@@ -1,5 +1,4 @@
 # CatModities
 Cat-themed trading game.
 
-# Reworked encapsulation and lowered coupling.
-# Groundwork for main
+Notes: Reworked encapsulation and coupling. Groundwork for main.
