@@ -7,4 +7,7 @@ class Bank {
         return bankBalance;
     }
 
+    public void setBalance(int amount){
+        this.bankBalance = amount;
+    }
 }

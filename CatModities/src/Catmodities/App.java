@@ -63,13 +63,16 @@ public class App extends Application {
       GridPane.setConstraints(day, 0, 1);
 
       Label message = new Label("Message Board");
-      GridPane.setConstraints(message, 0, 2);
+      GridPane.setConstraints(message, 1, 1);
 
       Label marketStatus = new Label("Normal/Crash/Rise");
-      GridPane.setConstraints(marketStatus, 3, 2);
+      GridPane.setConstraints(marketStatus, 3, 1);
 
       grid.getChildren().addAll(title, day, message, marketStatus);
 
+      Label fishVendorTitle = new Label("Vish Vendor");
+      GridPane.setConstraints(fishVendorTitle, 0, 2);
+      fishVendorTitle.setId("vendortitle");
 
       Label fishHeadsLabel = new Label("Fishheads");
       GridPane.setConstraints(fishHeadsLabel, 0, 3);
@@ -84,12 +87,20 @@ public class App extends Application {
       Label warehouseFishHeads = new Label("" + warehouse.getFishHeadsStock());
       GridPane.setConstraints(warehouseFishHeads, 1, 5);
 
-      grid.getChildren().addAll(fishHeadsLabel, fishHeadsPriceLabel, 
+      grid.getChildren().addAll(fishVendorTitle, fishHeadsLabel, fishHeadsPriceLabel, 
       headsBuyButton, headsSellButton, wholesalerFishHeads, warehouseFishHeads);
 
 
 
+      Label bankBalanceLabel = new Label("Bank Balance");
+      bankBalanceLabel.setId("bankbalance");
+      GridPane.setConstraints(bankBalanceLabel, 0, 10);
+      Label showBalance = new Label();
+      showBalance.setText("" + bank.getBalance());
+      showBalance.setId("showbalance");
+      GridPane.setConstraints(showBalance, 1, 10);
 
+      grid.getChildren().addAll(bankBalanceLabel, showBalance);
 
 
       Scene scene = new Scene(grid, 1100, 650);
@@ -98,9 +109,37 @@ public class App extends Application {
       
       window.show();
 
-      
-      
 
+
+      headsBuyButton.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(fishPrices.get("FishHeads"), fish.fishHeadsStockLevel, warehouse.getFishHeadsStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            fish.fishHeadsStockLevel = holding[0];
+            wholesalerFishHeads.setText("" + holding[0]);
+            warehouse.setWareHouseFishHeads(holding[1]);
+            warehouseFishHeads.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      headsSellButton.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(fishPrices.get("FishHeads"), fish.fishHeadsStockLevel, warehouse.getFishHeadsStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            fish.fishHeadsStockLevel = holding[0];
+            wholesalerFishHeads.setText("" + holding[0]);
+            warehouse.setWareHouseFishHeads(holding[1]);
+            warehouseFishHeads.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
    }
 
 
