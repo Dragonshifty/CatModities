@@ -13,6 +13,8 @@ class Warehouse {
 	private int warehouseScratchingPostStock = 0;
 	private int warehouseFortressStock = 0;
 	
+    private int warehouseAshyTreatsTooStock = 0;
+    private int warehouseRandomMothStock = 0;
 	private int warehouseDreamsiesStock = 0;
 	private int warehouseCatNipStock = 0;
 	private int warehouseMegaMunchiesStock = 0;
@@ -21,7 +23,7 @@ class Warehouse {
         return warehouseFishHeadsStock;
     }
 
-    public int getFishTreatsStock(){
+    public int getFishyTreatsStock(){
         return warehouseFishyTreatsStock;
     }
 
@@ -55,6 +57,14 @@ class Warehouse {
 
     public int getFortressStock(){
         return warehouseFortressStock;
+    }
+
+    public int getAshyTreatsTooStock(){
+        return warehouseAshyTreatsTooStock;
+    }
+
+    public int getRandomMothStock(){
+        return warehouseRandomMothStock;
     }
 
     public int getDreamsiesStock(){
@@ -107,6 +117,14 @@ class Warehouse {
 
     public void setWarehouseFortress(int level){
         this.warehouseFortressStock = level;
+    }
+
+    public void setWarehouseAshyTreatsToo(int level){
+        this.warehouseAshyTreatsTooStock = level;
+    }
+
+    public void setWarehouseRandomMoth(int level){
+        this.warehouseRandomMothStock = level;
     }
 
     public void setWarehouseDreamsies(int level){

@@ -16,6 +16,8 @@ abstract class Wholesaler {
 	protected int scratchingPostStockLevel = 500;
 	protected int fortressStockLevel = 500;
 	
+	protected int ashyTreatsTooStockLevel = 500;
+	protected int randomMothStockLevel = 500;
 	protected int dreamsiesStockLevel = 500;
 	protected int catNipStockLevel = 500;
 	protected int megaMunchiesStockLevel = 500;
