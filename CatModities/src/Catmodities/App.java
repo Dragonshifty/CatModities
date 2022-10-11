@@ -7,12 +7,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.Label;
 import javafx.geometry.*;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.paint.Color;
 
 import org.json.simple.JSONObject;
 
-import java.sql.DriverManager;
 import java.util.LinkedHashMap;
 // import java.io.FileWriter;
 // import java.io.IOException;
@@ -20,6 +19,8 @@ import java.util.LinkedHashMap;
 public class App extends Application {
 
    Stage window;
+
+   int dayCounter = 1;
 
    LinkedHashMap <String, Integer> fishPrices = new LinkedHashMap<>();
    LinkedHashMap <String, Integer> toyPrices = new LinkedHashMap<>();
@@ -57,11 +58,19 @@ public class App extends Application {
       window.setTitle("CatModities");
 
       GridPane grid = new GridPane();
+      grid.setAlignment(Pos.TOP_CENTER);
       GridPane gridTop = new GridPane();
+      gridTop.setAlignment(Pos.CENTER);
+      GridPane gridLeft = new GridPane();
+      gridLeft.setAlignment(Pos.TOP_CENTER);
+      GridPane gridBottom = new GridPane();
+      gridBottom.setAlignment(Pos.CENTER);
 
-      grid.setPadding(new Insets(10, 10, 10, 10));
+
+      // Main Grid padding
+      grid.setPadding(new Insets(10, 10, 12, 10));
       grid.setVgap(8);
-      grid.setHgap(10);
+      grid.setHgap(8);
       grid.getColumnConstraints().add(new ColumnConstraints(130));
       grid.getColumnConstraints().add(new ColumnConstraints(40));
       grid.getColumnConstraints().add(new ColumnConstraints(130));
@@ -72,307 +81,347 @@ public class App extends Application {
       grid.getColumnConstraints().add(new ColumnConstraints(40));
       grid.getColumnConstraints().add(new ColumnConstraints(130));
       grid.getColumnConstraints().add(new ColumnConstraints(40));
-      // grid.setGridLinesVisible(true);
+      
+      gridLeft.getColumnConstraints().add(new ColumnConstraints(120));
+      gridLeft.setPadding(new Insets(10, 5, 10, 5));
+      
 
+      gridBottom.setPadding(new Insets(10,10,10, 10));
 
-      Text text = new Text("CatModities");
-      Font font = Font.loadFont("file:/3Dumb.ttf", 45);
-      text.setFont(font);
-      GridPane.setConstraints(text, 0, 0);
+      Label title = new Label("CatModities");
+      title.setId("title");
+      GridPane.setConstraints(title, 0, 0);
 
-
-      // Label title = new Label("CatModities");
-      // GridPane.setConstraints(title, 0, 0);
+      gridTop.getChildren().addAll(title);
 
       Label day = new Label("Monday");
-      GridPane.setConstraints(day, 0, 1);
+      day.setId("day");
+      GridPane.setConstraints(day, 0, 0);
+      GridPane.setHalignment(day, HPos.CENTER);
+      Label dayCount = new Label("" + dayCounter);
+      dayCount.setId("daycount");
+      GridPane.setHalignment(dayCount, HPos.CENTER);
+      GridPane.setConstraints(dayCount, 0, 2);
 
-      Label message = new Label("Message Board");
-      GridPane.setConstraints(message, 1, 1);
+      gridLeft.getChildren().addAll(day, dayCount);
 
-      Label marketStatus = new Label("Normal/Crash/Rise");
-      GridPane.setConstraints(marketStatus, 3, 1);
 
-      gridTop.getChildren().addAll(text, day, message, marketStatus);
+      
+
+
 
       // Fish Vendor Labels and Buttons
-      Label fishVendorTitle = new Label("Vish Vendor");
-      GridPane.setConstraints(fishVendorTitle, 0, 2);
+      Label fishVendorTitle = new Label("Fish Vendor");
+      GridPane.setConstraints(fishVendorTitle, 0, 0);
       fishVendorTitle.setId("vendortitle");
 
       Label fishHeadsLabel = new Label("Fish Heads");
-      GridPane.setConstraints(fishHeadsLabel, 0, 3);
+      GridPane.setConstraints(fishHeadsLabel, 0, 1);
       Label fishHeadsPrice = new Label(""+ fishPrices.get("FishHeads"));
-      GridPane.setConstraints(fishHeadsPrice, 1, 3);
+      fishHeadsPrice.setId("pricelabel");
+      GridPane.setConstraints(fishHeadsPrice, 1, 1);
       Button headsBuyButton = new Button("Buy");
-      GridPane.setConstraints(headsBuyButton, 0, 4);
+      GridPane.setConstraints(headsBuyButton, 0, 2);
       Button headsSellButton = new Button("Sell");
-      GridPane.setConstraints(headsSellButton, 1, 4);
+      GridPane.setConstraints(headsSellButton, 1, 2);
       Label wholesalerFishHeads = new Label("" + fish.fishHeadsStockLevel);
-      GridPane.setConstraints(wholesalerFishHeads, 0, 5);
+      GridPane.setConstraints(wholesalerFishHeads, 0, 3);
       Label warehouseFishHeads = new Label("" + warehouse.getFishHeadsStock());
-      GridPane.setConstraints(warehouseFishHeads, 1, 5);
+      GridPane.setConstraints(warehouseFishHeads, 1, 3);
 
       grid.getChildren().addAll(fishVendorTitle, fishHeadsLabel, fishHeadsPrice, 
       headsBuyButton, headsSellButton, wholesalerFishHeads, warehouseFishHeads);
 
       Label fishyTreats = new Label("Fishy Treats");
-      GridPane.setConstraints(fishyTreats, 2, 3);
+      GridPane.setConstraints(fishyTreats, 2, 1);
       Label fishyTreatsPrice = new Label("" + fishPrices.get("Fishy Treats"));
-      GridPane.setConstraints(fishyTreatsPrice, 3, 3);
+      fishyTreatsPrice.setId("pricelabel");
+      GridPane.setConstraints(fishyTreatsPrice, 3, 1);
       Button fishyTreatsBuy = new Button("Buy");
-      GridPane.setConstraints(fishyTreatsBuy, 2, 4);
+      GridPane.setConstraints(fishyTreatsBuy, 2, 2);
       Button fishyTreatsSell = new Button("Sell");
-      GridPane.setConstraints(fishyTreatsSell, 3, 4);
+      GridPane.setConstraints(fishyTreatsSell, 3, 2);
       Label wholesalerFishyTreats = new Label("" + fish.fishyTreatsStockLevel);
-      GridPane.setConstraints(wholesalerFishyTreats, 2, 5);
+      GridPane.setConstraints(wholesalerFishyTreats, 2, 3);
       Label warehouseFishyTreats = new Label("" + warehouse.getFishyTreatsStock());
-      GridPane.setConstraints(warehouseFishyTreats, 3, 5);
+      warehouseFishyTreats.setId("warehouse");
+      GridPane.setConstraints(warehouseFishyTreats, 3, 3);
 
       grid.getChildren().addAll(fishyTreats, fishyTreatsPrice, fishyTreatsBuy, fishyTreatsSell,
       wholesalerFishyTreats, warehouseFishyTreats);
 
       Label cod = new Label("Cod");
-      GridPane.setConstraints(cod, 4, 3);
+      GridPane.setConstraints(cod, 4, 1);
       Label codPrice = new Label("" + fishPrices.get("Cod"));
-      GridPane.setConstraints(codPrice, 5, 3);
+      codPrice.setId("pricelabel");
+      GridPane.setConstraints(codPrice, 5, 1);
       Button codBuy = new Button("Buy");
-      GridPane.setConstraints(codBuy, 4, 4);
+      GridPane.setConstraints(codBuy, 4, 2);
       Button codSell = new Button("Sell");
-      GridPane.setConstraints(codSell, 5, 4);
+      GridPane.setConstraints(codSell, 5, 2);
       Label wholesalerCod = new Label("" + fish.codStockLevel);
-      GridPane.setConstraints(wholesalerCod, 4, 5);
+      GridPane.setConstraints(wholesalerCod, 4, 3);
       Label warehouseCod = new Label("" + warehouse.getWareHouseCodStock());
-      GridPane.setConstraints(warehouseCod, 5, 5);
+      warehouseCod.setId("warehouse");
+      GridPane.setConstraints(warehouseCod, 5, 3);
 
       grid.getChildren().addAll(cod, codPrice, codBuy, codSell, wholesalerCod, warehouseCod);
 
       Label salmon = new Label("Salmon Mousse");
-      GridPane.setConstraints(salmon, 6, 3);
+      GridPane.setConstraints(salmon, 6, 1);
       Label salmonPrice = new Label("" + fishPrices.get("Salmon Mousse"));
-      GridPane.setConstraints(salmonPrice, 7, 3);
+      salmonPrice.setId("pricelabel");
+      GridPane.setConstraints(salmonPrice, 7, 1);
       Button salmonBuy = new Button("Buy");
-      GridPane.setConstraints(salmonBuy, 6, 4);
+      GridPane.setConstraints(salmonBuy, 6, 2);
       Button salmonSell = new Button("Sell");
-      GridPane.setConstraints(salmonSell, 7, 4);
+      GridPane.setConstraints(salmonSell, 7, 2);
       Label wholesalerSalmon = new Label("" + fish.salmonStockLevel);
-      GridPane.setConstraints(wholesalerSalmon, 6, 5);
+      GridPane.setConstraints(wholesalerSalmon, 6, 3);
       Label warehouseSalmon = new Label("" + warehouse.getSalmonStock());
-      GridPane.setConstraints(warehouseSalmon, 7, 5);
+      warehouseSalmon.setId("warehouse");
+      GridPane.setConstraints(warehouseSalmon, 7, 3);
 
       grid.getChildren().addAll(salmon, salmonPrice, salmonBuy, salmonSell, 
       wholesalerSalmon, warehouseSalmon);
 
       Label rainbow = new Label("Rainbow Trout");
-      GridPane.setConstraints(rainbow, 8, 3);
+      GridPane.setConstraints(rainbow, 8, 1);
       Label rainbowPrice = new Label("" + fishPrices.get("Rainbow Trout"));
-      GridPane.setConstraints(rainbowPrice, 9, 3);
+      rainbowPrice.setId("pricelabel");
+      GridPane.setConstraints(rainbowPrice, 9, 1);
       Button rainbowBuy = new Button("Buy");
-      GridPane.setConstraints(rainbowBuy, 8, 4);
+      GridPane.setConstraints(rainbowBuy, 8, 2);
       Button rainbowSell = new Button("Sell");
-      GridPane.setConstraints(rainbowSell, 9, 4);
+      GridPane.setConstraints(rainbowSell, 9, 2);
       Label wholesalerRainbow = new Label("" + fish.rainbowStockLevel);
-      grid.setConstraints(wholesalerRainbow, 8, 5);
+      GridPane.setConstraints(wholesalerRainbow, 8, 3);
       Label warehouseRainbow = new Label("" + warehouse.getRainbowStock());
-      grid.setConstraints(warehouseRainbow, 9,5);
+      warehouseRainbow.setId("warehouse");
+      GridPane.setConstraints(warehouseRainbow, 9,3);
 
       grid.getChildren().addAll(rainbow, rainbowPrice, rainbowBuy, rainbowSell,
       wholesalerRainbow, warehouseRainbow);
 
       Label toyVendorTitle = new Label("Toy Vendor");
       toyVendorTitle.setId("vendortitle");
-      GridPane.setConstraints(toyVendorTitle, 0, 7);
+      GridPane.setConstraints(toyVendorTitle, 0, 5);
 
       Label ashyTreats = new Label("Ashy Treats");
-      GridPane.setConstraints(ashyTreats, 0, 8);
+      GridPane.setConstraints(ashyTreats, 0, 6);
       Label ashyTreatsPrice = new Label("" + toyPrices.get("Ashy Treats"));
-      GridPane.setConstraints(ashyTreatsPrice, 1, 8);
+      ashyTreatsPrice.setId("pricelabel");
+      GridPane.setConstraints(ashyTreatsPrice, 1, 6);
       Button ashyBuy = new Button("Buy");
-      GridPane.setConstraints(ashyBuy, 0, 9);
+      GridPane.setConstraints(ashyBuy, 0, 7);
       Button ashySell = new Button("Sell");
-      GridPane.setConstraints(ashySell, 1, 9);
+      GridPane.setConstraints(ashySell, 1, 7);
       Label wholesalerAshyTreats = new Label("" + toy.ashyTreatsStockLevel);
-      GridPane.setConstraints(wholesalerAshyTreats, 0, 10);
+      GridPane.setConstraints(wholesalerAshyTreats, 0, 8);
       Label warehouseAshyTreats = new Label("" + warehouse.getAshTreatsStock());
-      GridPane.setConstraints(warehouseAshyTreats, 1, 10);
+      warehouseAshyTreats.setId("warehouse");
+      GridPane.setConstraints(warehouseAshyTreats, 1, 8);
 
-      grid.getChildren().addAll(toyVendorTitle, ashyTreats, ashyBuy, ashySell,
+      grid.getChildren().addAll(toyVendorTitle, ashyTreats, ashyTreatsPrice, ashyBuy, ashySell,
       wholesalerAshyTreats, warehouseAshyTreats);
 
       Label yarnBall = new Label("Yarn Ball");
-      GridPane.setConstraints(yarnBall, 2, 8);
+      GridPane.setConstraints(yarnBall, 2, 6);
       Label yarnBallPrice = new Label("" + toyPrices.get("Yarn Ball"));
-      GridPane.setConstraints(yarnBallPrice, 3, 8);
+      yarnBallPrice.setId("pricelabel");
+      GridPane.setConstraints(yarnBallPrice, 3, 6);
       Button yarnBuy = new Button("Buy");
-      GridPane.setConstraints(yarnBuy, 2, 9);
+      GridPane.setConstraints(yarnBuy, 2, 7);
       Button yarnSell = new Button("Sell");
-      GridPane.setConstraints(yarnSell, 3, 9);
+      GridPane.setConstraints(yarnSell, 3, 7);
       Label wholesalerYarnBall = new Label("" + toy.yarnBallStockLevel);
-      GridPane.setConstraints(wholesalerYarnBall, 2, 10);
+      GridPane.setConstraints(wholesalerYarnBall, 2, 8);
       Label warehouseYarnBall = new Label("" + warehouse.getYarnBallStock());
-      GridPane.setConstraints(warehouseYarnBall, 3, 10);
+      warehouseYarnBall.setId("warehouse");
+      GridPane.setConstraints(warehouseYarnBall, 3, 8);
 
       grid.getChildren().addAll(yarnBall, yarnBallPrice, yarnBuy, yarnSell,
       wholesalerYarnBall, warehouseYarnBall);
 
       Label toyMouse = new Label("Toy Mouse");
-      GridPane.setConstraints(toyMouse, 4, 8);
+      GridPane.setConstraints(toyMouse, 4, 6);
       Label toyMousePrice = new Label("" + toyPrices.get("Toy Mouse"));
-      GridPane.setConstraints(toyMousePrice, 5, 8);
+      toyMousePrice.setId("pricelabel");
+      GridPane.setConstraints(toyMousePrice, 5, 6);
       Button toyMouseBuy = new Button("Buy");
-      GridPane.setConstraints(toyMouseBuy, 4, 9);
+      GridPane.setConstraints(toyMouseBuy, 4, 7);
       Button toyMouseSell = new Button("Sell");
-      GridPane.setConstraints(toyMouseSell, 5, 9);
+      GridPane.setConstraints(toyMouseSell, 5, 7);
       Label wholesalerToyMouse = new Label("" + toy.toyMouseStockLevel);
-      GridPane.setConstraints(wholesalerToyMouse, 4, 10);
+      GridPane.setConstraints(wholesalerToyMouse, 4, 8);
       Label warehouseToyMouse = new Label("" + warehouse.getToyMouseStock());
-      GridPane.setConstraints(warehouseToyMouse, 5, 10);
+      warehouseToyMouse.setId("warehouse");
+      GridPane.setConstraints(warehouseToyMouse, 5, 8);
 
       grid.getChildren().addAll(toyMouse, toyMousePrice, toyMouseBuy, toyMouseSell,
       wholesalerToyMouse, warehouseToyMouse);
 
       Label scratchingPost = new Label("Scratching Post");
-      GridPane.setConstraints(scratchingPost, 6, 8);
+      GridPane.setConstraints(scratchingPost, 6, 6);
       Label scratchingPostPrice = new Label("" + toyPrices.get("Scratching Post"));
-      GridPane.setConstraints(scratchingPostPrice, 7, 8);
+      scratchingPostPrice.setId("pricelabel");
+      GridPane.setConstraints(scratchingPostPrice, 7, 6);
       Button scratchingPostBuy = new Button("Buy");
-      GridPane.setConstraints(scratchingPostBuy, 6, 9);
+      GridPane.setConstraints(scratchingPostBuy, 6, 7);
       Button scratchingPostSell = new Button("Sell");
-      GridPane.setConstraints(scratchingPostSell, 7, 9);
+      GridPane.setConstraints(scratchingPostSell, 7, 7);
       Label wholesalerScratchingPost = new Label("" + toy.scratchingPostStockLevel);
-      GridPane.setConstraints(wholesalerScratchingPost, 6, 10);
+      GridPane.setConstraints(wholesalerScratchingPost, 6, 8);
       Label warehouseScratchingPost = new Label("" + warehouse.getScratchingPostStock());
-      GridPane.setConstraints(warehouseScratchingPost, 7, 10);
+      warehouseScratchingPost.setId("warehouse");
+      GridPane.setConstraints(warehouseScratchingPost, 7, 8);
       
       grid.getChildren().addAll(scratchingPost, scratchingPostPrice, scratchingPostBuy,
       scratchingPostSell, wholesalerScratchingPost,warehouseScratchingPost);
 
       Label fortress = new Label("Fortress");
-      GridPane.setConstraints(fortress, 8, 8);
+      GridPane.setConstraints(fortress, 8, 6);
       Label fortressPrice = new Label("" + toyPrices.get("Fortress"));
-      GridPane.setConstraints(fortressPrice, 9, 8);
+      fortressPrice.setId("pricelabel");
+      GridPane.setConstraints(fortressPrice, 9, 6);
       Button fortressBuy = new Button("Buy");
-      GridPane.setConstraints(fortressBuy, 8, 9);
+      GridPane.setConstraints(fortressBuy, 8, 7);
       Button fortressSell = new Button("Sell");
-      GridPane.setConstraints(fortressSell, 9, 9);
+      GridPane.setConstraints(fortressSell, 9, 7);
       Label wholesalerFortress = new Label("" + toy.fortressStockLevel);
-      GridPane.setConstraints(wholesalerFortress, 8, 10);
+      GridPane.setConstraints(wholesalerFortress, 8, 8);
       Label warehouseFortress = new Label("" + warehouse.getFortressStock());
+      warehouseFortress.setId("warehouse");
+      GridPane.setConstraints(warehouseFortress, 9, 8);
 
       grid.getChildren().addAll(fortress, fortressPrice, fortressBuy, fortressSell,
       wholesalerFortress, warehouseFortress);
 
       Label treatVendorTitle = new Label("Treat Vendor");
       treatVendorTitle.setId("vendortitle");
-      GridPane.setConstraints(treatVendorTitle, 0, 12);
+      GridPane.setConstraints(treatVendorTitle, 0, 10);
 
       Label ashyTreatsToo = new Label("Ashey Treats Too");
-      GridPane.setConstraints(ashyTreatsToo, 0, 13);
+      GridPane.setConstraints(ashyTreatsToo, 0, 11);
       Label ashyTreatsTooPrice = new Label("" + treatPrices.get("Ashy Treats Too"));
-      GridPane.setConstraints(ashyTreatsTooPrice, 1, 13);
+      ashyTreatsTooPrice.setId("pricelabel");
+      GridPane.setConstraints(ashyTreatsTooPrice, 1, 11);
       Button ashyTreatsTooBuy = new Button("Buy");
-      GridPane.setConstraints(ashyTreatsTooBuy, 0, 14);
+      GridPane.setConstraints(ashyTreatsTooBuy, 0, 12);
       Button ashyTreatsTooSell = new Button("Sell");
-      GridPane.setConstraints(ashyTreatsTooSell, 1, 14);
+      GridPane.setConstraints(ashyTreatsTooSell, 1, 12);
       Label wholesalerAshyTreatsToo = new Label("" + treat.ashyTreatsTooStockLevel);
-      GridPane.setConstraints(wholesalerAshyTreatsToo, 0, 15);
+      GridPane.setConstraints(wholesalerAshyTreatsToo, 0, 13);
       Label warehouseAshyTreatsToo = new Label("" + warehouse.getAshyTreatsTooStock());
-      GridPane.setConstraints(warehouseAshyTreatsToo, 1, 15);
+      warehouseAshyTreatsToo.setId("warehouse");
+      GridPane.setConstraints(warehouseAshyTreatsToo, 1, 13);
 
       grid.getChildren().addAll(treatVendorTitle, ashyTreatsToo, ashyTreatsTooPrice, ashyTreatsTooBuy,
       ashyTreatsTooSell, wholesalerAshyTreatsToo, warehouseAshyTreatsToo);
 
       Label randomMoth = new Label("Random Moth");
-      GridPane.setConstraints(randomMoth, 2, 13);
+      GridPane.setConstraints(randomMoth, 2, 11);
       Label randomMothPrice = new Label("" + treatPrices.get("Random Moth"));
-      GridPane.setConstraints(randomMothPrice, 3, 13);
+      randomMothPrice.setId("pricelabel");
+      GridPane.setConstraints(randomMothPrice, 3, 11);
       Button randomMothBuy = new Button("Buy");
-      GridPane.setConstraints(randomMothBuy, 2, 14);
+      GridPane.setConstraints(randomMothBuy, 2, 12);
       Button randomMothSell = new Button("Sell");
-      GridPane.setConstraints(randomMothSell, 3, 14);
+      GridPane.setConstraints(randomMothSell, 3, 12);
       Label wholesalerRandomMoth = new Label("" + treat.randomMothStockLevel);
-      GridPane.setConstraints(wholesalerRandomMoth, 2, 15);
+      GridPane.setConstraints(wholesalerRandomMoth, 2, 13);
       Label warehouseRandomMoth = new Label("" + warehouse.getRandomMothStock());
-      GridPane.setConstraints(warehouseRandomMoth, 3, 15);
+      warehouseRandomMoth.setId("warehouse");
+      GridPane.setConstraints(warehouseRandomMoth, 3, 13);
 
       grid.getChildren().addAll(randomMoth, randomMothPrice, randomMothBuy,
       randomMothSell, wholesalerRandomMoth, warehouseRandomMoth);
 
       Label dreamsies = new Label("Dreamsies");
-      GridPane.setConstraints(dreamsies, 4, 13);
+      GridPane.setConstraints(dreamsies, 4, 11);
       Label dreamsiesPrice = new Label("" + treatPrices.get("Dreamsies"));
-      GridPane.setConstraints(dreamsiesPrice, 5, 13);
+      dreamsiesPrice.setId("pricelabel");
+      GridPane.setConstraints(dreamsiesPrice, 5, 11);
       Button dreamsiesBuy = new Button("Buy");
-      GridPane.setConstraints(dreamsiesBuy, 4, 14);
+      GridPane.setConstraints(dreamsiesBuy, 4, 12);
       Button dreamsiesSell = new Button("Sell");
-      GridPane.setConstraints(dreamsiesSell, 5, 14);
+      GridPane.setConstraints(dreamsiesSell, 5, 12);
       Label wholesalerDreamsies = new Label("" + treat.dreamsiesStockLevel);
-      GridPane.setConstraints(wholesalerDreamsies, 4, 15);
+      GridPane.setConstraints(wholesalerDreamsies, 4, 13);
       Label warehouseDreamsies = new Label("" + warehouse.getDreamsiesStock());
-      GridPane.setConstraints(warehouseDreamsies, 5, 15);
+      warehouseDreamsies.setId("warehouse");
+      GridPane.setConstraints(warehouseDreamsies, 5, 13);
 
       grid.getChildren().addAll(dreamsies, dreamsiesPrice, dreamsiesBuy,
       dreamsiesSell, wholesalerDreamsies, warehouseDreamsies);
 
       Label catNip = new Label("CatNip");
-      GridPane.setConstraints(catNip, 6, 13);
+      GridPane.setConstraints(catNip, 6, 11);
       Label catNipPrice = new Label("" + treatPrices.get("CatNip"));
-      GridPane.setConstraints(catNipPrice, 7, 13);
+      catNipPrice.setId("pricelabel");
+      GridPane.setConstraints(catNipPrice, 7, 11);
       Button catNipBuy = new Button("Buy");
-      GridPane.setConstraints(catNipBuy, 6, 14);
+      GridPane.setConstraints(catNipBuy, 6, 12);
       Button catNipSell = new Button("Sell");
-      GridPane.setConstraints(catNipSell, 7, 14);
+      GridPane.setConstraints(catNipSell, 7, 12);
       Label wholesalerCatNip = new Label("" + treat.catNipStockLevel);
-      GridPane.setConstraints(wholesalerCatNip, 6, 15);
+      GridPane.setConstraints(wholesalerCatNip, 6, 13);
       Label warehouseCatNip = new Label("" + warehouse.getCatNipStock());
-      GridPane.setConstraints(warehouseCatNip, 7, 15);
+      warehouseCatNip.setId("warehouse");
+      GridPane.setConstraints(warehouseCatNip, 7, 13);
 
       grid.getChildren().addAll(catNip, catNipPrice, catNipBuy, catNipSell,
       wholesalerCatNip, warehouseCatNip);
 
       Label megaMunchies = new Label("Mega Munchies");
-      GridPane.setConstraints(megaMunchies, 8, 13);
+      GridPane.setConstraints(megaMunchies, 8, 11);
       Label megaMunchiesPrice = new Label("" + treatPrices.get("Mega Munchies"));
-      GridPane.setConstraints(megaMunchiesPrice, 9, 13);
+      megaMunchiesPrice.setId("pricelabel");
+      GridPane.setConstraints(megaMunchiesPrice, 9, 11);
       Button megaMunchiesBuy = new Button("Buy");
-      GridPane.setConstraints(megaMunchiesBuy, 8, 14);
+      GridPane.setConstraints(megaMunchiesBuy, 8, 12);
       Button megaMunchiesSell = new Button("Sell");
-      GridPane.setConstraints(megaMunchiesSell, 9, 14);
+      GridPane.setConstraints(megaMunchiesSell, 9, 12);
       Label wholesalerMegaMunchies = new Label("" + treat.megaMunchiesStockLevel);
-      GridPane.setConstraints(wholesalerMegaMunchies, 8, 15);
+      GridPane.setConstraints(wholesalerMegaMunchies, 8, 13);
       Label warehouseMegaMunchies = new Label("" + warehouse.getMegaMunchiesStock());
-      GridPane.setConstraints(warehouseMegaMunchies, 9, 15);
+      warehouseMegaMunchies.setId("warehouse");
+      GridPane.setConstraints(warehouseMegaMunchies, 9, 13);
 
       grid.getChildren().addAll(megaMunchies, megaMunchiesPrice, megaMunchiesBuy,
       megaMunchiesSell, wholesalerMegaMunchies, warehouseMegaMunchies);
 
-
+      Button endDay = new Button("End Day");
+      endDay.setId("endDay");
+      GridPane.setConstraints(endDay, 0, 15);
 
       Label bankBalanceLabel = new Label("Bank Balance");
       bankBalanceLabel.setId("bankbalance");
-      GridPane.setConstraints(bankBalanceLabel, 0, 17);
+      GridPane.setConstraints(bankBalanceLabel, 6, 15);
       Label showBalance = new Label();
       showBalance.setText("" + bank.getBalance());
       showBalance.setId("showbalance");
-      GridPane.setConstraints(showBalance, 0, 18);
+      GridPane.setConstraints(showBalance, 8, 15);
 
-      Button endDay = new Button("End Day");
-      GridPane.setConstraints(endDay, 2, 17);
-
-      grid.getChildren().addAll(bankBalanceLabel, showBalance, endDay);
+      grid.getChildren().addAll(endDay, bankBalanceLabel, showBalance);
 
 
       BorderPane pane = new BorderPane();
       pane.setTop(gridTop);
       pane.setCenter(grid);
+      pane.setLeft(gridLeft);
       Scene scene = new Scene(pane, 1100, 650);
+
+      scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Gafata");
+      scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Barriecito");
       scene.getStylesheets().add("/Catmodities/style.css");
+      
       window.setScene(scene); 
       
       window.show();
 
 
-
+      // Buy and sell buttons
       headsBuyButton.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(fishPrices.get("FishHeads"), fish.fishHeadsStockLevel, warehouse.getFishHeadsStock(), bank.getBalance());
@@ -403,14 +452,428 @@ public class App extends Application {
          }          
       });
    
+      fishyTreatsBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(fishPrices.get("Fishy Treats"), fish.fishyTreatsStockLevel, warehouse.getFishyTreatsStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            fish.fishyTreatsStockLevel = holding[0];
+            wholesalerFishyTreats.setText("" + holding[0]);
+            warehouse.setWarehouseFishyTreats(holding[1]);
+            warehouseFishyTreats.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      fishyTreatsSell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(fishPrices.get("Fishy Treats"), fish.fishyTreatsStockLevel, warehouse.getFishyTreatsStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            fish.fishyTreatsStockLevel = holding[0];
+            wholesalerFishyTreats.setText("" + holding[0]);
+            warehouse.setWarehouseFishyTreats(holding[1]);
+            warehouseFishyTreats.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      codBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(fishPrices.get("Cod"), fish.codStockLevel, warehouse.getWareHouseCodStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            fish.codStockLevel = holding[0];
+            wholesalerCod.setText("" + holding[0]);
+            warehouse.setWarehouseCod(holding[1]);
+            warehouseCod.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      codSell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(fishPrices.get("Cod"), fish.codStockLevel, warehouse.getWareHouseCodStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            fish.codStockLevel = holding[0];
+            wholesalerCod.setText("" + holding[0]);
+            warehouse.setWarehouseCod(holding[1]);
+            warehouseCod.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      salmonBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(fishPrices.get("Salmon Mousse"), fish.salmonStockLevel, warehouse.getSalmonStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            fish.salmonStockLevel = holding[0];
+            wholesalerSalmon.setText("" + holding[0]);
+            warehouse.setWarehouseSalmon(holding[1]);
+            warehouseSalmon.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      salmonSell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(fishPrices.get("Salmon Mousse"), fish.salmonStockLevel, warehouse.getSalmonStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            fish.salmonStockLevel = holding[0];
+            wholesalerSalmon.setText("" + holding[0]);
+            warehouse.setWarehouseSalmon(holding[1]);
+            warehouseSalmon.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      rainbowBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(fishPrices.get("Rainbow Trout"), fish.rainbowStockLevel, warehouse.getRainbowStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            fish.rainbowStockLevel = holding[0];
+            wholesalerRainbow.setText("" + holding[0]);
+            warehouse.setWarehouseRainbow(holding[1]);
+            warehouseRainbow.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      rainbowSell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(fishPrices.get("Rainbow Salmon"), fish.rainbowStockLevel, warehouse.getRainbowStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            fish.rainbowStockLevel = holding[0];
+            wholesalerRainbow.setText("" + holding[0]);
+            warehouse.setWarehouseRainbow(holding[1]);
+            warehouseRainbow.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      ashyBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(toyPrices.get("Ashy Treats"), toy.ashyTreatsStockLevel, warehouse.getAshTreatsStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            toy.ashyTreatsStockLevel = holding[0];
+            wholesalerAshyTreats.setText("" + holding[0]);
+            warehouse.setWarehouseAshTreats(holding[1]);
+            warehouseAshyTreats.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      ashySell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(toyPrices.get("Ashy Treats"), toy.ashyTreatsStockLevel, warehouse.getAshTreatsStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            toy.ashyTreatsStockLevel = holding[0];
+            wholesalerAshyTreats.setText("" + holding[0]);
+            warehouse.setWarehouseAshTreats(holding[1]);
+            warehouseAshyTreats.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      yarnBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(toyPrices.get("Yarn Ball"), toy.yarnBallStockLevel, warehouse.getYarnBallStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            toy.yarnBallStockLevel = holding[0];
+            wholesalerYarnBall.setText("" + holding[0]);
+            warehouse.setWarehouseYarnBall(holding[1]);
+            warehouseYarnBall.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      yarnSell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(toyPrices.get("Yarn Ball"), toy.yarnBallStockLevel, warehouse.getAshTreatsStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            toy.yarnBallStockLevel = holding[0];
+            wholesalerYarnBall.setText("" + holding[0]);
+            warehouse.setWarehouseYarnBall(holding[1]);
+            warehouseYarnBall.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      toyMouseBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(toyPrices.get("Toy Mouse"), toy.toyMouseStockLevel, warehouse.getToyMouseStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            toy.toyMouseStockLevel = holding[0];
+            wholesalerToyMouse.setText("" + holding[0]);
+            warehouse.setWarehouseToyMouse(holding[1]);
+            warehouseToyMouse.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      toyMouseSell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(toyPrices.get("Toy Mouse"), toy.toyMouseStockLevel, warehouse.getToyMouseStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            toy.toyMouseStockLevel = holding[0];
+            wholesalerToyMouse.setText("" + holding[0]);
+            warehouse.setWarehouseToyMouse(holding[1]);
+            warehouseToyMouse.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      scratchingPostBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(toyPrices.get("Scratching Post"), toy.scratchingPostStockLevel, warehouse.getScratchingPostStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            toy.scratchingPostStockLevel = holding[0];
+            wholesalerScratchingPost.setText("" + holding[0]);
+            warehouse.setWarehouseScracthingPost(holding[1]);
+            warehouseScratchingPost.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      scratchingPostSell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(toyPrices.get("Scratching Post"), toy.scratchingPostStockLevel, warehouse.getScratchingPostStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            toy.scratchingPostStockLevel = holding[0];
+            wholesalerScratchingPost.setText("" + holding[0]);
+            warehouse.setWarehouseScracthingPost(holding[1]);
+            warehouseScratchingPost.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      fortressBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(toyPrices.get("Fortress"), toy.fortressStockLevel, warehouse.getScratchingPostStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            toy.fortressStockLevel = holding[0];
+            wholesalerFortress.setText("" + holding[0]);
+            warehouse.setWarehouseFortress(holding[1]);
+            warehouseFortress.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      fortressSell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(toyPrices.get("Fortress"), toy.fortressStockLevel, warehouse.getScratchingPostStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            toy.fortressStockLevel = holding[0];
+            wholesalerFortress.setText("" + holding[0]);
+            warehouse.setWarehouseFortress(holding[1]);
+            warehouseFortress.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      ashyTreatsTooBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(treatPrices.get("Ashy Treats Too"), treat.ashyTreatsTooStockLevel, warehouse.getAshyTreatsTooStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            treat.ashyTreatsTooStockLevel = holding[0];
+            wholesalerAshyTreatsToo.setText("" + holding[0]);
+            warehouse.setWarehouseAshyTreatsToo(holding[1]);
+            warehouseAshyTreatsToo.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      ashyTreatsTooSell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(treatPrices.get("Ashy Treats Too"), treat.ashyTreatsTooStockLevel, warehouse.getAshyTreatsTooStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            treat.ashyTreatsTooStockLevel = holding[0];
+            wholesalerAshyTreatsToo.setText("" + holding[0]);
+            warehouse.setWarehouseAshyTreatsToo(holding[1]);
+            warehouseAshyTreatsToo.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      randomMothBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(treatPrices.get("Random Moth"), treat.randomMothStockLevel, warehouse.getRandomMothStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            treat.randomMothStockLevel = holding[0];
+            wholesalerRandomMoth.setText("" + holding[0]);
+            warehouse.setWarehouseRandomMoth(holding[1]);
+            warehouseRandomMoth.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      randomMothSell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(treatPrices.get("Random Moth"), treat.randomMothStockLevel, warehouse.getRandomMothStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            treat.randomMothStockLevel = holding[0];
+            wholesalerRandomMoth.setText("" + holding[0]);
+            warehouse.setWarehouseRandomMoth(holding[1]);
+            warehouseRandomMoth.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      dreamsiesBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(treatPrices.get("Dreamsies"), treat.dreamsiesStockLevel, warehouse.getDreamsiesStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            treat.dreamsiesStockLevel = holding[0];
+            wholesalerDreamsies.setText("" + holding[0]);
+            warehouse.setWarehouseDreamsies(holding[1]);
+            warehouseDreamsies.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      dreamsiesSell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(treatPrices.get("Dreamsies"), treat.dreamsiesStockLevel, warehouse.getDreamsiesStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            treat.dreamsiesStockLevel = holding[0];
+            wholesalerDreamsies.setText("" + holding[0]);
+            warehouse.setWarehouseDreamsies(holding[1]);
+            warehouseDreamsies.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      catNipBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(treatPrices.get("CatNip"), treat.catNipStockLevel, warehouse.getCatNipStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            treat.catNipStockLevel = holding[0];
+            wholesalerCatNip.setText("" + holding[0]);
+            warehouse.setWarehouseCatNip(holding[1]);
+            warehouseCatNip.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      catNipSell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(treatPrices.get("CatNip"), treat.catNipStockLevel, warehouse.getCatNipStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            treat.catNipStockLevel = holding[0];
+            wholesalerCatNip.setText("" + holding[0]);
+            warehouse.setWarehouseCatNip(holding[1]);
+            warehouseCatNip.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      megaMunchiesBuy.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = BuyBox.buy(treatPrices.get("Mega Munchies"), treat.megaMunchiesStockLevel, warehouse.getMegaMunchiesStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            treat.megaMunchiesStockLevel = holding[0];
+            wholesalerMegaMunchies.setText("" + holding[0]);
+            warehouse.setWarehouseMegaMunchies(holding[1]);
+            warehouseMegaMunchies.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
+
+      megaMunchiesSell.setOnAction(e -> {
+         int[] holding = new int[3];
+         holding = SellBox.sell(treatPrices.get("Mega Munchies"), treat.megaMunchiesStockLevel, warehouse.getMegaMunchiesStock(), bank.getBalance());
+
+         // return wholesaler/warehouse/bank balance/confirmation
+         if (holding[3] == 1){
+            treat.megaMunchiesStockLevel = holding[0];
+            wholesalerMegaMunchies.setText("" + holding[0]);
+            warehouse.setWarehouseMegaMunchies(holding[1]);
+            warehouseMegaMunchies.setText("" + holding[1]);
+            bank.setBalance(holding[2]);
+            showBalance.setText("" + holding[2]);
+         }          
+      });
 
 
-
-
-
-
-
-
+      // End day commands
       endDay.setOnAction(e -> {
          // Set vendor prices
          fish.setPrices();
@@ -422,6 +885,11 @@ public class App extends Application {
          toyPrices = toy.getPrices();
          treatPrices = treat.getPrices();
 
+         //Increment day counter
+         dayCounter++;
+         dayCount.setText("" + dayCounter);
+
+         // Set day
          switch(day.getText()){
             case "Monday":
                day.setText("Tuesday");
@@ -442,7 +910,26 @@ public class App extends Application {
                day.setText("Monday");
          }
 
+         // Reset prices
          fishHeadsPrice.setText("" + fishPrices.get("FishHeads"));
+         fishyTreatsPrice.setText("" + fishPrices.get("Fishy Treats"));
+         codPrice.setText("" + fishPrices.get("Cod"));
+         salmonPrice.setText("" + fishPrices.get("Salmon Mousse"));
+         rainbowPrice.setText("" + fishPrices.get("Rainbow Trout"));
+
+         ashyTreatsPrice.setText("" + toyPrices.get("Ashy Treats"));
+         yarnBallPrice.setText("" + toyPrices.get("Yarn Ball"));
+         toyMousePrice.setText("" + toyPrices.get("Toy Mouse"));
+         scratchingPostPrice.setText("" + toyPrices.get("Scratching Post"));
+         fortressPrice.setText("" + toyPrices.get("Fortress"));
+
+         ashyTreatsTooPrice.setText("" + treatPrices.get("Ashy Treats Too"));
+         randomMothPrice.setText("" + treatPrices.get("Random Moth"));
+         dreamsiesPrice.setText("" + treatPrices.get("Dreamsies"));
+         catNipPrice.setText("" + treatPrices.get("CatNip"));
+         megaMunchiesPrice.setText("" + treatPrices.get("Mega Munchies"));
+
+
 
       });
    

@@ -5,6 +5,8 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class BuyBox {
 
@@ -21,21 +23,41 @@ public class BuyBox {
         BuyBox buyBox = new BuyBox();
         Stage window = new Stage();
 
-        buyBox.wholesalerStockHolding = wholesalerStock;
-        buyBox.warehouseStockHolding = warehouseStock;
-
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Buying");
         window.setMinWidth(250);
 
-        Label label = new Label("How much?");
+        buyBox.wholesalerStockHolding = wholesalerStock;
+        buyBox.warehouseStockHolding = warehouseStock;
 
+        Label label = new Label("How much?");
         TextField amount = new TextField();
         Button confirm = new Button("Confirm");
 
-        confirm.setOnAction(e -> {
+        Slider slider = new Slider(0, 10000, 0);
+            int balanceMax = balance / price;
+            int sliderMax = 0;
+            if (balanceMax >= wholesalerStock){
+                sliderMax = wholesalerStock;
+            } else {
+                sliderMax = balanceMax;
+            }
+        slider.setMax(sliderMax);
 
-            try {
+        amount.setText(Math.round(slider.getValue()) + "");
+
+        slider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+              if (newValue == null) {
+                amount.setText("");
+                return;
+              }
+              amount.setText(Math.round(newValue.intValue()) + "");
+            }
+          });
+
+        confirm.setOnAction(e -> {
+        try {
             buyBox.entered += Integer.parseInt(amount.getText());
             
             buyBox.stockResult = buyBox.entered - wholesalerStock;
@@ -69,7 +91,7 @@ public class BuyBox {
 
         HBox layout = new HBox(10);
         layout.setPadding(new Insets(10, 10, 10, 10));
-        layout.getChildren().addAll(label, amount, confirm);
+        layout.getChildren().addAll(label, amount, confirm, slider);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);

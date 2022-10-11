@@ -5,6 +5,8 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class SellBox {
     
@@ -21,21 +23,34 @@ public class SellBox {
         SellBox sellBox = new SellBox();
         Stage window = new Stage();
 
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Selling");
+        window.setMinWidth(250);
+
         sellBox.wholesalerStockHolding = wholesalerStock;
         sellBox.warehouseStockHolding = warehouseStock;
 
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Buying");
-        window.setMinWidth(250);
-
         Label label = new Label("How much?");
-
         TextField amount = new TextField();
         Button confirm = new Button("Confirm");
+        Slider slider = new Slider(0, 10000, 0);
+        slider.setMax(warehouseStock);
+
+        amount.setText(Math.round(slider.getValue()) + "");
+
+        slider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+              if (newValue == null) {
+                amount.setText("");
+                return;
+              }
+              amount.setText(Math.round(newValue.intValue()) + "");
+            }
+          });
+
 
         confirm.setOnAction(e -> {
-
-        try {
+            try {
             sellBox.entered += Integer.parseInt(amount.getText());
         
             sellBox.stockResult = warehouseStock - sellBox.entered;
@@ -63,7 +78,7 @@ public class SellBox {
 
         HBox layout = new HBox(10);
         layout.setPadding(new Insets(10, 10, 10, 10));
-        layout.getChildren().addAll(label, amount, confirm);
+        layout.getChildren().addAll(label, amount, confirm, slider);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);
