@@ -1,8 +1,10 @@
+package Catmodities;
+
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class ToyVendor {
+class ToyVendor extends Wholesaler {
 	private int ashyTreats;
 	private int yarnBall;
 	private int toyMouse;
@@ -35,16 +37,18 @@ public class ToyVendor {
 	private LinkedHashMap<String, Integer> toyPrices = new LinkedHashMap<String, Integer>();
 	
 	// Constructor
-	ToyVendor(){				
+	ToyVendor(){	
+		if (toyPrices.isEmpty()) {
 		toyPrices.put("Ashy Treats", ashyTreats);
 		toyPrices.put("Yarn Ball", yarnBall);
 		toyPrices.put("Toy Mouse", toyMouse);
 		toyPrices.put("Scratching Post", scratchingPost);
-		toyPrices.put("Fortress", fortress);		
+		toyPrices.put("Fortress", fortress);	
+		}
 	}
 	
-	
-	public void setPrices() {		
+	@Override
+	protected void setPrices() {		
 		// Apply random within range prices
 		ashyTreats = ThreadLocalRandom.current().nextInt(ashyMin, ashyMax + 1);
 		yarnBall = ThreadLocalRandom.current().nextInt(yarnMin, yarnMax + 1);
@@ -82,21 +86,25 @@ public class ToyVendor {
 		}		
 	}
 	
-	public LinkedHashMap<String, Integer> getPrices() {
+	@Override
+	protected LinkedHashMap<String, Integer> getPrices() {
 		return toyPrices;
 	}
 	
-	public void localCrash(boolean toyCrash, double crashAmount) {
+	@Override
+	protected void localCrash(boolean toyCrash, double crashAmount) {
 		this.localCrashBool = toyCrash;
 		this.localCrash = crashAmount;
-		System.out.println(toyPrices);
+//		System.out.println(toyPrices);
 		setPrices();		
 	}
 	
-	public void localPriceRise(boolean toyRise, double riseAmount) {
+	@Override
+	protected void localPriceRise(boolean toyRise, double riseAmount) {
 		this.localPriceRiseBool = toyRise;
 		this.localPriceRise = riseAmount;
-		System.out.println(toyPrices);
+//		System.out.println(toyPrices);
 		setPrices();
 	}
 }
+

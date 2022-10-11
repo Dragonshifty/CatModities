@@ -1,8 +1,10 @@
+package Catmodities;
+
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class FishVendor {
+class FishVendor extends Wholesaler {
 	private int fishHeads;
 	private int fishyTreats;
 	private int cod;
@@ -35,16 +37,18 @@ public class FishVendor {
 	private LinkedHashMap<String, Integer> fishPrices = new LinkedHashMap<String, Integer>();
 	
 	// Constructor
-	FishVendor(){				
+	FishVendor(){
+		if (fishPrices.isEmpty()) {
 		fishPrices.put("FishHeads", fishHeads);
 		fishPrices.put("Fishy Treats", fishyTreats);
 		fishPrices.put("Cod", cod);
 		fishPrices.put("Salmon Mousse", salmonMousse);
-		fishPrices.put("Rainbow Trout", rainbowTrout);		
+		fishPrices.put("Rainbow Trout", rainbowTrout);	
+		}
 	}
 	
-	
-	public void setPrices() {		
+	@Override
+	protected void setPrices() {		
 		// Apply random within range prices
 		fishHeads = ThreadLocalRandom.current().nextInt(headsMin, headsMax + 1);
 		fishyTreats = ThreadLocalRandom.current().nextInt(treatsMin, treatsMax + 1);
@@ -70,37 +74,32 @@ public class FishVendor {
 			}
 		}
 		
-		// reset price/crash booleans
-		localPriceRiseBool = false;
-		localCrashBool = false;
-
 		// Assign array to HashMap key/value pairs
 		int local = 0;
 		for (Entry<String, Integer> set : fishPrices.entrySet()) {
 			set.setValue(fishArray[local++]);
 		}		
-
-		
 	}
 	
-	public LinkedHashMap<String, Integer> getPrices() {
+	@Override
+	protected LinkedHashMap<String, Integer> getPrices() {
 		return fishPrices;
 	}
 	
-	public void localCrash(boolean fishCrash, double crashAmount) {
-		
+	@Override
+	protected void localCrash(boolean fishCrash, double crashAmount) {
 		this.localCrashBool = fishCrash;
 		this.localCrash = crashAmount;
-		// System.out.println(fishPrices);
-		// setPrices();		
+//		System.out.println(fishPrices);
+		setPrices();		
 	}
 	
-	public void localPriceRise(boolean fishRise, double riseAmount) {
-		
+	@Override
+	protected void localPriceRise(boolean fishRise, double riseAmount) {
 		this.localPriceRiseBool = fishRise;
 		this.localPriceRise = riseAmount;
-		// System.out.println(fishPrices);
-		// setPrices();
+//		System.out.println(fishPrices);
+		setPrices();
 	}
 }
 
