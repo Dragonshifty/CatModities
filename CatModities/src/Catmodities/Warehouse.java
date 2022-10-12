@@ -19,6 +19,7 @@ class Warehouse {
 	private int warehouseCatNipStock = 0;
 	private int warehouseMegaMunchiesStock = 0;
 
+
     public int getFishHeadsStock(){
         return warehouseFishHeadsStock;
     }
@@ -39,7 +40,7 @@ class Warehouse {
         return warehouseRainbowStock;
     }
 
-    public int getAshTreatsStock(){
+    public int getAshyTreatsStock(){
         return warehouseAshyTreatsStock;
     }
 

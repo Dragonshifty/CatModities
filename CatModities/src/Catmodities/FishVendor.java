@@ -101,5 +101,15 @@ class FishVendor extends Wholesaler {
 //		System.out.println(fishPrices);
 		setPrices();
 	}
+
+	@Override
+	protected void restock(){
+		fishHeadsStockLevel = 100;
+		fishyTreatsStockLevel = 100;
+		codStockLevel = 80;
+		salmonStockLevel = 60;
+		rainbowStockLevel = 50;
+	}
+
 }
 

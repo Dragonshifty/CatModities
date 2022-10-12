@@ -95,7 +95,6 @@ class TreatVendor extends Wholesaler {
 	protected void localCrash(boolean treatCrash, double crashAmount) {
 		this.localCrashBool = treatCrash;
 		this.localCrash = crashAmount;
-//		System.out.println(treatPrices);
 		setPrices();		
 	}
 	
@@ -103,8 +102,16 @@ class TreatVendor extends Wholesaler {
 	protected void localPriceRise(boolean treatRise, double riseAmount) {
 		this.localPriceRiseBool = treatRise;
 		this.localPriceRise = riseAmount;
-//		System.out.println(treatPrices);
 		setPrices();
+	}
+
+	@Override
+	protected void restock(){
+		ashyTreatsTooStockLevel = 80;
+		randomMothStockLevel = 60;
+		dreamsiesStockLevel = 50;
+		catNipStockLevel = 50;
+		megaMunchiesStockLevel = 30;
 	}
 }
 

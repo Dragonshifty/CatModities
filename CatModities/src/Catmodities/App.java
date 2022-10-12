@@ -9,6 +9,9 @@ import javafx.scene.control.Label;
 import javafx.geometry.*;
 import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
+import java.util.Random;
+
+import javax.swing.event.SwingPropertyChangeSupport;
 
 import org.json.simple.JSONObject;
 
@@ -20,6 +23,55 @@ public class App extends Application {
 
    Stage window;
 
+   // Set class variables
+   Label wholesalerFishHeads;
+   Label wholesalerFishyTreats;
+   Label wholesalerCod;
+   Label wholesalerSalmon;
+   Label wholesalerRainbow;
+   Label wholesalerAshyTreats;
+   Label wholesalerYarnBall;
+   Label wholesalerToyMouse;
+   Label wholesalerScratchingPost;
+   Label wholesalerFortress;
+   Label wholesalerAshyTreatsToo;
+   Label wholesalerRandomMoth;
+   Label wholesalerDreamsies;
+   Label wholesalerCatNip;
+   Label wholesalerMegaMunchies;
+
+   Label warehouseFishHeads;
+   Label warehouseFishyTreats;
+   Label warehouseCod;
+   Label warehouseSalmon;
+   Label warehouseRainbow;
+   Label warehouseAshyTreats;
+   Label warehouseYarnBall;
+   Label warehouseToyMouse;
+   Label warehouseScratchingPost;
+   Label warehouseFortress;
+   Label warehouseAshyTreatsToo;
+   Label warehouseRandomMoth;
+   Label warehouseDreamsies;
+   Label warehouseCatNip;
+   Label warehouseMegaMunchies;
+
+   Label fishHeadsPrice;
+   Label fishyTreatsPrice;
+   Label codPrice;
+   Label salmonPrice;
+   Label rainbowPrice;
+   Label ashyTreatsPrice;
+   Label yarnBallPrice;
+   Label toyMousePrice;
+   Label scratchingPostPrice;
+   Label fortressPrice;
+   Label ashyTreatsTooPrice;
+   Label randomMothPrice;
+   Label dreamsiesPrice;
+   Label catNipPrice;
+   Label megaMunchiesPrice;
+
    int dayCounter = 1;
 
    LinkedHashMap <String, Integer> fishPrices = new LinkedHashMap<>();
@@ -27,7 +79,6 @@ public class App extends Application {
    LinkedHashMap <String, Integer> treatPrices = new LinkedHashMap<>();
 
     public static void main(String[] args) {
-      
       launch(args);
    }
 
@@ -49,9 +100,10 @@ public class App extends Application {
       toyPrices = toy.getPrices();
       treatPrices = treat.getPrices();
 
-      // Instantiate bank and personal warehouse stock
+      // Instantiate bank, personal warehouse stock, and Story Event
       Bank bank = new Bank();
       Warehouse warehouse = new Warehouse();
+      StoryEvent storyEvent = new StoryEvent();
       
       // Set window
       window = primaryStage;
@@ -66,67 +118,66 @@ public class App extends Application {
       GridPane gridBottom = new GridPane();
       gridBottom.setAlignment(Pos.CENTER);
 
-
       // Main Grid padding
-      grid.setPadding(new Insets(10, 10, 12, 10));
+      grid.setPadding(new Insets(10, 10, 12, 0));
       grid.setVgap(8);
       grid.setHgap(8);
       grid.getColumnConstraints().add(new ColumnConstraints(130));
-      grid.getColumnConstraints().add(new ColumnConstraints(40));
+      grid.getColumnConstraints().add(new ColumnConstraints(42));
       grid.getColumnConstraints().add(new ColumnConstraints(130));
-      grid.getColumnConstraints().add(new ColumnConstraints(40));
+      grid.getColumnConstraints().add(new ColumnConstraints(42));
       grid.getColumnConstraints().add(new ColumnConstraints(130));
-      grid.getColumnConstraints().add(new ColumnConstraints(40));
+      grid.getColumnConstraints().add(new ColumnConstraints(42));
       grid.getColumnConstraints().add(new ColumnConstraints(130));
-      grid.getColumnConstraints().add(new ColumnConstraints(40));
+      grid.getColumnConstraints().add(new ColumnConstraints(42));
       grid.getColumnConstraints().add(new ColumnConstraints(130));
-      grid.getColumnConstraints().add(new ColumnConstraints(40));
-      
+      grid.getColumnConstraints().add(new ColumnConstraints(42));     
       gridLeft.getColumnConstraints().add(new ColumnConstraints(120));
-      gridLeft.setPadding(new Insets(10, 5, 10, 5));
-      
-
+      gridLeft.setVgap(10);
+      gridLeft.setPadding(new Insets(10, 4, 10, 10));
       gridBottom.setPadding(new Insets(10,10,10, 10));
 
+      // Title set
       Label title = new Label("CatModities");
       title.setId("title");
       GridPane.setConstraints(title, 0, 0);
-
       gridTop.getChildren().addAll(title);
 
+      // Left panel
       Label day = new Label("Monday");
-      day.setId("day");
+      day.setId("day"); 
       GridPane.setConstraints(day, 0, 0);
       GridPane.setHalignment(day, HPos.CENTER);
+      
       Label dayCount = new Label("" + dayCounter);
       dayCount.setId("daycount");
       GridPane.setHalignment(dayCount, HPos.CENTER);
-      GridPane.setConstraints(dayCount, 0, 2);
+      GridPane.setConstraints(dayCount, 0, 3);
 
-      gridLeft.getChildren().addAll(day, dayCount);
+      Button story = new Button("Story");
+      GridPane.setConstraints(story, 0, 8);
+      GridPane.setHalignment(story, HPos.CENTER);
 
-
-      
-
+      gridLeft.getChildren().addAll(day, dayCount, story);
 
 
       // Fish Vendor Labels and Buttons
       Label fishVendorTitle = new Label("Fish Vendor");
       GridPane.setConstraints(fishVendorTitle, 0, 0);
       fishVendorTitle.setId("vendortitle");
-
       Label fishHeadsLabel = new Label("Fish Heads");
       GridPane.setConstraints(fishHeadsLabel, 0, 1);
-      Label fishHeadsPrice = new Label(""+ fishPrices.get("FishHeads"));
+      fishHeadsPrice = new Label(""+ fishPrices.get("FishHeads"));
       fishHeadsPrice.setId("pricelabel");
       GridPane.setConstraints(fishHeadsPrice, 1, 1);
       Button headsBuyButton = new Button("Buy");
       GridPane.setConstraints(headsBuyButton, 0, 2);
       Button headsSellButton = new Button("Sell");
       GridPane.setConstraints(headsSellButton, 1, 2);
-      Label wholesalerFishHeads = new Label("" + fish.fishHeadsStockLevel);
+      wholesalerFishHeads = new Label("" + fish.fishHeadsStockLevel);
       GridPane.setConstraints(wholesalerFishHeads, 0, 3);
-      Label warehouseFishHeads = new Label("" + warehouse.getFishHeadsStock());
+      warehouseFishHeads = new Label("" + warehouse.getFishHeadsStock());
+      warehouseFishHeads.setId("warehouse");
       GridPane.setConstraints(warehouseFishHeads, 1, 3);
 
       grid.getChildren().addAll(fishVendorTitle, fishHeadsLabel, fishHeadsPrice, 
@@ -134,16 +185,16 @@ public class App extends Application {
 
       Label fishyTreats = new Label("Fishy Treats");
       GridPane.setConstraints(fishyTreats, 2, 1);
-      Label fishyTreatsPrice = new Label("" + fishPrices.get("Fishy Treats"));
+      fishyTreatsPrice = new Label("" + fishPrices.get("Fishy Treats"));
       fishyTreatsPrice.setId("pricelabel");
       GridPane.setConstraints(fishyTreatsPrice, 3, 1);
       Button fishyTreatsBuy = new Button("Buy");
       GridPane.setConstraints(fishyTreatsBuy, 2, 2);
       Button fishyTreatsSell = new Button("Sell");
       GridPane.setConstraints(fishyTreatsSell, 3, 2);
-      Label wholesalerFishyTreats = new Label("" + fish.fishyTreatsStockLevel);
+      wholesalerFishyTreats = new Label("" + fish.fishyTreatsStockLevel);
       GridPane.setConstraints(wholesalerFishyTreats, 2, 3);
-      Label warehouseFishyTreats = new Label("" + warehouse.getFishyTreatsStock());
+      warehouseFishyTreats = new Label("" + warehouse.getFishyTreatsStock());
       warehouseFishyTreats.setId("warehouse");
       GridPane.setConstraints(warehouseFishyTreats, 3, 3);
 
@@ -152,16 +203,16 @@ public class App extends Application {
 
       Label cod = new Label("Cod");
       GridPane.setConstraints(cod, 4, 1);
-      Label codPrice = new Label("" + fishPrices.get("Cod"));
+      codPrice = new Label("" + fishPrices.get("Cod"));
       codPrice.setId("pricelabel");
       GridPane.setConstraints(codPrice, 5, 1);
       Button codBuy = new Button("Buy");
       GridPane.setConstraints(codBuy, 4, 2);
       Button codSell = new Button("Sell");
       GridPane.setConstraints(codSell, 5, 2);
-      Label wholesalerCod = new Label("" + fish.codStockLevel);
+      wholesalerCod = new Label("" + fish.codStockLevel);
       GridPane.setConstraints(wholesalerCod, 4, 3);
-      Label warehouseCod = new Label("" + warehouse.getWareHouseCodStock());
+      warehouseCod = new Label("" + warehouse.getWareHouseCodStock());
       warehouseCod.setId("warehouse");
       GridPane.setConstraints(warehouseCod, 5, 3);
 
@@ -169,16 +220,16 @@ public class App extends Application {
 
       Label salmon = new Label("Salmon Mousse");
       GridPane.setConstraints(salmon, 6, 1);
-      Label salmonPrice = new Label("" + fishPrices.get("Salmon Mousse"));
+      salmonPrice = new Label("" + fishPrices.get("Salmon Mousse"));
       salmonPrice.setId("pricelabel");
       GridPane.setConstraints(salmonPrice, 7, 1);
       Button salmonBuy = new Button("Buy");
       GridPane.setConstraints(salmonBuy, 6, 2);
       Button salmonSell = new Button("Sell");
       GridPane.setConstraints(salmonSell, 7, 2);
-      Label wholesalerSalmon = new Label("" + fish.salmonStockLevel);
+      wholesalerSalmon = new Label("" + fish.salmonStockLevel);
       GridPane.setConstraints(wholesalerSalmon, 6, 3);
-      Label warehouseSalmon = new Label("" + warehouse.getSalmonStock());
+      warehouseSalmon = new Label("" + warehouse.getSalmonStock());
       warehouseSalmon.setId("warehouse");
       GridPane.setConstraints(warehouseSalmon, 7, 3);
 
@@ -187,38 +238,38 @@ public class App extends Application {
 
       Label rainbow = new Label("Rainbow Trout");
       GridPane.setConstraints(rainbow, 8, 1);
-      Label rainbowPrice = new Label("" + fishPrices.get("Rainbow Trout"));
+      rainbowPrice = new Label("" + fishPrices.get("Rainbow Trout"));
       rainbowPrice.setId("pricelabel");
       GridPane.setConstraints(rainbowPrice, 9, 1);
       Button rainbowBuy = new Button("Buy");
       GridPane.setConstraints(rainbowBuy, 8, 2);
       Button rainbowSell = new Button("Sell");
       GridPane.setConstraints(rainbowSell, 9, 2);
-      Label wholesalerRainbow = new Label("" + fish.rainbowStockLevel);
+      wholesalerRainbow = new Label("" + fish.rainbowStockLevel);
       GridPane.setConstraints(wholesalerRainbow, 8, 3);
-      Label warehouseRainbow = new Label("" + warehouse.getRainbowStock());
+      warehouseRainbow = new Label("" + warehouse.getRainbowStock());
       warehouseRainbow.setId("warehouse");
       GridPane.setConstraints(warehouseRainbow, 9,3);
 
       grid.getChildren().addAll(rainbow, rainbowPrice, rainbowBuy, rainbowSell,
       wholesalerRainbow, warehouseRainbow);
 
+      // Toy Vendor label and buttons
       Label toyVendorTitle = new Label("Toy Vendor");
       toyVendorTitle.setId("vendortitle");
       GridPane.setConstraints(toyVendorTitle, 0, 5);
-
       Label ashyTreats = new Label("Ashy Treats");
       GridPane.setConstraints(ashyTreats, 0, 6);
-      Label ashyTreatsPrice = new Label("" + toyPrices.get("Ashy Treats"));
+      ashyTreatsPrice = new Label("" + toyPrices.get("Ashy Treats"));
       ashyTreatsPrice.setId("pricelabel");
       GridPane.setConstraints(ashyTreatsPrice, 1, 6);
       Button ashyBuy = new Button("Buy");
       GridPane.setConstraints(ashyBuy, 0, 7);
       Button ashySell = new Button("Sell");
       GridPane.setConstraints(ashySell, 1, 7);
-      Label wholesalerAshyTreats = new Label("" + toy.ashyTreatsStockLevel);
+      wholesalerAshyTreats = new Label("" + toy.ashyTreatsStockLevel);
       GridPane.setConstraints(wholesalerAshyTreats, 0, 8);
-      Label warehouseAshyTreats = new Label("" + warehouse.getAshTreatsStock());
+      warehouseAshyTreats = new Label("" + warehouse.getAshyTreatsStock());
       warehouseAshyTreats.setId("warehouse");
       GridPane.setConstraints(warehouseAshyTreats, 1, 8);
 
@@ -227,16 +278,16 @@ public class App extends Application {
 
       Label yarnBall = new Label("Yarn Ball");
       GridPane.setConstraints(yarnBall, 2, 6);
-      Label yarnBallPrice = new Label("" + toyPrices.get("Yarn Ball"));
+      yarnBallPrice = new Label("" + toyPrices.get("Yarn Ball"));
       yarnBallPrice.setId("pricelabel");
       GridPane.setConstraints(yarnBallPrice, 3, 6);
       Button yarnBuy = new Button("Buy");
       GridPane.setConstraints(yarnBuy, 2, 7);
       Button yarnSell = new Button("Sell");
       GridPane.setConstraints(yarnSell, 3, 7);
-      Label wholesalerYarnBall = new Label("" + toy.yarnBallStockLevel);
+      wholesalerYarnBall = new Label("" + toy.yarnBallStockLevel);
       GridPane.setConstraints(wholesalerYarnBall, 2, 8);
-      Label warehouseYarnBall = new Label("" + warehouse.getYarnBallStock());
+      warehouseYarnBall = new Label("" + warehouse.getYarnBallStock());
       warehouseYarnBall.setId("warehouse");
       GridPane.setConstraints(warehouseYarnBall, 3, 8);
 
@@ -245,16 +296,16 @@ public class App extends Application {
 
       Label toyMouse = new Label("Toy Mouse");
       GridPane.setConstraints(toyMouse, 4, 6);
-      Label toyMousePrice = new Label("" + toyPrices.get("Toy Mouse"));
+      toyMousePrice = new Label("" + toyPrices.get("Toy Mouse"));
       toyMousePrice.setId("pricelabel");
       GridPane.setConstraints(toyMousePrice, 5, 6);
       Button toyMouseBuy = new Button("Buy");
       GridPane.setConstraints(toyMouseBuy, 4, 7);
       Button toyMouseSell = new Button("Sell");
       GridPane.setConstraints(toyMouseSell, 5, 7);
-      Label wholesalerToyMouse = new Label("" + toy.toyMouseStockLevel);
+      wholesalerToyMouse = new Label("" + toy.toyMouseStockLevel);
       GridPane.setConstraints(wholesalerToyMouse, 4, 8);
-      Label warehouseToyMouse = new Label("" + warehouse.getToyMouseStock());
+      warehouseToyMouse = new Label("" + warehouse.getToyMouseStock());
       warehouseToyMouse.setId("warehouse");
       GridPane.setConstraints(warehouseToyMouse, 5, 8);
 
@@ -263,16 +314,16 @@ public class App extends Application {
 
       Label scratchingPost = new Label("Scratching Post");
       GridPane.setConstraints(scratchingPost, 6, 6);
-      Label scratchingPostPrice = new Label("" + toyPrices.get("Scratching Post"));
+      scratchingPostPrice = new Label("" + toyPrices.get("Scratching Post"));
       scratchingPostPrice.setId("pricelabel");
       GridPane.setConstraints(scratchingPostPrice, 7, 6);
       Button scratchingPostBuy = new Button("Buy");
       GridPane.setConstraints(scratchingPostBuy, 6, 7);
       Button scratchingPostSell = new Button("Sell");
       GridPane.setConstraints(scratchingPostSell, 7, 7);
-      Label wholesalerScratchingPost = new Label("" + toy.scratchingPostStockLevel);
+      wholesalerScratchingPost = new Label("" + toy.scratchingPostStockLevel);
       GridPane.setConstraints(wholesalerScratchingPost, 6, 8);
-      Label warehouseScratchingPost = new Label("" + warehouse.getScratchingPostStock());
+      warehouseScratchingPost = new Label("" + warehouse.getScratchingPostStock());
       warehouseScratchingPost.setId("warehouse");
       GridPane.setConstraints(warehouseScratchingPost, 7, 8);
       
@@ -281,38 +332,38 @@ public class App extends Application {
 
       Label fortress = new Label("Fortress");
       GridPane.setConstraints(fortress, 8, 6);
-      Label fortressPrice = new Label("" + toyPrices.get("Fortress"));
+      fortressPrice = new Label("" + toyPrices.get("Fortress"));
       fortressPrice.setId("pricelabel");
       GridPane.setConstraints(fortressPrice, 9, 6);
       Button fortressBuy = new Button("Buy");
       GridPane.setConstraints(fortressBuy, 8, 7);
       Button fortressSell = new Button("Sell");
       GridPane.setConstraints(fortressSell, 9, 7);
-      Label wholesalerFortress = new Label("" + toy.fortressStockLevel);
+      wholesalerFortress = new Label("" + toy.fortressStockLevel);
       GridPane.setConstraints(wholesalerFortress, 8, 8);
-      Label warehouseFortress = new Label("" + warehouse.getFortressStock());
+      warehouseFortress = new Label("" + warehouse.getFortressStock());
       warehouseFortress.setId("warehouse");
       GridPane.setConstraints(warehouseFortress, 9, 8);
 
       grid.getChildren().addAll(fortress, fortressPrice, fortressBuy, fortressSell,
       wholesalerFortress, warehouseFortress);
 
+      // Treat Vendor labels and buttons
       Label treatVendorTitle = new Label("Treat Vendor");
       treatVendorTitle.setId("vendortitle");
       GridPane.setConstraints(treatVendorTitle, 0, 10);
-
       Label ashyTreatsToo = new Label("Ashey Treats Too");
       GridPane.setConstraints(ashyTreatsToo, 0, 11);
-      Label ashyTreatsTooPrice = new Label("" + treatPrices.get("Ashy Treats Too"));
+      ashyTreatsTooPrice = new Label("" + treatPrices.get("Ashy Treats Too"));
       ashyTreatsTooPrice.setId("pricelabel");
       GridPane.setConstraints(ashyTreatsTooPrice, 1, 11);
       Button ashyTreatsTooBuy = new Button("Buy");
       GridPane.setConstraints(ashyTreatsTooBuy, 0, 12);
       Button ashyTreatsTooSell = new Button("Sell");
       GridPane.setConstraints(ashyTreatsTooSell, 1, 12);
-      Label wholesalerAshyTreatsToo = new Label("" + treat.ashyTreatsTooStockLevel);
+      wholesalerAshyTreatsToo = new Label("" + treat.ashyTreatsTooStockLevel);
       GridPane.setConstraints(wholesalerAshyTreatsToo, 0, 13);
-      Label warehouseAshyTreatsToo = new Label("" + warehouse.getAshyTreatsTooStock());
+      warehouseAshyTreatsToo = new Label("" + warehouse.getAshyTreatsTooStock());
       warehouseAshyTreatsToo.setId("warehouse");
       GridPane.setConstraints(warehouseAshyTreatsToo, 1, 13);
 
@@ -321,16 +372,16 @@ public class App extends Application {
 
       Label randomMoth = new Label("Random Moth");
       GridPane.setConstraints(randomMoth, 2, 11);
-      Label randomMothPrice = new Label("" + treatPrices.get("Random Moth"));
+      randomMothPrice = new Label("" + treatPrices.get("Random Moth"));
       randomMothPrice.setId("pricelabel");
       GridPane.setConstraints(randomMothPrice, 3, 11);
       Button randomMothBuy = new Button("Buy");
       GridPane.setConstraints(randomMothBuy, 2, 12);
       Button randomMothSell = new Button("Sell");
       GridPane.setConstraints(randomMothSell, 3, 12);
-      Label wholesalerRandomMoth = new Label("" + treat.randomMothStockLevel);
+      wholesalerRandomMoth = new Label("" + treat.randomMothStockLevel);
       GridPane.setConstraints(wholesalerRandomMoth, 2, 13);
-      Label warehouseRandomMoth = new Label("" + warehouse.getRandomMothStock());
+      warehouseRandomMoth = new Label("" + warehouse.getRandomMothStock());
       warehouseRandomMoth.setId("warehouse");
       GridPane.setConstraints(warehouseRandomMoth, 3, 13);
 
@@ -339,16 +390,16 @@ public class App extends Application {
 
       Label dreamsies = new Label("Dreamsies");
       GridPane.setConstraints(dreamsies, 4, 11);
-      Label dreamsiesPrice = new Label("" + treatPrices.get("Dreamsies"));
+      dreamsiesPrice = new Label("" + treatPrices.get("Dreamsies"));
       dreamsiesPrice.setId("pricelabel");
       GridPane.setConstraints(dreamsiesPrice, 5, 11);
       Button dreamsiesBuy = new Button("Buy");
       GridPane.setConstraints(dreamsiesBuy, 4, 12);
       Button dreamsiesSell = new Button("Sell");
       GridPane.setConstraints(dreamsiesSell, 5, 12);
-      Label wholesalerDreamsies = new Label("" + treat.dreamsiesStockLevel);
+      wholesalerDreamsies = new Label("" + treat.dreamsiesStockLevel);
       GridPane.setConstraints(wholesalerDreamsies, 4, 13);
-      Label warehouseDreamsies = new Label("" + warehouse.getDreamsiesStock());
+      warehouseDreamsies = new Label("" + warehouse.getDreamsiesStock());
       warehouseDreamsies.setId("warehouse");
       GridPane.setConstraints(warehouseDreamsies, 5, 13);
 
@@ -357,16 +408,16 @@ public class App extends Application {
 
       Label catNip = new Label("CatNip");
       GridPane.setConstraints(catNip, 6, 11);
-      Label catNipPrice = new Label("" + treatPrices.get("CatNip"));
+      catNipPrice = new Label("" + treatPrices.get("CatNip"));
       catNipPrice.setId("pricelabel");
       GridPane.setConstraints(catNipPrice, 7, 11);
       Button catNipBuy = new Button("Buy");
       GridPane.setConstraints(catNipBuy, 6, 12);
       Button catNipSell = new Button("Sell");
       GridPane.setConstraints(catNipSell, 7, 12);
-      Label wholesalerCatNip = new Label("" + treat.catNipStockLevel);
+      wholesalerCatNip = new Label("" + treat.catNipStockLevel);
       GridPane.setConstraints(wholesalerCatNip, 6, 13);
-      Label warehouseCatNip = new Label("" + warehouse.getCatNipStock());
+      warehouseCatNip = new Label("" + warehouse.getCatNipStock());
       warehouseCatNip.setId("warehouse");
       GridPane.setConstraints(warehouseCatNip, 7, 13);
 
@@ -375,16 +426,16 @@ public class App extends Application {
 
       Label megaMunchies = new Label("Mega Munchies");
       GridPane.setConstraints(megaMunchies, 8, 11);
-      Label megaMunchiesPrice = new Label("" + treatPrices.get("Mega Munchies"));
+      megaMunchiesPrice = new Label("" + treatPrices.get("Mega Munchies"));
       megaMunchiesPrice.setId("pricelabel");
       GridPane.setConstraints(megaMunchiesPrice, 9, 11);
       Button megaMunchiesBuy = new Button("Buy");
       GridPane.setConstraints(megaMunchiesBuy, 8, 12);
       Button megaMunchiesSell = new Button("Sell");
       GridPane.setConstraints(megaMunchiesSell, 9, 12);
-      Label wholesalerMegaMunchies = new Label("" + treat.megaMunchiesStockLevel);
+      wholesalerMegaMunchies = new Label("" + treat.megaMunchiesStockLevel);
       GridPane.setConstraints(wholesalerMegaMunchies, 8, 13);
-      Label warehouseMegaMunchies = new Label("" + warehouse.getMegaMunchiesStock());
+      warehouseMegaMunchies = new Label("" + warehouse.getMegaMunchiesStock());
       warehouseMegaMunchies.setId("warehouse");
       GridPane.setConstraints(warehouseMegaMunchies, 9, 13);
 
@@ -414,7 +465,7 @@ public class App extends Application {
 
       scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Gafata");
       scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Barriecito");
-      scene.getStylesheets().add("/Catmodities/style.css");
+      scene.getStylesheets().add("/Catmodities/Resources/style.css");
       
       window.setScene(scene); 
       
@@ -574,7 +625,7 @@ public class App extends Application {
 
       ashyBuy.setOnAction(e -> {
          int[] holding = new int[3];
-         holding = BuyBox.buy(toyPrices.get("Ashy Treats"), toy.ashyTreatsStockLevel, warehouse.getAshTreatsStock(), bank.getBalance());
+         holding = BuyBox.buy(toyPrices.get("Ashy Treats"), toy.ashyTreatsStockLevel, warehouse.getAshyTreatsStock(), bank.getBalance());
 
          // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
@@ -589,7 +640,7 @@ public class App extends Application {
 
       ashySell.setOnAction(e -> {
          int[] holding = new int[3];
-         holding = SellBox.sell(toyPrices.get("Ashy Treats"), toy.ashyTreatsStockLevel, warehouse.getAshTreatsStock(), bank.getBalance());
+         holding = SellBox.sell(toyPrices.get("Ashy Treats"), toy.ashyTreatsStockLevel, warehouse.getAshyTreatsStock(), bank.getBalance());
 
          // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
@@ -619,7 +670,7 @@ public class App extends Application {
 
       yarnSell.setOnAction(e -> {
          int[] holding = new int[3];
-         holding = SellBox.sell(toyPrices.get("Yarn Ball"), toy.yarnBallStockLevel, warehouse.getAshTreatsStock(), bank.getBalance());
+         holding = SellBox.sell(toyPrices.get("Yarn Ball"), toy.yarnBallStockLevel, warehouse.getYarnBallStock(), bank.getBalance());
 
          // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
@@ -872,10 +923,19 @@ public class App extends Application {
          }          
       });
 
+      story.setOnAction(e -> {
+         storyEvent.runPage(false, bank, fish, toy, treat, warehouse);
+      });
 
       // End day commands
       endDay.setOnAction(e -> {
-         // Set vendor prices
+         // Reset crash/rise and set vendor prices
+         fish.localCrash(false, 0.0);
+         fish.localPriceRise(false, 0.0);
+         toy.localCrash(false, 0.0);
+         toy.localPriceRise(false, 0.0);
+         treat.localCrash(false, 0.0);
+         treat.localPriceRise(false, 0.0);
          fish.setPrices();
          toy.setPrices();
          treat.setPrices();
@@ -905,38 +965,92 @@ public class App extends Application {
                break;
             case "Friday":
                day.setText("Monday");
+               fish.restock();
+               toy.restock();
+               treat.restock();
+               Random random = new Random();
+               int randomStory = random.nextInt(2);
+               System.out.println(randomStory);
+               if (randomStory == 1){
+                  storyEvent.runPage(false, bank, fish, toy, treat, warehouse);
+               }
                break;
-            default:
-               day.setText("Monday");
          }
 
-         // Reset prices
-         fishHeadsPrice.setText("" + fishPrices.get("FishHeads"));
-         fishyTreatsPrice.setText("" + fishPrices.get("Fishy Treats"));
-         codPrice.setText("" + fishPrices.get("Cod"));
-         salmonPrice.setText("" + fishPrices.get("Salmon Mousse"));
-         rainbowPrice.setText("" + fishPrices.get("Rainbow Trout"));
-
-         ashyTreatsPrice.setText("" + toyPrices.get("Ashy Treats"));
-         yarnBallPrice.setText("" + toyPrices.get("Yarn Ball"));
-         toyMousePrice.setText("" + toyPrices.get("Toy Mouse"));
-         scratchingPostPrice.setText("" + toyPrices.get("Scratching Post"));
-         fortressPrice.setText("" + toyPrices.get("Fortress"));
-
-         ashyTreatsTooPrice.setText("" + treatPrices.get("Ashy Treats Too"));
-         randomMothPrice.setText("" + treatPrices.get("Random Moth"));
-         dreamsiesPrice.setText("" + treatPrices.get("Dreamsies"));
-         catNipPrice.setText("" + treatPrices.get("CatNip"));
-         megaMunchiesPrice.setText("" + treatPrices.get("Mega Munchies"));
-
-
+         getWholesalerStock(fish, toy, treat);
+         getWarehouseStock(warehouse);
+         getPrices(fishPrices, toyPrices, treatPrices);
+         showHighLow(fishPrices, toyPrices, treatPrices);
 
       });
    
-   
-   
-   
    }
 
+   void getWholesalerStock(Wholesaler fish, Wholesaler toy, Wholesaler treat){
+      wholesalerFishHeads.setText("" + fish.fishHeadsStockLevel);
+      wholesalerFishyTreats.setText("" + fish.fishyTreatsStockLevel);
+      wholesalerCod.setText("" + fish.codStockLevel);
+      wholesalerSalmon.setText("" + fish.salmonStockLevel);
+      wholesalerRainbow.setText("" + fish.rainbowStockLevel);
+      wholesalerAshyTreats.setText("" + toy.ashyTreatsStockLevel);
+      wholesalerYarnBall.setText("" + toy.yarnBallStockLevel);
+      wholesalerToyMouse.setText("" + toy.toyMouseStockLevel);
+      wholesalerScratchingPost.setText("" + toy.scratchingPostStockLevel);
+      wholesalerFortress.setText("" + toy.fortressStockLevel);
+      wholesalerAshyTreatsToo.setText("" + treat.ashyTreatsTooStockLevel);
+      wholesalerRandomMoth.setText("" + treat.randomMothStockLevel);
+      wholesalerDreamsies.setText("" + treat.dreamsiesStockLevel);
+      wholesalerCatNip.setText("" + treat.catNipStockLevel);
+      wholesalerMegaMunchies.setText("" + treat.megaMunchiesStockLevel);
+   }
+
+   void getWarehouseStock(Warehouse warehouse){
+      warehouseFishHeads.setText("" + warehouse.getFishHeadsStock());
+      warehouseFishyTreats.setText("" + warehouse.getFishyTreatsStock());
+      warehouseCod.setText("" + warehouse.getWareHouseCodStock());
+      warehouseSalmon.setText("" + warehouse.getSalmonStock());
+      warehouseRainbow.setText("" + warehouse.getRainbowStock());
+      warehouseAshyTreats.setText("" + warehouse.getAshyTreatsStock());
+      warehouseYarnBall.setText("" + warehouse.getYarnBallStock());
+      warehouseToyMouse.setText("" + warehouse.getYarnBallStock());
+      warehouseScratchingPost.setText("" + warehouse.getScratchingPostStock());
+      warehouseFortress.setText("" + warehouse.getFortressStock());
+      warehouseAshyTreatsToo.setText("" + warehouse.getAshyTreatsTooStock());
+      warehouseRandomMoth.setText("" + warehouse.getRandomMothStock());
+      warehouseDreamsies.setText("" + warehouse.getDreamsiesStock());
+      warehouseCatNip.setText("" + warehouse.getCatNipStock());
+      warehouseMegaMunchies.setText("" + warehouse.getMegaMunchiesStock()); 
+   }
+
+   void getPrices(LinkedHashMap fishPrices, LinkedHashMap toyPrices, LinkedHashMap treatPrices){
+      fishHeadsPrice.setText("" + fishPrices.get("FishHeads"));
+      fishyTreatsPrice.setText("" + fishPrices.get("Fishy Treats"));
+      codPrice.setText("" + fishPrices.get("Cod"));
+      salmonPrice.setText("" + fishPrices.get("Salmon Mousse"));
+      rainbowPrice.setText("" + fishPrices.get("Rainbow Trout"));
+
+      ashyTreatsPrice.setText("" + toyPrices.get("Ashy Treats"));
+      yarnBallPrice.setText("" + toyPrices.get("Yarn Ball"));
+      toyMousePrice.setText("" + toyPrices.get("Toy Mouse"));
+      scratchingPostPrice.setText("" + toyPrices.get("Scratching Post"));
+      fortressPrice.setText("" + toyPrices.get("Fortress"));
+
+      ashyTreatsTooPrice.setText("" + treatPrices.get("Ashy Treats Too"));
+      randomMothPrice.setText("" + treatPrices.get("Random Moth"));
+      dreamsiesPrice.setText("" + treatPrices.get("Dreamsies"));
+      catNipPrice.setText("" + treatPrices.get("CatNip"));
+      megaMunchiesPrice.setText("" + treatPrices.get("Mega Munchies"));  
+   }
+
+   void showHighLow(LinkedHashMap fishPrices, LinkedHashMap toyPrices, LinkedHashMap treatPrices){
+
+      if ((int)fishPrices.get("FishHeads") >= 3){
+          fishHeadsPrice.setStyle("-fx-text-fill: green");
+      } else if ((int)fishPrices.get("FishHeads") < 3){
+         fishHeadsPrice.setStyle("-fx-text-fill: red");
+      }
+      
+
+  }
 
 }

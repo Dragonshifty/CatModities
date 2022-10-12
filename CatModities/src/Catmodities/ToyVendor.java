@@ -95,7 +95,6 @@ class ToyVendor extends Wholesaler {
 	protected void localCrash(boolean toyCrash, double crashAmount) {
 		this.localCrashBool = toyCrash;
 		this.localCrash = crashAmount;
-//		System.out.println(toyPrices);
 		setPrices();		
 	}
 	
@@ -103,8 +102,16 @@ class ToyVendor extends Wholesaler {
 	protected void localPriceRise(boolean toyRise, double riseAmount) {
 		this.localPriceRiseBool = toyRise;
 		this.localPriceRise = riseAmount;
-//		System.out.println(toyPrices);
 		setPrices();
+	}
+
+	@Override
+	protected void restock(){
+		ashyTreatsStockLevel= 100;
+		yarnBallStockLevel = 100;
+		toyMouseStockLevel = 50;
+		scratchingPostStockLevel = 30;
+		fortressStockLevel = 10;
 	}
 }
 
