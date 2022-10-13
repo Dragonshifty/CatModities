@@ -113,5 +113,9 @@ class ToyVendor extends Wholesaler {
 		scratchingPostStockLevel = 30;
 		fortressStockLevel = 10;
 	}
+
+	@Override int[] getArray(){
+		return toyArray;
+	}
 }
 

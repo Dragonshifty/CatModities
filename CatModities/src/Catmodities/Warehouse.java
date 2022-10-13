@@ -1,6 +1,9 @@
 package Catmodities;
 
+
+
 class Warehouse {
+
     private int warehouseFishHeadsStock = 0;
 	private int warehouseFishyTreatsStock = 0;
 	private int warehouseCodStock = 0;

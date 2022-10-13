@@ -26,5 +26,6 @@ abstract class Wholesaler {
 	abstract LinkedHashMap<String, Integer> getPrices();
 	abstract void localCrash(boolean crash, double crashAmount);
 	abstract void localPriceRise(boolean rise, double riseAmount);
+	abstract int[] getArray();
 	abstract void restock();
 }

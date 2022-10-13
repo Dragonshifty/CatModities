@@ -1,20 +1,5 @@
 .root {
-  /* -fx-background-color: #3b0707; */
   -fx-font-size: 10pt;
-  /* -fx-background-color: linear-gradient(#6d597a, #e56b6f); */
-  /* -fx-background-color: linear-gradient(
-    180deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(9, 121, 104, 1) 50%,
-    rgba(19, 152, 139, 0.9925012241224614) 100%
-  ); */
-  /* -fx-background-color: radial-gradient(
-    focus-distance 0%,
-    center 50% 50%,
-    radius 55%,
-    rgba(2, 0, 36, 1),
-    rgba(19, 152, 139, 0.9925012241224614)
-  ); */
   -fx-background-color: radial-gradient(
     focus-distance 0%,
     center 50% 50%,
@@ -22,10 +7,6 @@
     rgba(19, 152, 139, 0.9925012241224614),
     rgba(2, 0, 36, 1)
   );
-  /* -fx-background-color: radial-gradient(
-    rgba(2, 0, 36, 1),
-    rgba(19, 152, 139, 0.9925012241224614)
-  ); */
 }
 
 .button {
@@ -33,6 +14,7 @@
   -fx-effect: dropshadow(three-pass-box, rgb(12, 1, 1), 10, 0, 0, 5);
   -fx-background-radius: 8;
   -fx-text-fill: white;
+  -fx-font-weight: bold;
 }
 
 #stocklabel {
@@ -50,7 +32,7 @@
 }
 
 .label {
-  -fx-text-fill: #c3d334;
+  -fx-text-fill: #d7e932;
   -fx-font-size: 16;
   -fx-font-weight: bold;
 }

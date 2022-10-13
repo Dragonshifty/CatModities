@@ -105,6 +105,7 @@ public class App extends Application {
       Warehouse warehouse = new Warehouse();
       StoryEvent storyEvent = new StoryEvent();
       
+      
       // Set window
       window = primaryStage;
       window.setTitle("CatModities");
@@ -929,13 +930,13 @@ public class App extends Application {
 
       // End day commands
       endDay.setOnAction(e -> {
+         // Send today's prices for comparison
+         HighLow highLow = new HighLow();
+         highLow.recordOld(fish.getArray(), toy.getArray(), treat.getArray());    
+
          // Reset crash/rise and set vendor prices
-         fish.localCrash(false, 0.0);
-         fish.localPriceRise(false, 0.0);
-         toy.localCrash(false, 0.0);
-         toy.localPriceRise(false, 0.0);
-         treat.localCrash(false, 0.0);
-         treat.localPriceRise(false, 0.0);
+         CrashRise crashRise = new CrashRise();
+         crashRise.resetCrashRise(fish, toy, treat);
          fish.setPrices();
          toy.setPrices();
          treat.setPrices();
@@ -977,16 +978,20 @@ public class App extends Application {
                break;
          }
 
+         // Reset GUI methods
          getWholesalerStock(fish, toy, treat);
          getWarehouseStock(warehouse);
          getPrices(fishPrices, toyPrices, treatPrices);
-         showHighLow(fishPrices, toyPrices, treatPrices);
-
+         
+         // Get compraing figures for yesterday and today
+         int[] compareDays = highLow.getHighLow(fish.getArray(), toy.getArray(), treat.getArray());
+         showHighLow(compareDays, fish, toy, treat);
+         
       });
-   
    }
 
    void getWholesalerStock(Wholesaler fish, Wholesaler toy, Wholesaler treat){
+      // Reset wholesaler GUI
       wholesalerFishHeads.setText("" + fish.fishHeadsStockLevel);
       wholesalerFishyTreats.setText("" + fish.fishyTreatsStockLevel);
       wholesalerCod.setText("" + fish.codStockLevel);
@@ -1005,6 +1010,7 @@ public class App extends Application {
    }
 
    void getWarehouseStock(Warehouse warehouse){
+      // Reset own stock GUI
       warehouseFishHeads.setText("" + warehouse.getFishHeadsStock());
       warehouseFishyTreats.setText("" + warehouse.getFishyTreatsStock());
       warehouseCod.setText("" + warehouse.getWareHouseCodStock());
@@ -1023,18 +1029,17 @@ public class App extends Application {
    }
 
    void getPrices(LinkedHashMap fishPrices, LinkedHashMap toyPrices, LinkedHashMap treatPrices){
+      // Reset prices GUI
       fishHeadsPrice.setText("" + fishPrices.get("FishHeads"));
       fishyTreatsPrice.setText("" + fishPrices.get("Fishy Treats"));
       codPrice.setText("" + fishPrices.get("Cod"));
       salmonPrice.setText("" + fishPrices.get("Salmon Mousse"));
       rainbowPrice.setText("" + fishPrices.get("Rainbow Trout"));
-
       ashyTreatsPrice.setText("" + toyPrices.get("Ashy Treats"));
       yarnBallPrice.setText("" + toyPrices.get("Yarn Ball"));
       toyMousePrice.setText("" + toyPrices.get("Toy Mouse"));
       scratchingPostPrice.setText("" + toyPrices.get("Scratching Post"));
       fortressPrice.setText("" + toyPrices.get("Fortress"));
-
       ashyTreatsTooPrice.setText("" + treatPrices.get("Ashy Treats Too"));
       randomMothPrice.setText("" + treatPrices.get("Random Moth"));
       dreamsiesPrice.setText("" + treatPrices.get("Dreamsies"));
@@ -1042,15 +1047,114 @@ public class App extends Application {
       megaMunchiesPrice.setText("" + treatPrices.get("Mega Munchies"));  
    }
 
-   void showHighLow(LinkedHashMap fishPrices, LinkedHashMap toyPrices, LinkedHashMap treatPrices){
-
-      if ((int)fishPrices.get("FishHeads") >= 3){
-          fishHeadsPrice.setStyle("-fx-text-fill: green");
-      } else if ((int)fishPrices.get("FishHeads") < 3){
+   void showHighLow(int [] compareDays, Wholesaler fish, Wholesaler toy, Wholesaler treat){
+      if (compareDays[0] == 0){
          fishHeadsPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[0] == 1){
+         fishHeadsPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[0] == 2) {
+         fishHeadsPrice.setStyle("-fx-text-fill: green");
       }
-      
+      if (compareDays[1] == 0){
+         fishyTreatsPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[1] == 1){
+         fishyTreatsPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[1] == 2) {
+         fishyTreatsPrice.setStyle("-fx-text-fill: green");
+      }
+      if (compareDays[2] == 0){
+         codPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[2] == 1){
+         codPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[2] == 2) {
+         codPrice.setStyle("-fx-text-fill: green");
+      }
+      if (compareDays[3] == 0){
+         salmonPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[3] == 1){
+         salmonPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[3] == 2) {
+         salmonPrice.setStyle("-fx-text-fill: green");
+      }
+      if (compareDays[4] == 0){
+         rainbowPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[4] == 1){
+         rainbowPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[4] == 2) {
+         rainbowPrice.setStyle("-fx-text-fill: green");
+      }
+      if (compareDays[5] == 0){
+         ashyTreatsPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[5] == 1){
+         ashyTreatsPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[5] == 2) {
+         ashyTreatsPrice.setStyle("-fx-text-fill: green");
+      }
+      if (compareDays[6] == 0){
+         yarnBallPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[6] == 1){
+         yarnBallPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[6] == 2) {
+         yarnBallPrice.setStyle("-fx-text-fill: green");
+      }
+      if (compareDays[7] == 0){
+         toyMousePrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[7] == 1){
+         toyMousePrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[7] == 2) {
+         toyMousePrice.setStyle("-fx-text-fill: green");
+      }
+      if (compareDays[8] == 0){
+         scratchingPostPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[8] == 1){
+         scratchingPostPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[8] == 2) {
+         scratchingPostPrice.setStyle("-fx-text-fill: green");
+      }
+      if (compareDays[9] == 0){
+         fortressPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[9] == 1){
+         fortressPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[9] == 2) {
+         fortressPrice.setStyle("-fx-text-fill: green");
+      }
+      if (compareDays[10] == 0){
+         ashyTreatsTooPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[10] == 1){
+         ashyTreatsTooPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[10] == 2) {
+         ashyTreatsTooPrice.setStyle("-fx-text-fill: green");
+      }
+      if (compareDays[11] == 0){
+         randomMothPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[11] == 1){
+         randomMothPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[11] == 2) {
+         randomMothPrice.setStyle("-fx-text-fill: green");
+      }
+      if (compareDays[12] == 0){
+         dreamsiesPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[12] == 1){
+         dreamsiesPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[12] == 2) {
+         dreamsiesPrice.setStyle("-fx-text-fill: green");
+      }
+      if (compareDays[13] == 0){
+         catNipPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[13] == 1){
+         catNipPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[13] == 2) {
+         catNipPrice.setStyle("-fx-text-fill: green");
+      }
+      if (compareDays[14] == 0){
+         megaMunchiesPrice.setStyle("-fx-text-fill: red");
+      } else if (compareDays[14] == 1){
+         megaMunchiesPrice.setStyle("-fx-text-fill: white");
+      } else if (compareDays[14] == 2) {
+         megaMunchiesPrice.setStyle("-fx-text-fill: green");
+      }
+   }
+     
 
-  }
-
+   
 }

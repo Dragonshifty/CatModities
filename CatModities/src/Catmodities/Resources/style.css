@@ -29,6 +29,7 @@
 
 #pricelabel {
   -fx-text-fill: white;
+  -fx-font-size: 18;
 }
 
 .label {

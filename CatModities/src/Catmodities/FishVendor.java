@@ -23,9 +23,9 @@ class FishVendor extends Wholesaler {
 	private int salmonMin = 20;
 	private int salmonMax = 30;
 	
-	private int troutMin = 30;
-	private int troutMax = 40;
-	
+	private int rainbowMin = 30;
+	private int rainbowMax = 40;
+
 	private boolean localCrashBool;
 	private boolean localPriceRiseBool;
 	
@@ -54,7 +54,7 @@ class FishVendor extends Wholesaler {
 		fishyTreats = ThreadLocalRandom.current().nextInt(treatsMin, treatsMax + 1);
 		cod = ThreadLocalRandom.current().nextInt(codMin, codMax + 1);
 		salmonMousse = ThreadLocalRandom.current().nextInt(salmonMin, salmonMax + 1);
-		rainbowTrout = ThreadLocalRandom.current().nextInt(troutMin, troutMax + 1);
+		rainbowTrout = ThreadLocalRandom.current().nextInt(rainbowMin, rainbowMax + 1);
 		
 		// Set to array
 		fishArray[0] = fishHeads;
@@ -109,6 +109,10 @@ class FishVendor extends Wholesaler {
 		codStockLevel = 80;
 		salmonStockLevel = 60;
 		rainbowStockLevel = 50;
+	}
+
+	@Override int[] getArray(){
+		return fishArray;
 	}
 
 }

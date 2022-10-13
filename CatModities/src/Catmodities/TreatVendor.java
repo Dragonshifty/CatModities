@@ -11,8 +11,8 @@ class TreatVendor extends Wholesaler {
 	private int catNip;
 	private int megaMunchies;
 		
-	private int ashyMin = 2;
-	private int ashyMax = 5;
+	private int ashyTooMin = 2;
+	private int ashyTooMax = 5;
 	
 	private int mothMin = 2;
 	private int mothMax = 5;
@@ -50,7 +50,7 @@ class TreatVendor extends Wholesaler {
 	@Override
 	protected void setPrices() {		
 		// Apply random within range prices
-		ashyTreatsToo = ThreadLocalRandom.current().nextInt(ashyMin, ashyMax + 1);
+		ashyTreatsToo = ThreadLocalRandom.current().nextInt(ashyTooMin, ashyTooMax + 1);
 		randomMoth = ThreadLocalRandom.current().nextInt(mothMin, mothMax + 1);
 		dreamsies = ThreadLocalRandom.current().nextInt(dreamMin, dreamMax + 1);
 		catNip = ThreadLocalRandom.current().nextInt(nipMin, nipMax + 1);
@@ -112,6 +112,10 @@ class TreatVendor extends Wholesaler {
 		dreamsiesStockLevel = 50;
 		catNipStockLevel = 50;
 		megaMunchiesStockLevel = 30;
+	}
+
+	@Override int[] getArray(){
+		return treatArray;
 	}
 }
 
