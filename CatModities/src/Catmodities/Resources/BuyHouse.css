@@ -4,15 +4,15 @@
     focus-distance 0%,
     center 50% 50%,
     radius 55%,
-    rgba(188, 28, 28, 0.993),
-    rgb(45, 2, 2)
+    rgba(226, 45, 154, 0.993),
+    rgb(70, 3, 46)
   );
 }
 
 .label {
   -fx-text-fill: white;
   -fx-font-family: Delius;
-  -fx-font-size: 20;
+  -fx-font-size: 22;
   -fx-text-fill: white;
 }
 

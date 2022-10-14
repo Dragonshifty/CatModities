@@ -14,6 +14,8 @@ public class BuyBox {
     int stockResult;
     int balanceResult;
 
+    int max;
+
     int wholesalerStockHolding;
     int warehouseStockHolding;
 
@@ -43,6 +45,7 @@ public class BuyBox {
                 sliderMax = balanceMax;
             }
         slider.setMax(sliderMax);
+        buyBox.max = sliderMax;
 
         amount.setText(Math.round(slider.getValue()) + "");
 
@@ -55,6 +58,10 @@ public class BuyBox {
               amount.setText(Math.round(newValue.intValue()) + "");
             }
           });
+
+        Button all = new Button("All");
+
+        all.setOnAction(e -> amount.setText("" + buyBox.max));
 
         confirm.setOnAction(e -> {
         try {
@@ -91,10 +98,11 @@ public class BuyBox {
 
         HBox layout = new HBox(10);
         layout.setPadding(new Insets(10, 10, 10, 10));
-        layout.getChildren().addAll(label, amount, confirm, slider);
+        layout.getChildren().addAll(label, amount, confirm, slider, all);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add("/Catmodities/Resources/Buy.css");
         window.setScene(scene);
         window.showAndWait();
 

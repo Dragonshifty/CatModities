@@ -17,6 +17,10 @@
   -fx-font-weight: bold;
 }
 
+/* #panel {
+  -fx-background-color: linear-gradient(#782626, #340c7a);
+} */
+
 #stocklabel {
   -fx-text-fill: white;
 }
@@ -47,7 +51,6 @@
   -fx-font-family: Barriecito;
   -fx-font-size: 22;
   -fx-text-fill: rgb(255, 255, 255);
-  /* -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 2, 0.5, 0, 0); */
 }
 
 #bankbalance {

@@ -16,7 +16,7 @@ private final String begin = "Welcome, my feline friend! You arrive in Felixton 
     
 private final String pirates = "A ship full of cat pirates has recently docked, sharing tales of wild adventure on the high seas. They also bring crates stacked full of fish. Now would be an excellent time to buy some cheap stock.";
 
-private final String rats = "Rats have recently infested one of your warehouses and have decimated yourstock! You lose 10% of your stocks.";
+private final String rats = "Rats have recently infested one of your warehouses and have decimated yourstock! You lose 10% of your fish stocks.";
 
 private final String boots = "You meet a mysterious cat adorned in fancy boots in a local tavern who gives you some wonderful investment advice, a great evening out, and a sore head in the morning.";
 
@@ -80,6 +80,7 @@ public void runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, W
 
     // Get warehouse items into local variables
     int fishHeads = warehouse.getFishHeadsStock();
+    System.out.println(fishHeads);
     int fishyTreats = warehouse.getFishyTreatsStock();
     int cod = warehouse.getWareHouseCodStock();
     int salmon = warehouse.getSalmonStock();
@@ -110,27 +111,15 @@ public void runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, W
         String event = eventList.get(randomEvent);
         int tempBalance = bank.getBalance();
         contents.setText(event);
-
         switch(event){
             case pirates:
                 fish.localCrash(true, 0.5);
                 break;
-            case rats:
+            case rats:          
                 warehouse.setWareHouseFishHeads(fishHeads -= fishHeads * 0.1);
                 warehouse.setWarehouseFishyTreats(fishyTreats -= fishyTreats * 0.1);
                 warehouse.setWarehouseCod(cod -= cod * 0.1);
                 warehouse.setWarehouseSalmon(salmon -= salmon * 0.1);
-                warehouse.setWareHouseFishHeads(rainbow -= rainbow * 0.1);
-                warehouse.setWarehouseAshTreats(ashyTreats -= ashyTreats * 0.1);
-                warehouse.setWarehouseYarnBall(yarnBall -= yarnBall * 0.1);
-                warehouse.setWarehouseToyMouse(toyMouse -= toyMouse * 0.1);
-                warehouse.setWarehouseScracthingPost(scratchingPost -= scratchingPost * 0.1);
-                warehouse.setWarehouseFortress(fortress -= fortress * 0.1);
-                warehouse.setWarehouseAshyTreatsToo(ashyTreatsToo -= ashyTreatsToo * 0.1);
-                warehouse.setWarehouseRandomMoth(randomMoth -= randomEvent * 0.1);
-                warehouse.setWarehouseDreamsies(dreamsies -= dreamsies * 0.1);
-                warehouse.setWarehouseCatNip(catNip -= catNip * 0.1);
-                warehouse.setWarehouseMegaMunchies(megaMunchies -= megaMunchies * 0.1);
                 break;
             case boots:
                 bank.setBalance(tempBalance += tempBalance * 0.2);

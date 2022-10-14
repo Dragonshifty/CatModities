@@ -96,11 +96,12 @@ public class App extends Application {
    Button catNipSell;
    Button megaMunchiesBuy;
    Button megaMunchiesSell;
+   Button buyHouse;
 
    boolean apartmentChecked = false;
    boolean seaviewCottageChecked = false;
    boolean penthouseSuiteChecked = false;
-   // boolean mansionChecked = false; 
+   boolean mansionChecked = false; 
 
    int dayCounter = 1;
 
@@ -185,28 +186,37 @@ public class App extends Application {
       GridPane.setHalignment(dayCount, HPos.CENTER);
       GridPane.setConstraints(dayCount, 0, 3);
 
-      Button buyHouse = new Button("Buy House");
+      buyHouse = new Button("Buy House");
+      buyHouse.setMinWidth(90);
       GridPane.setConstraints(buyHouse, 0, 8);
       GridPane.setHalignment(buyHouse, HPos.CENTER);
 
       Label message = new Label("");
       message.setId("message");
-      GridPane.setConstraints(message, 0, 14);
+      GridPane.setConstraints(message, 0, 12);
       GridPane.setHalignment(message, HPos.CENTER);
 
       Button instructions = new Button("Instructions");
+      instructions.setId("panel");
+      instructions.setMinWidth(90);
       GridPane.setConstraints(instructions, 0, 17);
       GridPane.setHalignment(instructions, HPos.CENTER);
 
       Button load = new Button("Load");
+      load.setId("panel");
+      load.setMinWidth(90);
       GridPane.setConstraints(load, 0, 19);
       GridPane.setHalignment(load, HPos.CENTER);
 
       Button save = new Button("Save");
+      save.setId("panel");
+      save.setMinWidth(90);
       GridPane.setConstraints(save, 0, 21);
       GridPane.setHalignment(save, HPos.CENTER);
 
       Button quit = new Button("Quit");
+      quit.setId("panel");
+      quit.setMinWidth(90);
       GridPane.setConstraints(quit, 0, 23);
       GridPane.setHalignment(quit, HPos.CENTER);
 
@@ -1038,6 +1048,9 @@ public class App extends Application {
             case "Monday":
                day.setText("Tuesday");
                messageHold = crashRise.runCrashRiseChance(fish, toy, treat);
+               if (dayCounter % 17 == 0){
+                  house.rentReminder();
+               }
                break;
             case "Tuesday":
                day.setText("Wednesday");
@@ -1334,7 +1347,7 @@ public class App extends Application {
             yarnBuy.setDisable(false);
             yarnSell.setDisable(false);
             toyMouseBuy.setDisable(false);
-            toyMousePrice.setDisable(false);
+            toyMouseSell.setDisable(false);
             scratchingPostBuy.setDisable(false);
             scratchingPostSell.setDisable(false);
             apartmentChecked = true;
@@ -1367,6 +1380,10 @@ public class App extends Application {
          }
       }
 
+      if (!mansionChecked){
+         if (house.mansionOpen){
+            buyHouse.setDisable(true);
+         }
+      }
    }
-   
 }

@@ -154,7 +154,7 @@ class House {
         }
 
         Label rentDueLabel = new Label("Rent is due this Friday!");
-        Label rentMessage = new Label("Make sure you have the funds - " + rentDue);
+        Label rentMessage = new Label("Make sure you have the funds:" + rentDue);
 
         Button ok = new Button("OK");
         layout.getChildren().addAll(rentDueLabel,rentMessage,ok);
@@ -206,17 +206,16 @@ class House {
         GridPane.setConstraints(balanceLabel, 0, 3);
         GridPane.setHalignment(balanceLabel, HPos.CENTER);
         GridPane.setColumnSpan(balanceLabel, 2);
+        Label tomorrow = new Label("You'll move in tomorrow.");
+        GridPane.setConstraints(tomorrow, 0, 4);
+        tomorrow.setStyle("-fx-font-size: 16");
+        GridPane.setHalignment(tomorrow, HPos.CENTER);
+        GridPane.setColumnSpan(tomorrow, 2);
 
         Button ok = new Button("OK");
-        // GridPane.setConstraints(ok, 0, 4);
-        // GridPane.setHalignment(balanceLabel, HPos.RIGHT);
-
         Button cancel = new Button("Cancel");
-        // GridPane.setConstraints(cancel, 1, 4);
-        // GridPane.setHalignment(balanceLabel, HPos.LEFT);
 
-        layout.getChildren().addAll(messageLabel, upgradeCostLabel, newRentLabel, balanceLabel);
-
+        layout.getChildren().addAll(messageLabel, upgradeCostLabel, newRentLabel, balanceLabel, tomorrow);
         buttons.getChildren().addAll(ok, cancel);
 
         tempBalance = bank.getBalance();
@@ -284,7 +283,7 @@ class House {
 
         Scene scene = new Scene(pane);
         scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Barriecito&family=Mansalva&family=Delius");
-        scene.getStylesheets().add("/Catmodities/Resources/HouseStyle.css");
+        scene.getStylesheets().add("/Catmodities/Resources/BuyHouse.css");
         window.setScene(scene);
         window.showAndWait();
     }

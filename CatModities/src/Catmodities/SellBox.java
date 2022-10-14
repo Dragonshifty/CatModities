@@ -13,6 +13,7 @@ public class SellBox {
     int entered;
     int stockResult;
     int balanceResult;
+    int max;
 
     int wholesalerStockHolding;
     int warehouseStockHolding;
@@ -47,7 +48,10 @@ public class SellBox {
               amount.setText(Math.round(newValue.intValue()) + "");
             }
           });
-
+        
+        Button all = new Button("All");
+        
+        all.setOnAction(e -> amount.setText("" + warehouseStock));
 
         confirm.setOnAction(e -> {
             try {
@@ -78,10 +82,11 @@ public class SellBox {
 
         HBox layout = new HBox(10);
         layout.setPadding(new Insets(10, 10, 10, 10));
-        layout.getChildren().addAll(label, amount, confirm, slider);
+        layout.getChildren().addAll(label, amount, confirm, slider, all);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add("/Catmodities/Resources/Sell.css");
         window.setScene(scene);
         window.showAndWait();
 
