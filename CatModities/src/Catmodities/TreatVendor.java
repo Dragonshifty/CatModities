@@ -11,20 +11,20 @@ class TreatVendor extends Wholesaler {
 	private int catNip;
 	private int megaMunchies;
 		
-	private int ashyTooMin = 2;
-	private int ashyTooMax = 5;
+	private int ashyTooMin = 1;
+	private int ashyTooMax = 10;
 	
-	private int mothMin = 2;
-	private int mothMax = 5;
+	private int mothMin = 7;
+	private int mothMax = 15;
 	
-	private int dreamMin = 5;
-	private int dreamMax = 10;
+	private int dreamMin = 18;
+	private int dreamMax = 28;
 	
-	private int nipMin = 20;
-	private int nipMax = 30;
+	private int nipMin = 35;
+	private int nipMax = 45;
 	
-	private int megaMin = 30;
-	private int megaMax = 40;
+	private int megaMin = 50;
+	private int megaMax = 65;
 	
 	private boolean localCrashBool;
 	private boolean localPriceRiseBool;

@@ -11,20 +11,20 @@ class FishVendor extends Wholesaler {
 	private int salmonMousse;
 	private int rainbowTrout;
 		
-	private int headsMin = 2;
+	private int headsMin = 1;
 	private int headsMax = 5;
 	
-	private int treatsMin = 3;
-	private int treatsMax = 7;
+	private int treatsMin = 5;
+	private int treatsMax = 15;
 	
-	private int codMin = 5;
-	private int codMax = 10;
+	private int codMin = 40;
+	private int codMax = 55;
 	
-	private int salmonMin = 20;
-	private int salmonMax = 30;
+	private int salmonMin = 75;
+	private int salmonMax = 90;
 	
-	private int rainbowMin = 30;
-	private int rainbowMax = 40;
+	private int rainbowMin = 100;
+	private int rainbowMax = 120;
 
 	private boolean localCrashBool;
 	private boolean localPriceRiseBool;
@@ -90,7 +90,6 @@ class FishVendor extends Wholesaler {
 	protected void localCrash(boolean fishCrash, double crashAmount) {
 		this.localCrashBool = fishCrash;
 		this.localCrash = crashAmount;
-//		System.out.println(fishPrices);
 		setPrices();		
 	}
 	
@@ -98,7 +97,6 @@ class FishVendor extends Wholesaler {
 	protected void localPriceRise(boolean fishRise, double riseAmount) {
 		this.localPriceRiseBool = fishRise;
 		this.localPriceRise = riseAmount;
-//		System.out.println(fishPrices);
 		setPrices();
 	}
 

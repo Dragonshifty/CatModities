@@ -11,20 +11,20 @@ class ToyVendor extends Wholesaler {
 	private int scratchingPost;
 	private int fortress;
 		
-	private int ashyMin = 2;
-	private int ashyMax = 5;
+	private int ashyMin = 5;
+	private int ashyMax = 9;
 	
-	private int yarnMin = 2;
-	private int yarnMax = 5;
+	private int yarnMin = 5;
+	private int yarnMax = 15;
 	
-	private int mouseMin = 5;
-	private int mouseMax = 10;
+	private int mouseMin = 20;
+	private int mouseMax = 35;
 	
-	private int scratchMin = 20;
-	private int scratchMax = 30;
+	private int scratchMin = 60;
+	private int scratchMax = 80;
 	
-	private int fortressMin = 30;
-	private int fortressMax = 40;
+	private int fortressMin = 120;
+	private int fortressMax = 150;
 	
 	private boolean localCrashBool;
 	private boolean localPriceRiseBool;

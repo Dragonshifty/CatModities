@@ -34,9 +34,15 @@ private final String owl = "Whilst venturing abroad you happen upon an exception
 
 private final String mittens = "You are confronted in the street by three young cats who proclaim they have lost their mittens. You convince them that cats actually have no need for gloves anyway and sell them some Dreamsies instead.";
 
+private final String tigger = "Over the weekend you decide to go for an acre-long walk in a local wood to get away from the stresses of trading. Whilst there you meet a delightfully happy character bouncing along on his tail and singing 'happy with glee and copyright free!' As he leaves Tigger also slips you some cash from his recent book deal.";
+
+private final String hello = "On a weekend trip to Japan you have a frustrating conversation with a curious white cat who keeps on saying hello and addressing you as Kitty each time you ask her her name. Still, the trip was great and you had a woderful time (although the airfare wasn't cheap).";
+
+private final String lasagne = "On a lazy afternoon a lazy-looking cat lackadaisically leans into the lower floors, licks his lips and asks for some lasange. Lovely that would but lingers he does not.";
+
+private final String top = "As you're passing an alley you hear a 'pssst, is Dibble about?' You've no idea what he's on about but, after chatting a while, his street-smarts and savvy fincancial advise help you net some great deals. Your stocks have gone up.";
+
 List <String> eventList = new ArrayList<>();
-
-
 
 public void runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, Wholesaler treat, Warehouse warehouse){
     Stage window = new Stage();
@@ -67,6 +73,10 @@ public void runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, W
     eventList.add(smiling);
     eventList.add(owl);
     eventList.add(mittens);
+    eventList.add(tigger);
+    eventList.add(hello);
+    eventList.add(lasagne);
+    eventList.add(top);
 
     // Get warehouse items into local variables
     int fishHeads = warehouse.getFishHeadsStock();
@@ -98,6 +108,7 @@ public void runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, W
         Random random = new Random();
         int randomEvent = random.nextInt(eventList.size());
         String event = eventList.get(randomEvent);
+        int tempBalance = bank.getBalance();
         contents.setText(event);
 
         switch(event){
@@ -110,22 +121,44 @@ public void runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, W
                 warehouse.setWarehouseCod(cod -= cod * 0.1);
                 warehouse.setWarehouseSalmon(salmon -= salmon * 0.1);
                 warehouse.setWareHouseFishHeads(rainbow -= rainbow * 0.1);
+                warehouse.setWarehouseAshTreats(ashyTreats -= ashyTreats * 0.1);
+                warehouse.setWarehouseYarnBall(yarnBall -= yarnBall * 0.1);
+                warehouse.setWarehouseToyMouse(toyMouse -= toyMouse * 0.1);
+                warehouse.setWarehouseScracthingPost(scratchingPost -= scratchingPost * 0.1);
+                warehouse.setWarehouseFortress(fortress -= fortress * 0.1);
+                warehouse.setWarehouseAshyTreatsToo(ashyTreatsToo -= ashyTreatsToo * 0.1);
+                warehouse.setWarehouseRandomMoth(randomMoth -= randomEvent * 0.1);
+                warehouse.setWarehouseDreamsies(dreamsies -= dreamsies * 0.1);
+                warehouse.setWarehouseCatNip(catNip -= catNip * 0.1);
+                warehouse.setWarehouseMegaMunchies(megaMunchies -= megaMunchies * 0.1);
+                break;
+            case boots:
+                bank.setBalance(tempBalance += tempBalance * 0.2);
+                break;
+            case fluff:
+                toy.localPriceRise(true, 0.5);
+                break;
+            case darkAlley:
+                warehouse.setWarehouseScracthingPost(20);
+                break;
+            case theft:
+                bank.setBalance(tempBalance -= tempBalance * .15);
+                break;
+            case smiling:
+                treat.localPriceRise(true, 0.5);
+                break;
+            case owl:
+                bank.setBalance(tempBalance += 200);
+                break;
+            case mittens:
+                bank.setBalance(tempBalance += 50);
+                break;
+
         }
 
     }
 
   
-    
-
-
-
-
-
-
-    
-
-    
-
     page.getChildren().add(contents);
 
     Button ok = new Button("OK");
@@ -137,7 +170,7 @@ public void runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, W
     ok.setOnAction(e -> window.close());
 
     Scene scene = new Scene(pane);
-    scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Barriecito&family=Mansalva");
+    scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Barriecito&family=Mansalva&family=Delius");
     scene.getStylesheets().add("/Catmodities/Resources/StoryStyle.css");
     window.setScene(scene);
     window.showAndWait();

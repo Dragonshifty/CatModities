@@ -13,35 +13,43 @@ public class CrashRise {
            treat.localPriceRise(false, 0.0);
      }
 
-     void runCrashRiseChance(Wholesaler fish, Wholesaler toy, Wholesaler treat){
+     String runCrashRiseChance(Wholesaler fish, Wholesaler toy, Wholesaler treat){
         Random random = new Random();
         int chance = random.nextInt(4);
         int vendor = random.nextInt(3);
         int riseFall = random.nextInt(2);
+        String messageHold = "";
             if (chance == 3){
                 switch (vendor){
                     case 0:
                         if (riseFall == 0){
                             fish.localCrash(true, 0.2);
+                            messageHold = "Fish CRASH!";
                         } else {
                             fish.localPriceRise(true, 0.2);
+                            messageHold = "Fish RISE!";
                         }
                         break;
                     case 1:
                         if (riseFall == 0){
                             toy.localCrash(true, 0.2);
+                            messageHold = "Toy CRASH!";
                         } else {
                             toy.localPriceRise(true, 0.2);
+                            messageHold = "Toy RISE!";
                         }
                         break;
                     case 2:
                         if (riseFall == 0){
                             treat.localCrash(true, 0.2);
+                            messageHold = "Treat CRASH!";
                         } else {
                             treat.localPriceRise(true, 0.2);
+                            messageHold = "Treat RISE!";
                         }
                         break;
                 }
             }
+            return messageHold;
      }
 }

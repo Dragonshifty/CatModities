@@ -43,7 +43,6 @@ public class HighLow {
         int index = 0;
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 5; j++){
-                System.out.println(yesterday[i][j] + " : " + today[i][j]);
                 if (yesterday[i][j] < today[i][j]){
                     highLowMarkers[index++] = 0;
                 } else if (yesterday[i][j] > today[i][j]){
