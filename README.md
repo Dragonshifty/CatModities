@@ -3,4 +3,5 @@ Cat-themed trading game.
 
 Notes: Reworked encapsulation and coupling. Groundwork for main.
 
-![stock](https://user-images.githubusercontent.com/91226933/196274435-f5d7c994-e99e-4345-a595-ff152d20aeaf.jpg)
+
+![Screenshot (2)3](https://user-images.githubusercontent.com/91226933/196274607-7ca8b17a-7ff0-41f1-b75e-f033d6b22440.png)
