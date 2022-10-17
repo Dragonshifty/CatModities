@@ -5,6 +5,7 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
+import javafx.scene.media.AudioClip;
 
 class House {
     private final String friendsSofa = "Friend's Sofa";
@@ -77,6 +78,8 @@ class House {
         layout.setPadding(new Insets(10, 10, 10, 10));
         layout.setAlignment(Pos.CENTER);
 
+        playRent();        
+
         Label rentDueLabel = new Label("RENT DUE!");
         Label rentMessage = new Label();
 
@@ -87,6 +90,7 @@ class House {
                 if ((tempBalance -= friendsSofaRent) < 1){
                     rentMessage.setText("Not enough funds - " + friendsSofaRent);
                     bank.setBalance(1);
+                    playDowngradeHouse();
                 } else {
                     
                     bank.setBalance(tempBalance);
@@ -98,6 +102,7 @@ class House {
                     bank.setBalance(5);
                     rentMessage.setText("Not enough funds - " + apartmentRent + "! Back to Friend's Sofa!");
                     houseLevel = friendsSofa;
+                    playDowngradeHouse();
                 } else {
                     bank.setBalance(tempBalance);
                 }
@@ -108,6 +113,7 @@ class House {
                     bank.setBalance(50);
                     rentMessage.setText("Not enough funds - " + seaviewCottageRent + "! Back to the apartment!");
                     houseLevel = apartment;
+                    playDowngradeHouse();
                 } else {
                     bank.setBalance(tempBalance);
                 }
@@ -118,6 +124,7 @@ class House {
                     bank.setBalance(200);
                     rentMessage.setText("Not enough funds -" + penthouseSuiteRent + "! Back to Seaview Cottage!");
                     houseLevel = seaviewCottage;
+                    playDowngradeHouse();
                 } else {
                     bank.setBalance(tempBalance);
                 }
@@ -128,6 +135,7 @@ class House {
                     bank.setBalance(200);
                     rentMessage.setText("Not enough funds - " + mansionRent + "! Back to Penthouse Suite!");
                     houseLevel = penthouseSuite;
+                    playDowngradeHouse();
                 } else {
                     bank.setBalance(tempBalance);
                 }
@@ -155,6 +163,8 @@ class House {
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(10, 10, 10, 10));
         layout.setAlignment(Pos.CENTER);
+
+        playRentReminder();
 
         int rentDue = 0;
 
@@ -194,7 +204,7 @@ class House {
     public void upgradeHouse(Bank bank){
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Rent");
+        window.setTitle("Upgrade House");
         window.setMinWidth(250);
 
         GridPane layout = new GridPane();
@@ -270,8 +280,8 @@ class House {
 
         messageLabel.setText("Do you wish to upgrade to " + upgradeTo + "?");
         upgradeCostLabel.setText("This will cost you " + upgradePrice);
-        newRentLabel.setText("Your new rent per KMonth will be " + newRent);
-        balanceLabel.setText("You currently have " + bank.getBalance() + "CB");
+        newRentLabel.setText("Your new rent per month will be " + newRent);
+        balanceLabel.setText("You currently have " + bank.getBalance());
 
         if ((tempBalance -= upgradePrice) < 0){
             ok.setDisable(true);
@@ -297,6 +307,7 @@ class House {
                     mansionOpen = true;
                     break;
             }
+            playUpgradeHouse();
             window.close();
         });
 
@@ -307,5 +318,41 @@ class House {
         scene.getStylesheets().add("/Catmodities/Resources/BuyHouse.css");
         window.setScene(scene);
         window.showAndWait();
+    }
+
+    void playRentReminder(){
+        try {
+            AudioClip rentReminderSound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/rentReminder.wav").toExternalForm());
+            rentReminderSound.play();
+            } catch (Exception ex){
+                ex.printStackTrace();
+            }
+    }
+
+    void playRent(){
+        try{
+            AudioClip rentSound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/rent.wav").toExternalForm());
+            rentSound.play();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    void playUpgradeHouse(){
+        try {
+            AudioClip buyHouseSound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/Buy_House.wav").toExternalForm());
+            buyHouseSound.play();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    void playDowngradeHouse(){
+        try {
+            AudioClip loseHouseSound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/Lose_House.wav").toExternalForm());
+            loseHouseSound.play();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 }

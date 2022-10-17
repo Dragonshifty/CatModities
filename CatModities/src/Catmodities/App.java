@@ -10,8 +10,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import java.util.Random;
+import javafx.scene.media.AudioClip;
 
-import org.json.simple.JSONObject;
 
 import java.util.LinkedHashMap;
 // import java.io.FileWriter;
@@ -134,7 +134,7 @@ public class App extends Application {
       Warehouse warehouse = new Warehouse();
       StoryEvent storyEvent = new StoryEvent();
       House house = new House();
-      
+
       // Set window
       window = primaryStage;
       window.setTitle("CatModities");
@@ -230,8 +230,6 @@ public class App extends Application {
       scene.getStylesheets().add("/Catmodities/Resources/style.css");     
       window.setScene(scene); 
       window.show();
-
-      
 
       // Fish Vendor Labels and Buttons
       Label fishVendorTitle = new Label("Fish Vendor");
@@ -577,6 +575,7 @@ public class App extends Application {
             warehouseFishHeads.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -592,6 +591,7 @@ public class App extends Application {
             warehouseFishHeads.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
    
@@ -607,6 +607,7 @@ public class App extends Application {
             warehouseFishyTreats.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -622,6 +623,7 @@ public class App extends Application {
             warehouseFishyTreats.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -637,6 +639,7 @@ public class App extends Application {
             warehouseCod.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -652,6 +655,7 @@ public class App extends Application {
             warehouseCod.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -667,6 +671,7 @@ public class App extends Application {
             warehouseSalmon.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -682,6 +687,7 @@ public class App extends Application {
             warehouseSalmon.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -697,6 +703,7 @@ public class App extends Application {
             warehouseRainbow.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -712,6 +719,7 @@ public class App extends Application {
             warehouseRainbow.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -727,6 +735,7 @@ public class App extends Application {
             warehouseAshyTreats.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -742,6 +751,7 @@ public class App extends Application {
             warehouseAshyTreats.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -757,6 +767,7 @@ public class App extends Application {
             warehouseYarnBall.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -772,6 +783,7 @@ public class App extends Application {
             warehouseYarnBall.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -787,6 +799,7 @@ public class App extends Application {
             warehouseToyMouse.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -802,6 +815,7 @@ public class App extends Application {
             warehouseToyMouse.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -817,6 +831,7 @@ public class App extends Application {
             warehouseScratchingPost.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -832,6 +847,7 @@ public class App extends Application {
             warehouseScratchingPost.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -847,6 +863,7 @@ public class App extends Application {
             warehouseFortress.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -862,6 +879,7 @@ public class App extends Application {
             warehouseFortress.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -877,6 +895,7 @@ public class App extends Application {
             warehouseAshyTreatsToo.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -892,6 +911,7 @@ public class App extends Application {
             warehouseAshyTreatsToo.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -907,6 +927,7 @@ public class App extends Application {
             warehouseRandomMoth.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -922,6 +943,7 @@ public class App extends Application {
             warehouseRandomMoth.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -937,6 +959,7 @@ public class App extends Application {
             warehouseDreamsies.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -952,6 +975,7 @@ public class App extends Application {
             warehouseDreamsies.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -967,6 +991,7 @@ public class App extends Application {
             warehouseCatNip.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -982,6 +1007,7 @@ public class App extends Application {
             warehouseCatNip.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -997,6 +1023,7 @@ public class App extends Application {
             warehouseMegaMunchies.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -1012,6 +1039,7 @@ public class App extends Application {
             warehouseMegaMunchies.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
+            playBuySell();
          }          
       });
 
@@ -1025,6 +1053,7 @@ public class App extends Application {
          SaveLoad saveGame = new SaveLoad();
          saveGame.save(bank, house, warehouse, dayCounter, weekCounter);
          message.setText(saveGame.getMessageHold());
+         if (saveGame.getMessageHold() == "Saved") playSuccess();
       });
 
       load.setOnAction(e -> {
@@ -1037,12 +1066,14 @@ public class App extends Application {
             dayCounter = counters[0];
             weekCounter = counters[1];
             dayCount.setText("" + dayCounter);
+            playSuccess();
          }
          message.setText(loadGame.getMessageHold());
       });
 
       // End day commands
       endDay.setOnAction(e -> {
+         playEndDay();
          // Send today's prices for comparison
          HighLow highLow = new HighLow();
          highLow.recordOld(fish.getArray(), toy.getArray(), treat.getArray());    
@@ -1063,7 +1094,7 @@ public class App extends Application {
          dayCounter++;
          dayCount.setText("" + dayCounter);
 
-         // Set day
+         // Set day, check for crash/rise, check rent due (with reminder), possible story
          String messageHold = "";
          switch(day.getText()){
             case "Monday":
@@ -1112,11 +1143,15 @@ public class App extends Application {
          message.setText(messageHold);
          
          
-         // Get compraing figures for yesterday and today
+         // Get comparitive figures for yesterday and today
          int[] compareDays = highLow.getHighLow(fish.getArray(), toy.getArray(), treat.getArray());
          showHighLow(compareDays, fish, toy, treat, warehouse);
          
       });
+
+      //Start
+      playBegin();
+      storyEvent.runPage(true, bank, fish, toy, treat, warehouse);
    }
 
    void getWholesalerStock(Wholesaler fish, Wholesaler toy, Wholesaler treat){
@@ -1176,6 +1211,7 @@ public class App extends Application {
       megaMunchiesPrice.setText("" + treatPrices.get("Mega Munchies"));  
    }
 
+   // Set price label, red for higher than yeterday/white for same/green for lower
    void showHighLow(int [] compareDays, Wholesaler fish, Wholesaler toy, Wholesaler treat, Warehouse warehouse){
       if (compareDays[0] == 0){
          fishHeadsPrice.setStyle("-fx-text-fill: red");
@@ -1362,6 +1398,7 @@ public class App extends Application {
    }
      
    void checkHouseLevel(House house){
+      // Check to see if house level open and only change buttons if true
       if (!apartmentChecked){
          if (house.apartmentOpen){
             ashyBuy.setDisable(false);
@@ -1375,7 +1412,6 @@ public class App extends Application {
             apartmentChecked = true;
          }
       }
-
       if (!seaviewCottageChecked){
          if (house.seaviewCottageOpen){
             ashyTreatsTooBuy.setDisable(false);
@@ -1389,7 +1425,6 @@ public class App extends Application {
             seaviewCottageChecked = true;
          }
       }
-
       if (!penthouseSuiteChecked){
          if (house.penthouseSuiteOpen){
             rainbowBuy.setDisable(false);
@@ -1401,11 +1436,56 @@ public class App extends Application {
             penthouseSuiteChecked = true;
          }
       }
-
       if (!mansionChecked){
          if (house.mansionOpen){
             buyHouse.setDisable(true);
          }
       }
+   }
+
+   // Sound methods
+   void playEndDay(){
+      try{
+         AudioClip endDaySound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/End_Day.wav").toExternalForm());
+         endDaySound.play();    
+         } catch (Exception ex){
+            ex.printStackTrace();
+         }
+   }
+
+   void playSoundCrashRise(){
+      try {
+          AudioClip crashRise = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/crashRise.wav").toExternalForm());
+          crashRise.play();
+          } catch (Exception ex){
+              ex.printStackTrace();
+          }
+   }
+
+   void playBuySell(){
+      try {
+         AudioClip buySellSound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/buySell.wav").toExternalForm());
+         buySellSound.play();
+         } catch (Exception ex){
+             ex.printStackTrace();
+         }
+   }
+
+   void playSuccess(){
+      try {
+         AudioClip successSound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/success.wav").toExternalForm());
+         successSound.play();
+         } catch (Exception ex){
+             ex.printStackTrace();
+         }
+   }
+
+   void playBegin(){
+      try {
+         AudioClip beginSound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/begin.wav").toExternalForm());
+         beginSound.play();
+         } catch (Exception ex){
+             ex.printStackTrace();
+         }
    }
 }

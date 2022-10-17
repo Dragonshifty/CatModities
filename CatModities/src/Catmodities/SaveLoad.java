@@ -31,7 +31,7 @@ public class SaveLoad{
         window.setMinWidth(250);
 
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(12,12,12, 12));
+        grid.setPadding(new Insets(20,20,20, 20));
         grid.setAlignment(Pos.CENTER);
         grid.setMaxWidth(300);
 
@@ -83,7 +83,6 @@ public class SaveLoad{
             file.flush();
             messageHold = "Saved";
             window.close();
- 
         } catch (IOException ex) {
             messageLabel.setText("Error writing file");
             e.consume();
@@ -107,7 +106,7 @@ public class SaveLoad{
         window.setMinWidth(250);
 
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(12,12,12, 12));
+        grid.setPadding(new Insets(20,20,20, 20));
         grid.setAlignment(Pos.CENTER);
         grid.setMaxWidth(300);
 

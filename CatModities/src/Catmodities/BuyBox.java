@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.geometry.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.media.AudioClip;
 
 public class BuyBox {
 
@@ -97,6 +98,7 @@ public class BuyBox {
             e.consume();
             window.close();
         }
+        
         });
 
         HBox layout = new HBox(10);
@@ -108,7 +110,7 @@ public class BuyBox {
         scene.getStylesheets().add("/Catmodities/Resources/Buy.css");
         window.setScene(scene);
         window.showAndWait();
-
+        
         return buyBox.stockBalance;
     }
 }

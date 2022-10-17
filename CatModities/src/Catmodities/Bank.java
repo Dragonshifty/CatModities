@@ -1,7 +1,7 @@
 package Catmodities;
 
 class Bank {
-    private int bankBalance = 1000000;
+    private int bankBalance = 20;
 
     public int getBalance(){
         return bankBalance;

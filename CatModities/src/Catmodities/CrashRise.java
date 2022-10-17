@@ -1,6 +1,7 @@
 package Catmodities;
 
 import java.util.Random;
+import javafx.scene.media.AudioClip;
 
 public class CrashRise {
     
@@ -49,7 +50,17 @@ public class CrashRise {
                         }
                         break;
                 }
+                playSoundCrashRise();
             }
             return messageHold;
+     }
+
+     void playSoundCrashRise(){
+        try {
+            AudioClip crashRise = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/smallCrashRise.wav").toExternalForm());
+            crashRise.play();
+            } catch (Exception ex){
+                ex.printStackTrace();
+            }
      }
 }

@@ -9,10 +9,11 @@ import javafx.scene.text.*;
 import javafx.scene.paint.*;
 import java.util.*;
 import java.util.Random;
+import javafx.scene.media.AudioClip;
 
 class StoryEvent {
 
-private final String begin = "Welcome, my feline friend! You arrive in Felixton Town, fesh and ready to face the world, but with only 10 DollarBucks to your name. Can you find fame and fortune by trading your way to success. Beware, many pitfalls stand in your way. Plus there's always rent to worry about. Good luck!";
+private final String begin = "Welcome, my feline friend! You arrive in Felixton Town, fesh and ready to face the world, but with only 20 DollarBucks to your name. Can you find fame and fortune by trading your way to success. Beware, many pitfalls stand in your way. Plus there's always rent to worry about. Good luck!";
     
 private final String pirates = "A ship full of cat pirates has recently docked, sharing tales of wild adventure on the high seas. They also bring crates stacked full of fish. Now would be an excellent time to buy some cheap stock.";
 
@@ -105,6 +106,7 @@ public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy,
     Text contents = new Text();
     contents.setFill(Color.WHITE);
     contents.setId("contents");
+    page.getChildren().add(contents);
 
     String messageHold = "";
     
@@ -121,6 +123,7 @@ public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy,
             case pirates:
                 fish.localCrash(true, 0.5);
                 messageHold = "Fish CRASH!";
+                playSoundCrashRise();
                 break;
             case rats:          
                 warehouse.setWareHouseFishHeads(fishHeads -= fishHeads * 0.1);
@@ -128,65 +131,76 @@ public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy,
                 warehouse.setWarehouseCod(cod -= cod * 0.1);
                 warehouse.setWarehouseSalmon(salmon -= salmon * 0.1);
                 messageHold = "Stock loss!";
+                playSoundLoseMoney();
                 break;
             case boots:
                 bank.setBalance(tempBalance += tempBalance * 0.2);
                 messageHold = "Cash LOSS!";
+                playSoundLoseMoney();
                 break;
             case fluff:
                 toy.localPriceRise(true, 0.5);
                 messageHold = "Toy RISE!";
+                playSoundCrashRise();
                 break;
             case darkAlley:
                 warehouse.setWarehouseScracthingPost(scratchingPost += 20);
                 messageHold = "Stock GAIN!";
+                playSoundGainMoney();
                 break;
             case theft:
                 bank.setBalance(tempBalance -= tempBalance * .15);
                 messageHold = "Cash LOSS!";
+                playSoundLoseMoney();
                 break;
             case smiling:
                 treat.localPriceRise(true, 0.5);
                 messageHold = "Treat RISE!";
+                playSoundCrashRise();
                 break;
             case owl:
                 bank.setBalance(tempBalance += 200);
                 messageHold = "Cash GAIN!";
+                playSoundGainMoney();
                 break;
             case mittens:
                 bank.setBalance(tempBalance += 50);
                 messageHold = "Cash GAIN!";
+                playSoundGainMoney();
                 break;
             case tigger:
                 bank.setBalance(tempBalance += 300);
                 messageHold = "Cash GAIN!";
+                playSoundGainMoney();
                 break;
             case hello:
                 tempBalance -= 100;
                 tempBalance = (tempBalance < 1) ? 1 : tempBalance;
                 bank.setBalance(tempBalance);
                 messageHold = "Cash LOSS!";
+                playSoundLoseMoney();
                 break;
             case top:
                 warehouse.setWarehouseToyMouse(toyMouse += 15);
                 warehouse.setWarehouseDreamsies(dreamsies += 5);
                 messageHold = "Stock GAIN!";
+                playSoundGainMoney();
                 break;
             case pink:
                 bank.setBalance(tempBalance += 500);
                 messageHold = "Cash GAIN!";
+                playSoundGainMoney();
                 break;
             case hat:
                 tempBalance -= tempBalance * 0.3;
                 tempBalance = (tempBalance < 1) ? 1 : tempBalance;
                 bank.setBalance(tempBalance);
                 messageHold = "Cash LOSS!";
+                playSoundLoseMoney();
                 break;
         }
     }
-
   
-    page.getChildren().add(contents);
 
     Button ok = new Button("OK");
     GridPane.setConstraints(ok, 0, 0);
@@ -204,5 +218,32 @@ public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy,
 
     return messageHold;
 }
+
+    void playSoundCrashRise(){
+        try {
+            AudioClip crashRise = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/crashRise.wav").toExternalForm());
+            crashRise.play();
+            } catch (Exception ex){
+                ex.printStackTrace();
+            }
+    }
+
+    void playSoundLoseMoney(){
+        try {
+            AudioClip loseMoney = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/loseMoney.wav").toExternalForm());
+            loseMoney.play();
+            } catch (Exception ex){
+                ex.printStackTrace();
+            }
+    }
+
+    void playSoundGainMoney(){
+        try {
+            AudioClip gainMoney = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/gainMoney.wav").toExternalForm());
+            gainMoney.play();
+            } catch (Exception ex){
+                ex.printStackTrace();
+            }
+    }
 
 }
