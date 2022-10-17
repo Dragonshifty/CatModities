@@ -23,8 +23,8 @@ class FishVendor extends Wholesaler {
 	private int salmonMin = 75;
 	private int salmonMax = 90;
 	
-	private int rainbowMin = 100;
-	private int rainbowMax = 120;
+	private int rainbowMin = 180;
+	private int rainbowMax = 220;
 
 	private boolean localCrashBool;
 	private boolean localPriceRiseBool;
@@ -67,6 +67,7 @@ class FishVendor extends Wholesaler {
 		if (localCrashBool) {
 			for (int i = 0; i < fishArray.length; i++) {
 				fishArray[i] -= fishArray[i] * localCrash;
+				fishArray[i] = (fishArray[0] < 1) ? 1 : fishArray[i];
 			}					
 		} else if (localPriceRiseBool) {
 			for (int i = 0; i < fishArray.length; i++) {
@@ -102,11 +103,11 @@ class FishVendor extends Wholesaler {
 
 	@Override
 	protected void restock(){
-		fishHeadsStockLevel = 100;
-		fishyTreatsStockLevel = 100;
-		codStockLevel = 80;
-		salmonStockLevel = 60;
-		rainbowStockLevel = 50;
+		fishHeadsStockLevel = 50;
+		fishyTreatsStockLevel = 30;
+		codStockLevel = 25;
+		salmonStockLevel = 25;
+		rainbowStockLevel = 10;
 	}
 
 	@Override int[] getArray(){

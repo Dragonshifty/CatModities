@@ -5,14 +5,11 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-// import javafx.scene.control.Label;
 import javafx.geometry.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import java.util.Random;
-
-import javax.swing.event.SwingPropertyChangeSupport;
 
 import org.json.simple.JSONObject;
 
@@ -104,6 +101,7 @@ public class App extends Application {
    boolean mansionChecked = false; 
 
    int dayCounter = 1;
+   int weekCounter = 1;
 
    LinkedHashMap <String, Integer> fishPrices = new LinkedHashMap<>();
    LinkedHashMap <String, Integer> toyPrices = new LinkedHashMap<>();
@@ -202,17 +200,17 @@ public class App extends Application {
       GridPane.setConstraints(instructions, 0, 17);
       GridPane.setHalignment(instructions, HPos.CENTER);
 
-      Button load = new Button("Load");
-      load.setId("panel");
-      load.setMinWidth(90);
-      GridPane.setConstraints(load, 0, 19);
-      GridPane.setHalignment(load, HPos.CENTER);
-
       Button save = new Button("Save");
       save.setId("panel");
       save.setMinWidth(90);
-      GridPane.setConstraints(save, 0, 21);
+      GridPane.setConstraints(save, 0, 19);
       GridPane.setHalignment(save, HPos.CENTER);
+     
+      Button load = new Button("Load");
+      load.setId("panel");
+      load.setMinWidth(90);
+      GridPane.setConstraints(load, 0, 21);
+      GridPane.setHalignment(load, HPos.CENTER);
 
       Button quit = new Button("Quit");
       quit.setId("panel");
@@ -543,11 +541,13 @@ public class App extends Application {
       endDay.setId("endDay");
       GridPane.setConstraints(endDay, 0, 15);
 
+      // House Labels
       Label houseLabel = new Label("House Level:");
       GridPane.setConstraints(houseLabel, 2, 15);
       GridPane.setHalignment(houseLabel, HPos.RIGHT);
 
       Label houseLevel = new Label("" + house.getHouseLevel());
+      houseLevel.setId("showbalance");
       GridPane.setConstraints(houseLevel, 3, 15);
       GridPane.setColumnSpan(houseLevel, 2);
 
@@ -563,7 +563,6 @@ public class App extends Application {
       GridPane.setConstraints(showBalance, 8, 15);
 
       grid.getChildren().addAll(endDay, houseLabel, houseLevel, bankBalanceLabel, showBalance);
-
 
       // Buy and sell buttons
       headsBuyButton.setOnAction(e -> {
@@ -1018,6 +1017,28 @@ public class App extends Application {
 
       buyHouse.setOnAction(e -> {
          house.upgradeHouse(bank);
+         showBalance.setText("" + bank.getBalance());
+         houseLevel.setText("" + house.getHouseLevel());
+      });
+
+      save.setOnAction(e ->{
+         SaveLoad saveGame = new SaveLoad();
+         saveGame.save(bank, house, warehouse, dayCounter, weekCounter);
+         message.setText(saveGame.getMessageHold());
+      });
+
+      load.setOnAction(e -> {
+         SaveLoad loadGame = new SaveLoad();
+         int[] counters = loadGame.load(bank, house, warehouse);
+         houseLevel.setText("" + house.getHouseLevel());
+         getWarehouseStock(warehouse);
+         checkHouseLevel(house);
+         if (counters[2] == 1){
+            dayCounter = counters[0];
+            weekCounter = counters[1];
+            dayCount.setText("" + dayCounter);
+         }
+         message.setText(loadGame.getMessageHold());
       });
 
       // End day commands
@@ -1048,7 +1069,7 @@ public class App extends Application {
             case "Monday":
                day.setText("Tuesday");
                messageHold = crashRise.runCrashRiseChance(fish, toy, treat);
-               if (dayCounter % 17 == 0){
+               if (weekCounter % 4 == 0){
                   house.rentReminder();
                }
                break;
@@ -1062,6 +1083,7 @@ public class App extends Application {
                break;
             case "Thursday":
                day.setText("Friday");
+               weekCounter++;
                messageHold = crashRise.runCrashRiseChance(fish, toy, treat);
                if (dayCounter % 20 == 0){
                   house.payRent(bank);
@@ -1075,7 +1097,7 @@ public class App extends Application {
                Random random = new Random();
                int randomStory = random.nextInt(2);
                if (randomStory == 1){
-                  storyEvent.runPage(false, bank, fish, toy, treat, warehouse);
+                  messageHold = storyEvent.runPage(false, bank, fish, toy, treat, warehouse);
                }
                break;
          }
@@ -1125,7 +1147,7 @@ public class App extends Application {
       warehouseRainbow.setText("" + warehouse.getRainbowStock());
       warehouseAshyTreats.setText("" + warehouse.getAshyTreatsStock());
       warehouseYarnBall.setText("" + warehouse.getYarnBallStock());
-      warehouseToyMouse.setText("" + warehouse.getYarnBallStock());
+      warehouseToyMouse.setText("" + warehouse.getToyMouseStock());
       warehouseScratchingPost.setText("" + warehouse.getScratchingPostStock());
       warehouseFortress.setText("" + warehouse.getFortressStock());
       warehouseAshyTreatsToo.setText("" + warehouse.getAshyTreatsTooStock());

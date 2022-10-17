@@ -34,17 +34,21 @@ private final String owl = "Whilst venturing abroad you happen upon an exception
 
 private final String mittens = "You are confronted in the street by three young cats who proclaim they have lost their mittens. You convince them that cats actually have no need for gloves anyway and sell them some Dreamsies instead.";
 
-private final String tigger = "Over the weekend you decide to go for an acre-long walk in a local wood to get away from the stresses of trading. Whilst there you meet a delightfully happy character bouncing along on his tail and singing 'happy with glee and copyright free!' As he leaves Tigger also slips you some cash from his recent book deal.";
+private final String tigger = "Over the weekend you decide to go for a walk in a local wood to get away from the stresses of trading. Whilst there you meet a delightfully happy character bouncing along on his tail and singing 'happy and glee and copyright free!' As he leaves, Tigger slips you some cash from his recent book deal.";
 
 private final String hello = "On a weekend trip to Japan you have a frustrating conversation with a curious white cat who keeps on saying hello and addressing you as Kitty each time you ask her her name. Still, the trip was great and you had a woderful time (although the airfare wasn't cheap).";
 
-private final String lasagne = "On a lazy afternoon a lazy-looking cat lackadaisically leans into the lower floors, licks his lips and asks for some lasange. Lovely that would but lingers he does not.";
+private final String lasagne = "On a lazy afternoon a lazy-looking cat lackadaisically leans into the lower floors, licks his lips and asks for some lasagne.";
 
 private final String top = "As you're passing an alley you hear a 'pssst, is Dibble about?' You've no idea what he's on about but, after chatting a while, his street-smarts and savvy fincancial advise help you net some great deals. Your stocks have gone up.";
 
+private final String pink = "Over the weekend a smart, rose-coloured panther enters your office to invest in your business. He says I might want to be on the lookout for a particular inspector but he doesn't have a Clue-so you shouldn't really worry about it.";
+
+private final String hat = "Against your better judgement you arrange a deal for a cruious cat in a curious hat. Upon delivery he claims that the delivery wasn't what he asks for. Despite explaining you never mentioned ham, and eggs really shouldn't be that colour anyway, he refuses to pay and the stock goes bad.";
+
 List <String> eventList = new ArrayList<>();
 
-public void runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, Wholesaler treat, Warehouse warehouse){
+public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, Wholesaler treat, Warehouse warehouse){
     Stage window = new Stage();
 
     window.initModality(Modality.APPLICATION_MODAL);
@@ -55,9 +59,9 @@ public void runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, W
     GridPane grid = new GridPane();
     TextFlow page = new TextFlow();
 
-    page.setPadding(new Insets(10,10,10, 10));
+    page.setPadding(new Insets(12,12,12, 12));
     page.setTextAlignment(TextAlignment.CENTER);
-    page.setMaxWidth(400);
+    page.setMaxWidth(500);
 
     pane.setCenter(page);
     pane.setBottom(grid);
@@ -77,10 +81,11 @@ public void runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, W
     eventList.add(hello);
     eventList.add(lasagne);
     eventList.add(top);
+    eventList.add(pink);
+    eventList.add(hat);
 
     // Get warehouse items into local variables
     int fishHeads = warehouse.getFishHeadsStock();
-    System.out.println(fishHeads);
     int fishyTreats = warehouse.getFishyTreatsStock();
     int cod = warehouse.getWareHouseCodStock();
     int salmon = warehouse.getSalmonStock();
@@ -100,8 +105,9 @@ public void runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, W
     Text contents = new Text();
     contents.setFill(Color.WHITE);
     contents.setId("contents");
-    
 
+    String messageHold = "";
+    
     if (start){
         contents.setText(begin);
     } else {
@@ -114,37 +120,69 @@ public void runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, W
         switch(event){
             case pirates:
                 fish.localCrash(true, 0.5);
+                messageHold = "Fish CRASH!";
                 break;
             case rats:          
                 warehouse.setWareHouseFishHeads(fishHeads -= fishHeads * 0.1);
                 warehouse.setWarehouseFishyTreats(fishyTreats -= fishyTreats * 0.1);
                 warehouse.setWarehouseCod(cod -= cod * 0.1);
                 warehouse.setWarehouseSalmon(salmon -= salmon * 0.1);
+                messageHold = "Stock loss!";
                 break;
             case boots:
                 bank.setBalance(tempBalance += tempBalance * 0.2);
+                messageHold = "Cash LOSS!";
                 break;
             case fluff:
                 toy.localPriceRise(true, 0.5);
+                messageHold = "Toy RISE!";
                 break;
             case darkAlley:
-                warehouse.setWarehouseScracthingPost(20);
+                warehouse.setWarehouseScracthingPost(scratchingPost += 20);
+                messageHold = "Stock GAIN!";
                 break;
             case theft:
                 bank.setBalance(tempBalance -= tempBalance * .15);
+                messageHold = "Cash LOSS!";
                 break;
             case smiling:
                 treat.localPriceRise(true, 0.5);
+                messageHold = "Treat RISE!";
                 break;
             case owl:
                 bank.setBalance(tempBalance += 200);
+                messageHold = "Cash GAIN!";
                 break;
             case mittens:
                 bank.setBalance(tempBalance += 50);
+                messageHold = "Cash GAIN!";
                 break;
-
+            case tigger:
+                bank.setBalance(tempBalance += 300);
+                messageHold = "Cash GAIN!";
+                break;
+            case hello:
+                tempBalance -= 100;
+                tempBalance = (tempBalance < 1) ? 1 : tempBalance;
+                bank.setBalance(tempBalance);
+                messageHold = "Cash LOSS!";
+                break;
+            case top:
+                warehouse.setWarehouseToyMouse(toyMouse += 15);
+                warehouse.setWarehouseDreamsies(dreamsies += 5);
+                messageHold = "Stock GAIN!";
+                break;
+            case pink:
+                bank.setBalance(tempBalance += 500);
+                messageHold = "Cash GAIN!";
+                break;
+            case hat:
+                tempBalance -= tempBalance * 0.3;
+                tempBalance = (tempBalance < 1) ? 1 : tempBalance;
+                bank.setBalance(tempBalance);
+                messageHold = "Cash LOSS!";
+                break;
         }
-
     }
 
   
@@ -163,6 +201,8 @@ public void runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, W
     scene.getStylesheets().add("/Catmodities/Resources/StoryStyle.css");
     window.setScene(scene);
     window.showAndWait();
+
+    return messageHold;
 }
 
 }

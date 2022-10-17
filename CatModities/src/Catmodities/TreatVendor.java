@@ -23,8 +23,8 @@ class TreatVendor extends Wholesaler {
 	private int nipMin = 35;
 	private int nipMax = 45;
 	
-	private int megaMin = 50;
-	private int megaMax = 65;
+	private int megaMin = 80;
+	private int megaMax = 120;
 	
 	private boolean localCrashBool;
 	private boolean localPriceRiseBool;
@@ -67,6 +67,7 @@ class TreatVendor extends Wholesaler {
 		if (localCrashBool) {
 			for (int i = 0; i < treatArray.length; i++) {
 				treatArray[i] -= treatArray[i] * localCrash;
+				treatArray[i] = (treatArray[0] < 1) ? 1 : treatArray[i];
 			}					
 		} else if (localPriceRiseBool) {
 			for (int i = 0; i < treatArray.length; i++) {

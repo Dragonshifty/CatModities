@@ -4,9 +4,6 @@ import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-
-import javax.naming.directory.SearchResult;
-
 import javafx.geometry.*;
 
 class House {
@@ -17,9 +14,9 @@ class House {
     private final String mansion = "Mansion";
 
     int friendsSofaRent = 20;
-    int apartmentRent = 100;
-    int seaviewCottageRent = 500;
-    int penthouseSuiteRent = 2000;
+    int apartmentRent = 350;
+    int seaviewCottageRent = 900;
+    int penthouseSuiteRent = 3000;
     int mansionRent = 10000;
 
     int apartmentCost = 1000;
@@ -40,8 +37,34 @@ class House {
         return houseLevel;
     }
 
-    public void setCurrentHouseLevel(String houseLevel) {
-        this.houseLevel = houseLevel;
+    public void setCurrentHouseLevel(String houseString) {
+        switch (houseString){
+            case "Friend's Sofa":
+                houseLevel = friendsSofa;
+                break;
+            case "Apartment":
+                houseLevel = apartment;
+                apartmentOpen = true;
+                break;
+            case "Seaview Terrace":
+                houseLevel = seaviewCottage;
+                apartmentOpen = true;
+                seaviewCottageOpen = true;
+                break;
+            case "Penthouse Suite":
+                houseLevel = penthouseSuite;
+                apartmentOpen = true;
+                seaviewCottageOpen = true;
+                penthouseSuiteOpen = true;
+                break;
+            case "Mansion":
+                houseLevel = mansion;
+                apartmentOpen = true;
+                seaviewCottageOpen = true;
+                penthouseSuiteOpen = true;
+                mansionOpen = true;
+                break;
+        }
     }
 
     public void payRent(Bank bank){
@@ -182,8 +205,6 @@ class House {
 
         HBox buttons = new HBox(20);
         buttons.setPadding(new Insets(10, 10, 10, 10));
-        // buttons.setVgap(8);
-        // buttons.setHgap(8);
         buttons.setAlignment(Pos.CENTER);
 
         BorderPane pane = new BorderPane();

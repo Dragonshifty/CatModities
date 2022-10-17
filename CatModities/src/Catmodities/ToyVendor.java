@@ -23,8 +23,8 @@ class ToyVendor extends Wholesaler {
 	private int scratchMin = 60;
 	private int scratchMax = 80;
 	
-	private int fortressMin = 120;
-	private int fortressMax = 150;
+	private int fortressMin = 200;
+	private int fortressMax = 240;
 	
 	private boolean localCrashBool;
 	private boolean localPriceRiseBool;
@@ -67,6 +67,7 @@ class ToyVendor extends Wholesaler {
 		if (localCrashBool) {
 			for (int i = 0; i < toyArray.length; i++) {
 				toyArray[i] -= toyArray[i] * localCrash;
+				toyArray[i] = (toyArray[0] < 1) ? 1 : toyArray[i];
 			}					
 		} else if (localPriceRiseBool) {
 			for (int i = 0; i < toyArray.length; i++) {
@@ -107,10 +108,10 @@ class ToyVendor extends Wholesaler {
 
 	@Override
 	protected void restock(){
-		ashyTreatsStockLevel= 100;
-		yarnBallStockLevel = 100;
-		toyMouseStockLevel = 50;
-		scratchingPostStockLevel = 30;
+		ashyTreatsStockLevel= 50;
+		yarnBallStockLevel = 40;
+		toyMouseStockLevel = 30;
+		scratchingPostStockLevel = 20;
 		fortressStockLevel = 10;
 	}
 

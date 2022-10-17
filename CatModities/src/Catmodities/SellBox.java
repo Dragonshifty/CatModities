@@ -77,6 +77,9 @@ public class SellBox {
             }
         } catch (NumberFormatException ex){
             e.consume();
+        } catch (ArithmeticException ex){
+            e.consume();
+            window.close();
         }
         });
 
