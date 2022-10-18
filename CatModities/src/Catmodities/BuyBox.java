@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.geometry.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.media.AudioClip;
 
 public class BuyBox {
 
@@ -107,7 +106,7 @@ public class BuyBox {
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);
-        scene.getStylesheets().add("/Catmodities/Resources/Buy.css");
+        scene.getStylesheets().add("/Catmodities/Resources/Style/Buy.css");
         window.setScene(scene);
         window.showAndWait();
         

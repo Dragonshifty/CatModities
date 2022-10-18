@@ -89,7 +89,7 @@ public class SellBox {
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);
-        scene.getStylesheets().add("/Catmodities/Resources/Sell.css");
+        scene.getStylesheets().add("/Catmodities/Resources/Style/Sell.css");
         window.setScene(scene);
         window.showAndWait();
 

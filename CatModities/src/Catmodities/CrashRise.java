@@ -7,11 +7,11 @@ public class CrashRise {
     
     void resetCrashRise(Wholesaler fish, Wholesaler toy, Wholesaler treat){
         fish.localCrash(false, 0.0);
-           fish.localPriceRise(false, 0.0);
-           toy.localCrash(false, 0.0);
-           toy.localPriceRise(false, 0.0);
-           treat.localCrash(false, 0.0);
-           treat.localPriceRise(false, 0.0);
+        fish.localPriceRise(false, 0.0);
+        toy.localCrash(false, 0.0);
+        toy.localPriceRise(false, 0.0);
+        treat.localCrash(false, 0.0);
+        treat.localPriceRise(false, 0.0);
      }
 
      String runCrashRiseChance(Wholesaler fish, Wholesaler toy, Wholesaler treat){
@@ -52,7 +52,7 @@ public class CrashRise {
                 }
                 playSoundCrashRise();
             }
-            return messageHold;
+        return messageHold;
      }
 
      void playSoundCrashRise(){

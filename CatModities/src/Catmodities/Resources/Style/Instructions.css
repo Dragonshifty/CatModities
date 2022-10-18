@@ -1,0 +1,27 @@
+.root {
+  -fx-font-size: 12pt;
+  -fx-font-weight: bold;
+  -fx-background-color: radial-gradient(
+    focus-distance 0%,
+    center 50% 50%,
+    radius 55%,
+    rgba(188, 28, 28, 0.993),
+    rgb(45, 2, 2)
+  );
+}
+
+.button {
+  -fx-background-color: linear-gradient(#dc9656, #ab4642);
+  -fx-effect: dropshadow(three-pass-box, rgb(12, 1, 1), 10, 0, 0, 5);
+  -fx-background-radius: 8;
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+}
+
+#tick {
+  -fx-font-family: Barriecito;
+}
+
+#image {
+  -fx-effect: dropshadow(three-pass-box, rgb(12, 1, 1), 10, 0, 0, 5);
+}

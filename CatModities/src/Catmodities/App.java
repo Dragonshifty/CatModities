@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import java.util.Random;
 import javafx.scene.media.AudioClip;
 
-
+import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 // import java.io.FileWriter;
 // import java.io.IOException;
@@ -21,7 +21,7 @@ public class App extends Application {
 
    Stage window;
 
-   // Set class variables
+   // Set instance variables
    Label wholesalerFishHeads;
    Label wholesalerFishyTreats;
    Label wholesalerCod;
@@ -100,6 +100,12 @@ public class App extends Application {
    boolean penthouseSuiteChecked = false;
    boolean mansionChecked = false; 
 
+   AudioClip intermission;
+   AudioClip endDaySound;
+   AudioClip crashRiseSound;
+   AudioClip buySound;
+   AudioClip sellSound;
+
    int dayCounter = 1;
    int weekCounter = 1;
 
@@ -134,6 +140,20 @@ public class App extends Application {
       Warehouse warehouse = new Warehouse();
       StoryEvent storyEvent = new StoryEvent();
       House house = new House();
+
+      //Load Fonts 
+      Font.loadFont(getClass().getResource("/Catmodities/Resources/Fonts/Barriecito-Regular.ttf").toExternalForm(),10);
+      Font.loadFont(getClass().getResource("/Catmodities/Resources/Fonts/Delius-Regular.ttf").toExternalForm(),10);
+
+      //Load frequented sounds
+      try{
+         endDaySound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/End_Day.wav").toExternalForm());
+         crashRiseSound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/crashRise.wav").toExternalForm());
+         buySound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/buy.wav").toExternalForm());
+         sellSound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/sell.wav").toExternalForm());
+         } catch (Exception ex){
+            ex.printStackTrace();
+         }
 
       // Set window
       window = primaryStage;
@@ -178,12 +198,12 @@ public class App extends Application {
       day.setId("day"); 
       GridPane.setConstraints(day, 0, 0);
       GridPane.setHalignment(day, HPos.CENTER);
-      
+     
       Label dayCount = new Label("" + dayCounter);
       dayCount.setId("daycount");
       GridPane.setHalignment(dayCount, HPos.CENTER);
       GridPane.setConstraints(dayCount, 0, 3);
-
+      
       buyHouse = new Button("Buy House");
       buyHouse.setMinWidth(90);
       GridPane.setConstraints(buyHouse, 0, 8);
@@ -224,11 +244,31 @@ public class App extends Application {
       pane.setTop(gridTop);
       pane.setCenter(grid);
       pane.setLeft(gridLeft);
-      
+
+      // SPLASH scene
+      GridPane gridSplash = new GridPane();
+      gridSplash.setAlignment(Pos.CENTER);
+      gridSplash.setVgap(10);
+      gridSplash.setPadding(new Insets(10, 10, 10, 10));
+      Label titleSplash = new Label("CatModities");
+      titleSplash.setId("titlesplash");
+      GridPane.setConstraints(title, 0, 0);
+      Button switchIt = new Button("Enter");
+      GridPane.setConstraints(switchIt, 0,6);
+      GridPane.setHalignment(switchIt, HPos.CENTER);
+      gridTop.setAlignment(Pos.CENTER);
+      gridSplash.getChildren().addAll(titleSplash, switchIt);
+
+      Scene sceneSplash = new Scene(gridSplash, 1100, 650);
+      sceneSplash.getStylesheets().add("/Catmodities/Resources/Style/style.css");
+
+      // Play splash screen music
+      introMusicPlay();
+
+      // Main Window
       Scene scene = new Scene(pane, 1100, 650);
-      scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Barriecito");
-      scene.getStylesheets().add("/Catmodities/Resources/style.css");     
-      window.setScene(scene); 
+      scene.getStylesheets().add("/Catmodities/Resources/Style/style.css");     
+      window.setScene(sceneSplash); 
       window.show();
 
       // Fish Vendor Labels and Buttons
@@ -534,7 +574,7 @@ public class App extends Application {
       grid.getChildren().addAll(megaMunchies, megaMunchiesPrice, megaMunchiesBuy,
       megaMunchiesSell, wholesalerMegaMunchies, warehouseMegaMunchies);
 
-      //End Day Button
+      // End Day Button
       Button endDay = new Button("End Day");
       endDay.setId("endDay");
       GridPane.setConstraints(endDay, 0, 15);
@@ -575,15 +615,13 @@ public class App extends Application {
             warehouseFishHeads.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       headsSellButton.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(fishPrices.get("FishHeads"), fish.fishHeadsStockLevel, warehouse.getFishHeadsStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             fish.fishHeadsStockLevel = holding[0];
             wholesalerFishHeads.setText("" + holding[0]);
@@ -591,15 +629,13 @@ public class App extends Application {
             warehouseFishHeads.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
    
       fishyTreatsBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(fishPrices.get("Fishy Treats"), fish.fishyTreatsStockLevel, warehouse.getFishyTreatsStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             fish.fishyTreatsStockLevel = holding[0];
             wholesalerFishyTreats.setText("" + holding[0]);
@@ -607,15 +643,13 @@ public class App extends Application {
             warehouseFishyTreats.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       fishyTreatsSell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(fishPrices.get("Fishy Treats"), fish.fishyTreatsStockLevel, warehouse.getFishyTreatsStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             fish.fishyTreatsStockLevel = holding[0];
             wholesalerFishyTreats.setText("" + holding[0]);
@@ -623,15 +657,13 @@ public class App extends Application {
             warehouseFishyTreats.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
       codBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(fishPrices.get("Cod"), fish.codStockLevel, warehouse.getWareHouseCodStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             fish.codStockLevel = holding[0];
             wholesalerCod.setText("" + holding[0]);
@@ -639,15 +671,13 @@ public class App extends Application {
             warehouseCod.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       codSell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(fishPrices.get("Cod"), fish.codStockLevel, warehouse.getWareHouseCodStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             fish.codStockLevel = holding[0];
             wholesalerCod.setText("" + holding[0]);
@@ -655,15 +685,13 @@ public class App extends Application {
             warehouseCod.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
       salmonBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(fishPrices.get("Salmon Mousse"), fish.salmonStockLevel, warehouse.getSalmonStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             fish.salmonStockLevel = holding[0];
             wholesalerSalmon.setText("" + holding[0]);
@@ -671,15 +699,13 @@ public class App extends Application {
             warehouseSalmon.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       salmonSell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(fishPrices.get("Salmon Mousse"), fish.salmonStockLevel, warehouse.getSalmonStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             fish.salmonStockLevel = holding[0];
             wholesalerSalmon.setText("" + holding[0]);
@@ -687,15 +713,13 @@ public class App extends Application {
             warehouseSalmon.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
       rainbowBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(fishPrices.get("Rainbow Trout"), fish.rainbowStockLevel, warehouse.getRainbowStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             fish.rainbowStockLevel = holding[0];
             wholesalerRainbow.setText("" + holding[0]);
@@ -703,15 +727,13 @@ public class App extends Application {
             warehouseRainbow.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       rainbowSell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(fishPrices.get("Rainbow Trout"), fish.rainbowStockLevel, warehouse.getRainbowStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             fish.rainbowStockLevel = holding[0];
             wholesalerRainbow.setText("" + holding[0]);
@@ -719,15 +741,13 @@ public class App extends Application {
             warehouseRainbow.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
       ashyBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(toyPrices.get("Ashy Treats"), toy.ashyTreatsStockLevel, warehouse.getAshyTreatsStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             toy.ashyTreatsStockLevel = holding[0];
             wholesalerAshyTreats.setText("" + holding[0]);
@@ -735,15 +755,13 @@ public class App extends Application {
             warehouseAshyTreats.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       ashySell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(toyPrices.get("Ashy Treats"), toy.ashyTreatsStockLevel, warehouse.getAshyTreatsStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             toy.ashyTreatsStockLevel = holding[0];
             wholesalerAshyTreats.setText("" + holding[0]);
@@ -751,15 +769,13 @@ public class App extends Application {
             warehouseAshyTreats.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
       yarnBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(toyPrices.get("Yarn Ball"), toy.yarnBallStockLevel, warehouse.getYarnBallStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             toy.yarnBallStockLevel = holding[0];
             wholesalerYarnBall.setText("" + holding[0]);
@@ -767,15 +783,13 @@ public class App extends Application {
             warehouseYarnBall.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       yarnSell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(toyPrices.get("Yarn Ball"), toy.yarnBallStockLevel, warehouse.getYarnBallStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             toy.yarnBallStockLevel = holding[0];
             wholesalerYarnBall.setText("" + holding[0]);
@@ -783,15 +797,13 @@ public class App extends Application {
             warehouseYarnBall.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
       toyMouseBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(toyPrices.get("Toy Mouse"), toy.toyMouseStockLevel, warehouse.getToyMouseStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             toy.toyMouseStockLevel = holding[0];
             wholesalerToyMouse.setText("" + holding[0]);
@@ -799,15 +811,13 @@ public class App extends Application {
             warehouseToyMouse.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       toyMouseSell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(toyPrices.get("Toy Mouse"), toy.toyMouseStockLevel, warehouse.getToyMouseStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             toy.toyMouseStockLevel = holding[0];
             wholesalerToyMouse.setText("" + holding[0]);
@@ -815,15 +825,13 @@ public class App extends Application {
             warehouseToyMouse.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
       scratchingPostBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(toyPrices.get("Scratching Post"), toy.scratchingPostStockLevel, warehouse.getScratchingPostStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             toy.scratchingPostStockLevel = holding[0];
             wholesalerScratchingPost.setText("" + holding[0]);
@@ -831,15 +839,13 @@ public class App extends Application {
             warehouseScratchingPost.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       scratchingPostSell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(toyPrices.get("Scratching Post"), toy.scratchingPostStockLevel, warehouse.getScratchingPostStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             toy.scratchingPostStockLevel = holding[0];
             wholesalerScratchingPost.setText("" + holding[0]);
@@ -847,15 +853,13 @@ public class App extends Application {
             warehouseScratchingPost.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
       fortressBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(toyPrices.get("Fortress"), toy.fortressStockLevel, warehouse.getScratchingPostStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             toy.fortressStockLevel = holding[0];
             wholesalerFortress.setText("" + holding[0]);
@@ -863,15 +867,13 @@ public class App extends Application {
             warehouseFortress.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       fortressSell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(toyPrices.get("Fortress"), toy.fortressStockLevel, warehouse.getScratchingPostStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             toy.fortressStockLevel = holding[0];
             wholesalerFortress.setText("" + holding[0]);
@@ -879,15 +881,13 @@ public class App extends Application {
             warehouseFortress.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
       ashyTreatsTooBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(treatPrices.get("Ashy Treats Too"), treat.ashyTreatsTooStockLevel, warehouse.getAshyTreatsTooStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             treat.ashyTreatsTooStockLevel = holding[0];
             wholesalerAshyTreatsToo.setText("" + holding[0]);
@@ -895,15 +895,13 @@ public class App extends Application {
             warehouseAshyTreatsToo.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       ashyTreatsTooSell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(treatPrices.get("Ashy Treats Too"), treat.ashyTreatsTooStockLevel, warehouse.getAshyTreatsTooStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             treat.ashyTreatsTooStockLevel = holding[0];
             wholesalerAshyTreatsToo.setText("" + holding[0]);
@@ -911,15 +909,13 @@ public class App extends Application {
             warehouseAshyTreatsToo.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
       randomMothBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(treatPrices.get("Random Moth"), treat.randomMothStockLevel, warehouse.getRandomMothStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             treat.randomMothStockLevel = holding[0];
             wholesalerRandomMoth.setText("" + holding[0]);
@@ -927,15 +923,13 @@ public class App extends Application {
             warehouseRandomMoth.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       randomMothSell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(treatPrices.get("Random Moth"), treat.randomMothStockLevel, warehouse.getRandomMothStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             treat.randomMothStockLevel = holding[0];
             wholesalerRandomMoth.setText("" + holding[0]);
@@ -943,15 +937,13 @@ public class App extends Application {
             warehouseRandomMoth.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
       dreamsiesBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(treatPrices.get("Dreamsies"), treat.dreamsiesStockLevel, warehouse.getDreamsiesStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             treat.dreamsiesStockLevel = holding[0];
             wholesalerDreamsies.setText("" + holding[0]);
@@ -959,15 +951,13 @@ public class App extends Application {
             warehouseDreamsies.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       dreamsiesSell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(treatPrices.get("Dreamsies"), treat.dreamsiesStockLevel, warehouse.getDreamsiesStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             treat.dreamsiesStockLevel = holding[0];
             wholesalerDreamsies.setText("" + holding[0]);
@@ -975,15 +965,13 @@ public class App extends Application {
             warehouseDreamsies.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
       catNipBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(treatPrices.get("CatNip"), treat.catNipStockLevel, warehouse.getCatNipStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             treat.catNipStockLevel = holding[0];
             wholesalerCatNip.setText("" + holding[0]);
@@ -991,15 +979,13 @@ public class App extends Application {
             warehouseCatNip.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       catNipSell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(treatPrices.get("CatNip"), treat.catNipStockLevel, warehouse.getCatNipStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             treat.catNipStockLevel = holding[0];
             wholesalerCatNip.setText("" + holding[0]);
@@ -1007,15 +993,13 @@ public class App extends Application {
             warehouseCatNip.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
       megaMunchiesBuy.setOnAction(e -> {
          int[] holding = new int[3];
          holding = BuyBox.buy(treatPrices.get("Mega Munchies"), treat.megaMunchiesStockLevel, warehouse.getMegaMunchiesStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             treat.megaMunchiesStockLevel = holding[0];
             wholesalerMegaMunchies.setText("" + holding[0]);
@@ -1023,15 +1007,13 @@ public class App extends Application {
             warehouseMegaMunchies.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playBuy();
          }          
       });
 
       megaMunchiesSell.setOnAction(e -> {
          int[] holding = new int[3];
          holding = SellBox.sell(treatPrices.get("Mega Munchies"), treat.megaMunchiesStockLevel, warehouse.getMegaMunchiesStock(), bank.getBalance());
-
-         // return wholesaler/warehouse/bank balance/confirmation
          if (holding[3] == 1){
             treat.megaMunchiesStockLevel = holding[0];
             wholesalerMegaMunchies.setText("" + holding[0]);
@@ -1039,10 +1021,19 @@ public class App extends Application {
             warehouseMegaMunchies.setText("" + holding[1]);
             bank.setBalance(holding[2]);
             showBalance.setText("" + holding[2]);
-            playBuySell();
+            playSell();
          }          
       });
 
+      // Switch from splash screen to main window
+      switchIt.setOnAction(e -> {
+         intermission.stop();
+         window.setScene(scene);
+         playBegin();
+         storyEvent.runPage(true, bank, fish, toy, treat, warehouse, house);
+      });
+
+      // Left panel buttons
       buyHouse.setOnAction(e -> {
          house.upgradeHouse(bank);
          showBalance.setText("" + bank.getBalance());
@@ -1069,6 +1060,11 @@ public class App extends Application {
             playSuccess();
          }
          message.setText(loadGame.getMessageHold());
+      });
+
+      instructions.setOnAction(e ->{
+         Instructions instruct = new Instructions();
+         instruct.showInstructions();
       });
 
       // End day commands
@@ -1128,7 +1124,7 @@ public class App extends Application {
                Random random = new Random();
                int randomStory = random.nextInt(2);
                if (randomStory == 1){
-                  messageHold = storyEvent.runPage(false, bank, fish, toy, treat, warehouse);
+                  messageHold = storyEvent.runPage(false, bank, fish, toy, treat, warehouse, house);
                }
                break;
          }
@@ -1142,16 +1138,11 @@ public class App extends Application {
          showBalance.setText("" + bank.getBalance());
          message.setText(messageHold);
          
-         
          // Get comparitive figures for yesterday and today
          int[] compareDays = highLow.getHighLow(fish.getArray(), toy.getArray(), treat.getArray());
          showHighLow(compareDays, fish, toy, treat, warehouse);
          
       });
-
-      //Start
-      playBegin();
-      storyEvent.runPage(true, bank, fish, toy, treat, warehouse);
    }
 
    void getWholesalerStock(Wholesaler fish, Wholesaler toy, Wholesaler treat){
@@ -1446,7 +1437,6 @@ public class App extends Application {
    // Sound methods
    void playEndDay(){
       try{
-         AudioClip endDaySound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/End_Day.wav").toExternalForm());
          endDaySound.play();    
          } catch (Exception ex){
             ex.printStackTrace();
@@ -1455,17 +1445,23 @@ public class App extends Application {
 
    void playSoundCrashRise(){
       try {
-          AudioClip crashRise = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/crashRise.wav").toExternalForm());
-          crashRise.play();
+          crashRiseSound.play();
           } catch (Exception ex){
               ex.printStackTrace();
           }
    }
 
-   void playBuySell(){
+   void playBuy(){
       try {
-         AudioClip buySellSound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/buySell.wav").toExternalForm());
-         buySellSound.play();
+         buySound.play();
+         } catch (Exception ex){
+             ex.printStackTrace();
+         }
+   }
+
+   void playSell(){
+      try {
+         sellSound.play();
          } catch (Exception ex){
              ex.printStackTrace();
          }
@@ -1484,6 +1480,15 @@ public class App extends Application {
       try {
          AudioClip beginSound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/begin.wav").toExternalForm());
          beginSound.play();
+         } catch (Exception ex){
+             ex.printStackTrace();
+         }
+   }
+
+   void introMusicPlay(){
+      try {
+         intermission = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/Intermission.mp3").toExternalForm());
+         intermission.play();
          } catch (Exception ex){
              ex.printStackTrace();
          }

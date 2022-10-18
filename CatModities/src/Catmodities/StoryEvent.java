@@ -13,7 +13,7 @@ import javafx.scene.media.AudioClip;
 
 class StoryEvent {
 
-private final String begin = "Welcome, my feline friend! You arrive in Felixton Town, fesh and ready to face the world, but with only 20 DollarBucks to your name. Can you find fame and fortune by trading your way to success. Beware, many pitfalls stand in your way. Plus there's always rent to worry about. Good luck!";
+private final String begin = "'Here, catch! That twenty I owe you!' Your old friend greets you off the the boat after a long voyage to start a new life in Felixton. 'You can stay on my sofa whilst you get on your feet. In this town we trade our way to success, but it's not gonna be easy. Not all the traders will deal with you until you get better digs; kinda stuck up if you ask me, but that's Felixton for you.' He slaps you on the back. 'Still, you can use my warehouse, and you're sure gonna meet some characters along the way!' As you make your way along the dock you can't help but wonder what you've got yourself into...";
     
 private final String pirates = "A ship full of cat pirates has recently docked, sharing tales of wild adventure on the high seas. They also bring crates stacked full of fish. Now would be an excellent time to buy some cheap stock.";
 
@@ -49,7 +49,7 @@ private final String hat = "Against your better judgement you arrange a deal for
 
 List <String> eventList = new ArrayList<>();
 
-public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, Wholesaler treat, Warehouse warehouse){
+public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, Wholesaler treat, Warehouse warehouse, House house){
     Stage window = new Stage();
 
     window.initModality(Modality.APPLICATION_MODAL);
@@ -61,7 +61,7 @@ public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy,
     TextFlow page = new TextFlow();
 
     page.setPadding(new Insets(12,12,12, 12));
-    page.setTextAlignment(TextAlignment.CENTER);
+    page.setTextAlignment(TextAlignment.JUSTIFY);
     page.setMaxWidth(500);
 
     pane.setCenter(page);
@@ -135,8 +135,8 @@ public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy,
                 break;
             case boots:
                 bank.setBalance(tempBalance += tempBalance * 0.2);
-                messageHold = "Cash LOSS!";
-                playSoundLoseMoney();
+                messageHold = "Cash GAIN!";
+                playSoundGainMoney();
                 break;
             case fluff:
                 toy.localPriceRise(true, 0.5);
@@ -149,7 +149,9 @@ public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy,
                 playSoundGainMoney();
                 break;
             case theft:
-                bank.setBalance(tempBalance -= tempBalance * .15);
+                tempBalance -= tempBalance * 0.1;
+                tempBalance = (tempBalance < 1) ? 1 : tempBalance;
+                bank.setBalance(tempBalance);
                 messageHold = "Cash LOSS!";
                 playSoundLoseMoney();
                 break;
@@ -159,17 +161,65 @@ public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy,
                 playSoundCrashRise();
                 break;
             case owl:
-                bank.setBalance(tempBalance += 200);
+                switch (house.getHouseLevel()){
+                    case "Friend's Sofa":
+                        bank.setBalance(tempBalance += 200);
+                        break;
+                    case "Apartment":
+                        bank.setBalance(tempBalance += 500);
+                        break;
+                    case "Seaview Terrace":
+                        bank.setBalance(tempBalance += 1000);
+                        break;
+                    case "Penthouse Suite":
+                        bank.setBalance(tempBalance += 2000);
+                        break;
+                    case "Mansion":
+                        bank.setBalance(tempBalance += 10000);
+                        break;
+                }
                 messageHold = "Cash GAIN!";
                 playSoundGainMoney();
                 break;
             case mittens:
-                bank.setBalance(tempBalance += 50);
+            switch (house.getHouseLevel()){
+                case "Friend's Sofa":
+                    bank.setBalance(tempBalance += 50);
+                    break;
+                case "Apartment":
+                    bank.setBalance(tempBalance += 200);
+                    break;
+                case "Seaview Terrace":
+                    bank.setBalance(tempBalance += 500);
+                    break;
+                case "Penthouse Suite":
+                    bank.setBalance(tempBalance += 800);
+                    break;
+                case "Mansion":
+                    bank.setBalance(tempBalance += 1200);
+                    break;
+                }
                 messageHold = "Cash GAIN!";
                 playSoundGainMoney();
                 break;
             case tigger:
-                bank.setBalance(tempBalance += 300);
+            switch (house.getHouseLevel()){
+                case "Friend's Sofa":
+                    bank.setBalance(tempBalance += 100);
+                    break;
+                case "Apartment":
+                    bank.setBalance(tempBalance += 300);
+                    break;
+                case "Seaview Terrace":
+                    bank.setBalance(tempBalance += 750);
+                    break;
+                case "Penthouse Suite":
+                    bank.setBalance(tempBalance += 1000);
+                    break;
+                case "Mansion":
+                    bank.setBalance(tempBalance += 8000);
+                    break;
+                }
                 messageHold = "Cash GAIN!";
                 playSoundGainMoney();
                 break;
@@ -211,8 +261,7 @@ public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy,
     ok.setOnAction(e -> window.close());
 
     Scene scene = new Scene(pane);
-    scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Barriecito&family=Mansalva&family=Delius");
-    scene.getStylesheets().add("/Catmodities/Resources/StoryStyle.css");
+    scene.getStylesheets().add("/Catmodities/Resources/Style/StoryStyle.css");
     window.setScene(scene);
     window.showAndWait();
 

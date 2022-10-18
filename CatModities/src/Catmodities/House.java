@@ -76,9 +76,7 @@ class House {
 
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(10, 10, 10, 10));
-        layout.setAlignment(Pos.CENTER);
-
-        playRent();        
+        layout.setAlignment(Pos.CENTER);        
 
         Label rentDueLabel = new Label("RENT DUE!");
         Label rentMessage = new Label();
@@ -92,7 +90,7 @@ class House {
                     bank.setBalance(1);
                     playDowngradeHouse();
                 } else {
-                    
+                    playRent();
                     bank.setBalance(tempBalance);
                 }
                 break;
@@ -104,6 +102,7 @@ class House {
                     houseLevel = friendsSofa;
                     playDowngradeHouse();
                 } else {
+                    playRent();
                     bank.setBalance(tempBalance);
                 }
                 break;
@@ -115,6 +114,7 @@ class House {
                     houseLevel = apartment;
                     playDowngradeHouse();
                 } else {
+                    playRent();
                     bank.setBalance(tempBalance);
                 }
                 break;
@@ -126,6 +126,7 @@ class House {
                     houseLevel = seaviewCottage;
                     playDowngradeHouse();
                 } else {
+                    playRent();
                     bank.setBalance(tempBalance);
                 }
                 break;
@@ -137,6 +138,7 @@ class House {
                     houseLevel = penthouseSuite;
                     playDowngradeHouse();
                 } else {
+                    playRent();
                     bank.setBalance(tempBalance);
                 }
                 break;
@@ -148,8 +150,7 @@ class House {
         ok.setOnAction(e -> window.close());
 
         Scene scene = new Scene(layout);
-        scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Barriecito&family=Mansalva&family=Delius");
-        scene.getStylesheets().add("/Catmodities/Resources/HouseStyle.css");
+        scene.getStylesheets().add("/Catmodities/Resources/Style/HouseStyle.css");
         window.setScene(scene);
         window.showAndWait();
     }
@@ -195,8 +196,7 @@ class House {
         ok.setOnAction(e -> window.close());
 
         Scene scene = new Scene(layout);
-        scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Barriecito&family=Mansalva&family=Delius");
-        scene.getStylesheets().add("/Catmodities/Resources/HouseStyle.css");
+        scene.getStylesheets().add("/Catmodities/Resources/Style/HouseStyle.css");
         window.setScene(scene);
         window.showAndWait();
     }
@@ -314,8 +314,7 @@ class House {
         cancel.setOnAction(e -> window.close());
 
         Scene scene = new Scene(pane);
-        scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Barriecito&family=Mansalva&family=Delius");
-        scene.getStylesheets().add("/Catmodities/Resources/BuyHouse.css");
+        scene.getStylesheets().add("/Catmodities/Resources/Style/BuyHouse.css");
         window.setScene(scene);
         window.showAndWait();
     }

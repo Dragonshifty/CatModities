@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.*;
 
 public class SaveLoad{
 
@@ -55,7 +56,7 @@ public class SaveLoad{
         buttons.getChildren().addAll(ok, cancel);
         
         ok.setOnAction(e ->{
-        JSONObject store = new JSONObject();
+        Map<String, Object> store = new HashMap<>();
 
         store.put("balance", bank.getBalance());
         store.put("house", house.getHouseLevel());
@@ -76,10 +77,12 @@ public class SaveLoad{
         store.put("Dreamsies", warehouse.getDreamsiesStock());
         store.put("CatNip", warehouse.getCatNipStock());
         store.put("Mega Munchies", warehouse.getMegaMunchiesStock());
+        
+        JSONObject JStore = new JSONObject(store);
 
         try (FileWriter file = new FileWriter("save1.json")) {
             //We can write any JSONArray or JSONObject instance to the file
-            file.write(store.toJSONString()); 
+            file.write(JStore.toJSONString()); 
             file.flush();
             messageHold = "Saved";
             window.close();
@@ -92,8 +95,7 @@ public class SaveLoad{
         cancel.setOnAction(e -> window.close());
 
         Scene scene = new Scene(pane);
-        scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Barriecito&family=Mansalva&family=Delius");
-        scene.getStylesheets().add("/Catmodities/Resources/Buy.css");
+        scene.getStylesheets().add("/Catmodities/Resources/Style/Sell.css");
         window.setScene(scene);
         window.showAndWait();
     }
@@ -212,8 +214,7 @@ public class SaveLoad{
         cancel.setOnAction(e -> window.close());
 
         Scene scene = new Scene(pane);
-        scene.getStylesheets().add("https://fonts.googleapis.com/css2?family=Barriecito&family=Mansalva&family=Delius");
-        scene.getStylesheets().add("/Catmodities/Resources/Sell.css");
+        scene.getStylesheets().add("/Catmodities/Resources/Style/Buy.css");
         window.setScene(scene);
         window.showAndWait();
 
