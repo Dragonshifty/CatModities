@@ -45,7 +45,7 @@ private final String top = "As you're passing an alley you hear a 'pssst, is Dib
 
 private final String pink = "Over the weekend a smart, rose-coloured panther enters your office to invest in your business. He says I might want to be on the lookout for a particular inspector but he doesn't have a Clue-so you shouldn't really worry about it.";
 
-private final String hat = "Against your better judgement you arrange a deal for a cruious cat in a curious hat. Upon delivery he claims that the delivery wasn't what he asks for. Despite explaining you never mentioned ham, and eggs really shouldn't be that colour anyway, he refuses to pay and the stock goes bad.";
+private final String hat = "Against your better judgement you arrange a deal for a curious cat in a curious hat. Upon delivery he claims that the delivery wasn't what he asks for. Despite explaining you never mentioned ham, and eggs really shouldn't be that colour anyway, he refuses to pay and the stock goes bad.";
 
 List <String> eventList = new ArrayList<>();
 
