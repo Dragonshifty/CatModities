@@ -14,8 +14,6 @@ import javafx.scene.media.AudioClip;
 
 import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
-// import java.io.FileWriter;
-// import java.io.IOException;
 
 public class App extends Application {
 
@@ -142,8 +140,12 @@ public class App extends Application {
       House house = new House();
 
       //Load Fonts 
-      Font.loadFont(getClass().getResource("/Catmodities/Resources/Fonts/Barriecito-Regular.ttf").toExternalForm(),10);
-      Font.loadFont(getClass().getResource("/Catmodities/Resources/Fonts/Delius-Regular.ttf").toExternalForm(),10);
+      try{
+         Font.loadFont(getClass().getResource("/Catmodities/Resources/Fonts/Barriecito-Regular.ttf").toExternalForm(),10);
+         Font.loadFont(getClass().getResource("/Catmodities/Resources/Fonts/Delius-Regular.ttf").toExternalForm(),10);
+      } catch (Exception ex){
+         ex.printStackTrace();
+      }
 
       //Load frequented sounds
       try{
@@ -250,17 +252,29 @@ public class App extends Application {
       gridSplash.setAlignment(Pos.CENTER);
       gridSplash.setVgap(10);
       gridSplash.setPadding(new Insets(10, 10, 10, 10));
+      
       Label titleSplash = new Label("CatModities");
       titleSplash.setId("titlesplash");
       GridPane.setConstraints(title, 0, 0);
+      
       Button switchIt = new Button("Enter");
       GridPane.setConstraints(switchIt, 0,6);
       GridPane.setHalignment(switchIt, HPos.CENTER);
-      gridTop.setAlignment(Pos.CENTER);
       gridSplash.getChildren().addAll(titleSplash, switchIt);
 
-      Scene sceneSplash = new Scene(gridSplash, 1100, 650);
-      sceneSplash.getStylesheets().add("/Catmodities/Resources/Style/style.css");
+      VBox splashText = new VBox(10);
+      Text copyright = new Text("Dragonshifty Studios 2022 © - Music by James Fitt ©");
+      copyright.setFill(Color.WHITE);
+      splashText.setPadding(new Insets(10, 0, 20, 0));
+      splashText.setAlignment(Pos.CENTER);
+      splashText.getChildren().add(copyright);
+
+      BorderPane paneSplash = new BorderPane();
+      paneSplash.setCenter(gridSplash);
+      paneSplash.setBottom(splashText);
+
+      Scene sceneSplash = new Scene(paneSplash, 1100, 650);
+      sceneSplash.getStylesheets().add("/Catmodities/Resources/Style/Splash.css");
 
       // Play splash screen music
       introMusicPlay();
@@ -1027,7 +1041,11 @@ public class App extends Application {
 
       // Switch from splash screen to main window
       switchIt.setOnAction(e -> {
-         intermission.stop();
+         try {
+            intermission.stop();
+         } catch (Exception ex){
+            ex.printStackTrace();
+         }
          window.setScene(scene);
          playBegin();
          storyEvent.runPage(true, bank, fish, toy, treat, warehouse, house);
@@ -1065,6 +1083,11 @@ public class App extends Application {
       instructions.setOnAction(e ->{
          Instructions instruct = new Instructions();
          instruct.showInstructions();
+      });
+
+      quit.setOnAction(e ->{
+         boolean confirm = Quit.quit();
+         if (confirm) window.close();
       });
 
       // End day commands

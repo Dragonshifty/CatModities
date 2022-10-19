@@ -8,13 +8,13 @@ abstract class Wholesaler {
 	protected int fishyTreatsStockLevel = 30;
 	protected int codStockLevel = 25;
 	protected int salmonStockLevel = 25;
-	protected int rainbowStockLevel = 10;
+	protected int rainbowStockLevel = 20;
 	
 	protected int ashyTreatsStockLevel= 50;
 	protected int yarnBallStockLevel = 40;
 	protected int toyMouseStockLevel = 30;
 	protected int scratchingPostStockLevel = 20;
-	protected int fortressStockLevel = 10;
+	protected int fortressStockLevel = 20;
 	
 	protected int ashyTreatsTooStockLevel = 80;
 	protected int randomMothStockLevel = 60;

@@ -1,0 +1,25 @@
+.root {
+  -fx-font-size: 10pt;
+  -fx-background-color: radial-gradient(
+    focus-distance 0%,
+    center 50% 50%,
+    radius 55%,
+    rgba(226, 45, 154, 0.993),
+    rgb(70, 3, 46)
+  );
+}
+
+.label {
+  -fx-text-fill: white;
+  -fx-font-family: Delius;
+  -fx-font-size: 22;
+  -fx-text-fill: white;
+}
+
+.button {
+  -fx-background-color: linear-gradient(#dc9656, #ab4642);
+  -fx-effect: dropshadow(three-pass-box, rgb(12, 1, 1), 10, 0, 0, 5);
+  -fx-background-radius: 8;
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+}

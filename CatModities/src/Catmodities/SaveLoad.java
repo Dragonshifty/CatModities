@@ -28,7 +28,7 @@ public class SaveLoad{
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Story");
+        window.setTitle("Save Game");
         window.setMinWidth(250);
 
         GridPane grid = new GridPane();
@@ -104,7 +104,7 @@ public class SaveLoad{
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Story");
+        window.setTitle("Load Game");
         window.setMinWidth(250);
 
         GridPane grid = new GridPane();

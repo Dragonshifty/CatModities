@@ -107,7 +107,7 @@ class FishVendor extends Wholesaler {
 		fishyTreatsStockLevel = 30;
 		codStockLevel = 25;
 		salmonStockLevel = 25;
-		rainbowStockLevel = 10;
+		rainbowStockLevel = 20;
 	}
 
 	@Override int[] getArray(){

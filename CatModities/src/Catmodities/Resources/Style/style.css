@@ -60,12 +60,10 @@
   -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0, 8);
 }
 
-#titlesplash {
-  -fx-font-family: Barriecito;
-  -fx-font-size: 200;
-  -fx-text-fill: white;
-  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0, 8);
-}
+/* .label .text {
+  -fx-stroke: rgb(255, 255, 255);
+  -fx-stroke-width: 2px;
+} */
 
 #message {
   -fx-font-size: 16;

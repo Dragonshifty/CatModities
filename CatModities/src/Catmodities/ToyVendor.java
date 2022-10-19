@@ -112,7 +112,7 @@ class ToyVendor extends Wholesaler {
 		yarnBallStockLevel = 40;
 		toyMouseStockLevel = 30;
 		scratchingPostStockLevel = 20;
-		fortressStockLevel = 10;
+		fortressStockLevel = 20;
 	}
 
 	@Override int[] getArray(){
