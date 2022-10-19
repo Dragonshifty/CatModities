@@ -13,7 +13,7 @@ Features:
 - Polymorphism
 - Encapsulation (mostly)
 - Extremely minimal staticness (cats hate static electricity)
-- Puns, aliteration, and carefully constructed nods
+- Puns, alliteration, and carefully constructed nods
 
 
 ![Screenshot (2)3](https://user-images.githubusercontent.com/91226933/196274910-aae8d429-c879-49c1-90b9-ff4bf9b4e207.jpg)
