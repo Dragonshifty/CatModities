@@ -339,7 +339,7 @@ class House {
 
     void playUpgradeHouse(){
         try {
-            AudioClip buyHouseSound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/Buy_House.wav").toExternalForm());
+            AudioClip buyHouseSound = new AudioClip(getClass().getResource("/Catmodities/Resources/Sounds/Buy_house.wav").toExternalForm());
             buyHouseSound.play();
         } catch (Exception ex){
             ex.printStackTrace();
