@@ -9,7 +9,7 @@ Features:
 - Fluctuating market
 - Level scaling
 - Save and Load to JSON
-- Singleton OOP
+- Singleton OOP (or will be when I refactor it properly)
 - Polymorphism
 - Encapsulation (mostly)
 - Extremely minimal staticness (cats hate static electricity)
