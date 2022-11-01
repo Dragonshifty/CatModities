@@ -47,6 +47,29 @@ private final String pink = "Over the weekend a smart, rose-coloured panther ent
 
 private final String hat = "Against your better judgement you arrange a deal for a curious cat in a curious hat. Upon delivery he claims that the delivery wasn't what he asks for. Despite explaining you never mentioned ham, and eggs really shouldn't be that colour anyway, he refuses to pay and the stock goes bad.";
 
+private final String king = "Whilst on a hiking holiday you spot a baboon holding a young lion cub over a cliff, with all sorts of animals looking on. It really is a moving sight, despite the obvious disregard for any kind of health and safety.";
+
+private final String tom = "You decide to go for a stroll in the park one afternoon and witness what looks to be a shocking assault when a small brown mouse hits a cat with a baseball bat. It turns out they're actually good friends and do this sort of thing all the time. You guess the cat is just very resilient to kinetic energy or something? Who knows; people are weird sometimes.";
+
+private final String path = "You step outside the warehouse and a black cat crosses in front of you. Just after this you spot something shiny on the ground and find some money. You thank your geographically-based luck; if you hadn't have been in the UK it might have been bad luck!";
+
+private final String shop = "After a pleasant morning spent window shopping in town you come across an odd scene where lots of mice are singing and crafting things around a pink and white stripy cat. At least you thought that's what you saw. When you glance back in the shop window everyone is completely still. You put it down to a bad batch of Ashy Treats.";
+
+private final String wardrobe = "For reasons known only to yourself you decide to check whether your wardrobe would be a good hiding place (you never know when someone will drop round for a quick game of hide and seek, I guess?). You're somewhat alarmed to find a lot more coats are there than you previously thought and it actually backs out onto a snowy landscape you didn't think was physically possible, given the confines of this kind of furniture. You're greeted by a huge friendly lion who suggests investing in toys (useful information, if a bit odd). You return home with a greater respect for lions (and carpentry, come to think of it).";
+
+private final String siam = "You happen upon a couple of Siamese cats. You can tell they're Siamese as they look just like Siamese cats, and they do indeed confirm this by singing a song about them being Siamese cats. They don't seem to mind whether you're pleased or not about this information, apparently.";
+
+private final String puddy = "One Sunday afternoon a small yellow bird flies in and proclaims 'I tawt I saw a puddy tat'. Hardly surprising information given you're in a town full of cats, but hey, I guess it was just making conversation";
+
+private final String face = "You come face to face with and strange floating cat with a gigantic head and tiny body. He says he's after a load of Ashy Treats but says he can only pay in Random Moths. You're slightly taken aback by his use of 'only' as you can't think of a universe where Random Moths wouldn't be accepted as local currency.";
+
+private final String grumpy = "You enter the warehouse one morning and notice an unhappy-looking cat walk out. You ask him what the matter is and he immediately berates you for assuming he was sad just because he looks a bit grumpy. You apologise and he goes on his way. A little later you notice some money has gone missing, so apparently he's not making enough ad revenue money on YouTube and has resorted to petty theft. Which IS sad.";
+
+private final String jungle = "On a recent visit abroad you decide to go on a jungle cruise. Against the advice from the tour rep you go off for an explore by yourself. In a terrifying encounter with an incredibly smooth-talking tiger you narrowly avoid by eaten. However, the tiger manages to steal your wallet as you make your escape, so just cash and a little bit of your dignity lost there.";
+
+private final String tony = "You receive an interesting phone call one day from a tiger called Tony. He's in the cereals business but wants to branch out into other areas; he has some Ashy Treats and Salmon Mousse he wants us to sample. He keeps saying they're 'greeeeeaaaaaaaat', which just comes across as a bit pushy, really. Still, you're not one to turn down free stuff.";
+
+
 List <String> eventList = new ArrayList<>();
 
 public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy, Wholesaler treat, Warehouse warehouse, House house){
@@ -84,6 +107,17 @@ public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy,
     eventList.add(top);
     eventList.add(pink);
     eventList.add(hat);
+    eventList.add(king);
+    eventList.add(tom);
+    eventList.add(path);
+    eventList.add(shop);
+    eventList.add(wardrobe);
+    eventList.add(siam);
+    eventList.add(puddy);
+    eventList.add(face);
+    eventList.add(grumpy);
+    eventList.add(jungle);
+    eventList.add(tony);
 
     // Get warehouse items into local variables
     int fishHeads = warehouse.getFishHeadsStock();
@@ -147,6 +181,11 @@ public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy,
                 warehouse.setWarehouseScracthingPost(scratchingPost += 20);
                 messageHold = "Stock GAIN!";
                 playSoundGainMoney();
+                break;
+            case junkYard:
+                treat.localCrash(true, 0.5);
+                messageHold = "Treat CRASH!";
+                playSoundCrashRise();
                 break;
             case theft:
                 tempBalance -= tempBalance * 0.1;
@@ -230,8 +269,13 @@ public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy,
                 messageHold = "Cash LOSS!";
                 playSoundLoseMoney();
                 break;
+            case lasagne:
+                fish.localPriceRise(true, 0.5);
+                messageHold = "Fish RISE!";
+                playSoundCrashRise();
+                break;
             case top:
-                warehouse.setWarehouseToyMouse(toyMouse += 15);
+                warehouse.setWarehouseYarnBall(yarnBall += 15);
                 warehouse.setWarehouseDreamsies(dreamsies += 5);
                 messageHold = "Stock GAIN!";
                 playSoundGainMoney();
@@ -247,6 +291,83 @@ public String runPage(boolean start, Bank bank, Wholesaler fish, Wholesaler toy,
                 bank.setBalance(tempBalance);
                 messageHold = "Cash LOSS!";
                 playSoundLoseMoney();
+                break;
+            case king:
+                treat.localPriceRise(true, 0.5);
+                messageHold = "Treat RISE!";
+                playSoundCrashRise();
+                break;
+            case tom:
+                warehouse.setWarehouseToyMouse(toyMouse += 30);
+                messageHold = "Stock GAIN!";
+                playSoundGainMoney();
+                break;
+            case path:
+            switch (house.getHouseLevel()){
+                case "Friend's Sofa":
+                    bank.setBalance(tempBalance += 75);
+                    break;
+                case "Apartment":
+                    bank.setBalance(tempBalance += 250);
+                    break;
+                case "Seaview Terrace":
+                    bank.setBalance(tempBalance += 700);
+                    break;
+                case "Penthouse Suite":
+                    bank.setBalance(tempBalance += 1000);
+                    break;
+                case "Mansion":
+                    bank.setBalance(tempBalance += 2000);
+                    break;
+                }
+                messageHold = "Cash GAIN!";
+                playSoundGainMoney();
+                break;
+            case shop:
+                if (warehouse.getAshyTreatsStock() > 0) warehouse.setWarehouseAshTreats(0);
+                if (warehouse.getAshyTreatsTooStock() > 0) warehouse.setWarehouseAshyTreatsToo(0);
+                playSoundLoseMoney();
+                messageHold = "Stock LOSS!";
+                break;
+            case wardrobe:
+                toy.localCrash(true, 0.7);
+                messageHold = "Toy CRASH!";
+                playSoundCrashRise();
+                break;
+            case siam:
+                fish.localPriceRise(true, 0.7);
+                messageHold = "Fish RISE!";
+                playSoundCrashRise();
+                break;
+            case puddy:
+                treat.localPriceRise(true, 0.5);
+                messageHold = "Treat RISE!";
+                playSoundCrashRise();
+                break;
+            case face:
+                warehouse.setWarehouseRandomMoth(randomMoth += 200);
+                messageHold = "Stock GAIN!";
+                playSoundGainMoney();
+                break;
+            case grumpy:
+                tempBalance -= tempBalance * 0.2;
+                tempBalance = (tempBalance < 1) ? 1 : tempBalance;
+                bank.setBalance(tempBalance);
+                messageHold = "Cash LOSS!";
+                playSoundLoseMoney();
+                break;
+            case jungle:
+                tempBalance -= tempBalance * 0.15;
+                tempBalance = (tempBalance < 1) ? 1 : tempBalance;
+                bank.setBalance(tempBalance);
+                messageHold = "Cash LOSS!";
+                playSoundLoseMoney();
+                break;
+            case tony:
+                warehouse.setWarehouseAshyTreatsToo(ashyTreatsToo += 100);
+                warehouse.setWarehouseSalmon(salmon += 50);
+                messageHold = "Stock GAIN!";
+                playSoundGainMoney();
                 break;
         }
     }
