@@ -18,13 +18,13 @@ import java.util.*;
 public class SaveLoad{
 
     String messageHold = "";
-    int[] counters = new int[3];
+    int[] counters = new int[4];
 
     public String getMessageHold(){
         return messageHold;
     }
     
-    public void save(Bank bank, House house, Warehouse warehouse, int dayCounter, int weekCounter){
+    public void save(Bank bank, House house, Warehouse warehouse, int dayCounter, int weekCounter, String weekDay){
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -63,6 +63,7 @@ public class SaveLoad{
         store.put("house", house.getHouseLevel());
         store.put("day", dayCounter);
         store.put("week", weekCounter);
+        store.put("weekDay", weekDay);
         store.put("FishHeads", warehouse.getFishHeadsStock());
         store.put("Fishy Treats", warehouse.getFishyTreatsStock());
         store.put("Cod", warehouse.getWareHouseCodStock());
@@ -100,6 +101,7 @@ public class SaveLoad{
             store.put("house", house.getHouseLevel());
             store.put("day", dayCounter);
             store.put("week", weekCounter);
+            store.put("weekDay", weekDay);
             store.put("FishHeads", warehouse.getFishHeadsStock());
             store.put("Fishy Treats", warehouse.getFishyTreatsStock());
             store.put("Cod", warehouse.getWareHouseCodStock());
@@ -185,6 +187,7 @@ public class SaveLoad{
                 String houseLevel = (String) loadedFile.get("house");
                 int day = (int) (long) loadedFile.get("day");
                 int week = (int) (long) loadedFile.get("week");
+                String dayOfTheWeek = (String)  loadedFile.get("weekDay");
                 int fishHeads = (int) (long) loadedFile.get("FishHeads");
                 int fishyTreats = (int) (long) loadedFile.get("Fishy Treats");
                 int cod = (int) (long) loadedFile.get("Cod");
@@ -219,11 +222,28 @@ public class SaveLoad{
                 warehouse.setWarehouseCatNip(catNip);
                 warehouse.setWarehouseMegaMunchies(megaMunchies);
 
-                // Return array - day/week/success = 1
+                // Return array - day/week/day of the week/success = 1
                 counters[0] = day;
                 counters[1] = week;
-                counters[2] = 1;
-
+                counters[3] = 1;
+                switch(dayOfTheWeek){
+                    case "Monday":
+                        counters[2] = 1;
+                        break;
+                    case "Tuesday":
+                        counters[2] = 2;
+                        break;
+                    case "Wednesday":
+                        counters[2] = 3;
+                        break;
+                    case "Thursday":
+                        counters[2] = 4;
+                        break;
+                    case "Friday":
+                        counters[2] = 5;
+                        break;
+                }
+                
                 messageHold = "Loaded";
                 
                 window.close();
@@ -231,22 +251,22 @@ public class SaveLoad{
             } catch(FileNotFoundException ex){
                 messageLabel.setText("File Not Found");
                 messageHold = "Error";
-                counters[2] = 0;
+                counters[3] = 1;
                 e.consume();
             } catch (IOException ex){
                 messageLabel.setText("Error");
                 messageHold = "Error";
-                counters[2] = 0;
+                counters[3] = 1;
                 ex.printStackTrace();
             } catch (ParseException ex){
                 messageLabel.setText("Error");
                 messageHold = "Error";
-                counters[2] = 0;
+                counters[3] = 1;
                 ex.printStackTrace();
             } catch (Exception ex){
                 messageLabel.setText("Error");
                 messageHold = "Error";
-                counters[2] = 0;
+                counters[3] = 1;
                 ex.printStackTrace();
             }
         });
@@ -262,6 +282,7 @@ public class SaveLoad{
                 String houseLevel = (String) loadedFile.get("house");
                 int day = (int) (long) loadedFile.get("day");
                 int week = (int) (long) loadedFile.get("week");
+                String dayOfTheWeek = (String)  loadedFile.get("weekDay");
                 int fishHeads = (int) (long) loadedFile.get("FishHeads");
                 int fishyTreats = (int) (long) loadedFile.get("Fishy Treats");
                 int cod = (int) (long) loadedFile.get("Cod");
@@ -296,11 +317,27 @@ public class SaveLoad{
                 warehouse.setWarehouseCatNip(catNip);
                 warehouse.setWarehouseMegaMunchies(megaMunchies);
 
-                // Return array - day/week/success = 1
+                // Return array - day/week/day of the week/success = 1
                 counters[0] = day;
                 counters[1] = week;
-                counters[2] = 1;
-
+                counters[3] = 1;
+                switch(dayOfTheWeek){
+                    case "Monday":
+                        counters[2] = 1;
+                        break;
+                    case "Tuesday":
+                        counters[2] = 2;
+                        break;
+                    case "Wednesday":
+                        counters[2] = 3;
+                        break;
+                    case "Thursday":
+                        counters[2] = 4;
+                        break;
+                    case "Friday":
+                        counters[2] = 5;
+                        break;
+                }
                 messageHold = "Loaded";
                 
                 window.close();
@@ -308,22 +345,22 @@ public class SaveLoad{
             } catch(FileNotFoundException ex){
                 messageLabel.setText("File Not Found");
                 messageHold = "Error";
-                counters[2] = 0;
+                counters[3] = 1;
                 e.consume();
             } catch (IOException ex){
                 messageLabel.setText("Error");
                 messageHold = "Error";
-                counters[2] = 0;
+                counters[3] = 1;
                 ex.printStackTrace();
             } catch (ParseException ex){
                 messageLabel.setText("Error");
                 messageHold = "Error";
-                counters[2] = 0;
+                counters[3] = 1;
                 ex.printStackTrace();
             } catch (Exception ex){
                 messageLabel.setText("Error");
                 messageHold = "Error";
-                counters[2] = 0;
+                counters[3] = 1;
                 ex.printStackTrace();
             }
         });

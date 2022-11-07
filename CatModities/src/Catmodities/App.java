@@ -1058,7 +1058,7 @@ public class App extends Application {
 
       save.setOnAction(e ->{
          SaveLoad saveGame = new SaveLoad();
-         saveGame.save(bank, house, warehouse, dayCounter, weekCounter);
+         saveGame.save(bank, house, warehouse, dayCounter, weekCounter, day.getText());
          message.setText(saveGame.getMessageHold());
          if (saveGame.getMessageHold() == "Saved") playSuccess();
       });
@@ -1069,10 +1069,27 @@ public class App extends Application {
          houseLevel.setText("" + house.getHouseLevel());
          getWarehouseStock(warehouse);
          checkHouseLevel(house);
-         if (counters[2] == 1){
+         if (counters[3] == 1){
             dayCounter = counters[0];
             weekCounter = counters[1];
             dayCount.setText("" + dayCounter);
+            switch(counters[2]){
+               case 1:
+                  day.setText("Monday");
+                  break;
+               case 2:
+                  day.setText("Tuesday");
+                  break;
+               case 3:
+                  day.setText("Wednesday");
+                  break;
+               case 4:
+                  day.setText("Thursday");
+                  break;
+               case 5:
+                  day.setText("Friday");
+                  break;
+            }
             playSuccess();
          }
          message.setText(loadGame.getMessageHold());
