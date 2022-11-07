@@ -61,7 +61,27 @@ public class BuyBox {
 
         Button all = new Button("All");
 
-        all.setOnAction(e -> amount.setText("" + buyBox.max));
+        all.setOnAction(e -> {
+            amount.setText("" + buyBox.max);
+            try {
+                buyBox.entered += Integer.parseInt(amount.getText());
+                
+                buyBox.stockResult = buyBox.entered - wholesalerStock;
+                buyBox.balanceResult = buyBox.entered * price;
+    
+                buyBox.stockBalance[0] = buyBox.wholesalerStockHolding -= buyBox.entered;
+                buyBox.stockBalance[1] = buyBox.warehouseStockHolding += buyBox.entered;
+                buyBox.stockBalance[2] = balance - buyBox.balanceResult;
+                buyBox.stockBalance[3] = 1;
+                window.close();
+                
+            } catch (NumberFormatException ex){
+                e.consume();
+            } catch (ArithmeticException ex){
+                e.consume();
+                window.close();
+            }
+        });
 
         confirm.setOnAction(e -> {
         try {

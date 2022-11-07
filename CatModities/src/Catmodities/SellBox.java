@@ -51,7 +51,28 @@ public class SellBox {
         
         Button all = new Button("All");
         
-        all.setOnAction(e -> amount.setText("" + warehouseStock));
+        all.setOnAction(e -> {
+            amount.setText("" + warehouseStock);
+            try {
+                sellBox.entered += Integer.parseInt(amount.getText());
+            
+                sellBox.stockResult = warehouseStock - sellBox.entered;
+                sellBox.balanceResult = sellBox.entered * price;
+    
+                // Wholesaler/Warehouse/Bank Balance/confirmation
+                sellBox.stockBalance[0] = sellBox.wholesalerStockHolding += sellBox.entered;
+                sellBox.stockBalance[1] = sellBox.warehouseStockHolding -= sellBox.entered;
+                sellBox.stockBalance[2] = balance + sellBox.balanceResult;
+                sellBox.stockBalance[3] = 1;
+                window.close();
+                
+            } catch (NumberFormatException ex){
+                e.consume();
+            } catch (ArithmeticException ex){
+                e.consume();
+                window.close();
+            }
+        });
 
         confirm.setOnAction(e -> {
             try {
