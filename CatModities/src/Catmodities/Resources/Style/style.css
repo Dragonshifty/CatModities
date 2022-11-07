@@ -9,6 +9,8 @@
   );
 }
 
+
+
 .button {
   -fx-background-color: linear-gradient(#dc9656, #ab4642);
   -fx-effect: dropshadow(three-pass-box, rgb(12, 1, 1), 10, 0, 0, 5);
@@ -30,6 +32,11 @@
 #pricelabel {
   -fx-text-fill: white;
   -fx-font-size: 18;
+}
+
+#pricelabel2 .text {
+  -fx-stroke: black;
+  -fx-stroke-width: .2px;
 }
 
 .label {

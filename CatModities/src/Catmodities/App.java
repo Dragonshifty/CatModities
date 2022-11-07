@@ -11,8 +11,6 @@ import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import java.util.Random;
 import javafx.scene.media.AudioClip;
-
-import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 
 public class App extends Application {
@@ -407,7 +405,7 @@ public class App extends Application {
       Label yarnBall = new Label("Yarn Ball");
       GridPane.setConstraints(yarnBall, 2, 6);
       yarnBallPrice = new Label("" + toyPrices.get("Yarn Ball"));
-      yarnBallPrice.setId("pricelabel");
+      yarnBallPrice.setId("pricelabel2");
       GridPane.setConstraints(yarnBallPrice, 3, 6);
       yarnBuy = new Button("Buy");
       GridPane.setConstraints(yarnBuy, 2, 7);
@@ -427,7 +425,7 @@ public class App extends Application {
       Label toyMouse = new Label("Toy Mouse");
       GridPane.setConstraints(toyMouse, 4, 6);
       toyMousePrice = new Label("" + toyPrices.get("Toy Mouse"));
-      toyMousePrice.setId("pricelabel");
+      toyMousePrice.setId("pricelabel2");
       GridPane.setConstraints(toyMousePrice, 5, 6);
       toyMouseBuy = new Button("Buy");
       GridPane.setConstraints(toyMouseBuy, 4, 7);
